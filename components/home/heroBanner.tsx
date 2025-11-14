@@ -60,7 +60,7 @@ export default function HeroBanner({
   return (
     <section
       className={cn(
-        "bg-surface-98 relative h-[20vh] w-full overflow-hidden md:h-[30vh] lg:h-[45vh]",
+        "bg-surface-98 relative h-[70vh] w-full overflow-hidden",
         className
       )}
     >
@@ -86,39 +86,55 @@ export default function HeroBanner({
         ))}
       </div>
 
-      {/* 네비게이션 컨트롤 */}
-      <div className="absolute right-1/5 bottom-4 z-10 flex gap-2">
-        {/* 재생/일시중지 */}
-        <button
-          onClick={togglePlayPause}
-          className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 transition-colors hover:bg-black/80"
-          aria-label={isPlaying ? "일시정지" : "재생"}
-        >
-          {isPlaying ? (
-            <Square color="white" size={18} />
-          ) : (
-            <Play color="white" size={18} />
-          )}
-        </button>
+      <div className="absolute inset-x-0 top-1/2">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 md:px-6 lg:px-8">
+          <span className="font-emphasis text-2xl font-bold text-neutral-100 text-shadow-lg">
+            ModusPlant
+          </span>
+          <span className="font-emphasis text-3xl font-bold tracking-tighter text-neutral-100 text-shadow-lg md:text-4xl lg:text-[44px]">
+            당신의 공간에 스며든 초록빛 평화
+          </span>
+          <span className="font-body text-base text-neutral-100 lg:text-lg">
+            모두의식물에서 함께 가꾸는 특별한 일상을 시작하세요.
+          </span>
+        </div>
+      </div>
 
-        {/* 좌우 화살표 및 인덱스 */}
-        <div className="flex h-8 w-22 items-center justify-between rounded-full bg-black/60 px-1 text-white">
+      {/* 네비게이션 컨트롤 */}
+      <div className="absolute inset-x-0 bottom-4 z-10">
+        <div className="mx-auto flex w-full max-w-7xl justify-end gap-2 px-4 md:px-6 lg:px-8">
+          {/* 재생/일시중지 */}
           <button
-            onClick={handlePrev}
-            className="transition-opacity hover:opacity-80"
-            aria-label="이전 슬라이드"
+            onClick={togglePlayPause}
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 transition-colors hover:bg-black/80"
+            aria-label={isPlaying ? "일시정지" : "재생"}
           >
-            <ChevronLeft color="white" size={20} />
+            {isPlaying ? (
+              <Square color="white" size={18} />
+            ) : (
+              <Play color="white" size={18} />
+            )}
           </button>
-          <span>{currentIndex + 1}</span>
-          <span className="opacity-50">| {images.length}</span>
-          <button
-            onClick={handleNext}
-            className="transition-opacity hover:opacity-80"
-            aria-label="다음 슬라이드"
-          >
-            <ChevronRight color="white" size={20} />
-          </button>
+
+          {/* 좌우 화살표 및 인덱스 */}
+          <div className="flex h-8 w-22 items-center justify-between rounded-full bg-black/60 px-1 text-white">
+            <button
+              onClick={handlePrev}
+              className="transition-opacity hover:opacity-80"
+              aria-label="이전 슬라이드"
+            >
+              <ChevronLeft color="white" size={20} />
+            </button>
+            <span>{currentIndex + 1}</span>
+            <span className="opacity-50">| {images.length}</span>
+            <button
+              onClick={handleNext}
+              className="transition-opacity hover:opacity-80"
+              aria-label="다음 슬라이드"
+            >
+              <ChevronRight color="white" size={20} />
+            </button>
+          </div>
         </div>
       </div>
     </section>
