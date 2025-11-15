@@ -104,3 +104,75 @@ export interface User {
   bio?: string;
   createdAt: Date;
 }
+
+/**
+ * 회원가입 폼 데이터 타입
+ */
+export interface SignupFormData {
+  email: string;
+  verificationCode: string;
+  password: string;
+  passwordConfirm: string;
+  nickname: string;
+  agreeToTerms: boolean;
+  agreeToPrivacy: boolean;
+  agreeToMarketing: boolean; // 선택 동의
+}
+
+/**
+ * 이메일 인증 상태 타입
+ */
+export interface EmailVerificationState {
+  isCodeSent: boolean;
+  isVerified: boolean;
+  timeRemaining: number; // 초 단위
+  canResend: boolean;
+}
+
+/**
+ * 닉네임 검증 상태 타입
+ */
+export interface NicknameVerificationState {
+  isChecked: boolean;
+  isAvailable: boolean;
+  message: string;
+}
+
+/**
+ * 회원가입 API 응답 타입
+ */
+export interface SignupResponse {
+  success: boolean;
+  message: string;
+  user?: {
+    id: string;
+    email: string;
+    nickname: string;
+  };
+}
+
+/**
+ * 이메일 인증 요청 응답 타입
+ */
+export interface EmailVerificationResponse {
+  success: boolean;
+  message: string;
+  expiresIn?: number; // 만료 시간(초)
+}
+
+/**
+ * 인증코드 확인 응답 타입
+ */
+export interface VerificationCodeResponse {
+  success: boolean;
+  message: string;
+}
+
+/**
+ * 닉네임 중복 확인 응답 타입
+ */
+export interface NicknameCheckResponse {
+  success: boolean;
+  available: boolean;
+  message: string;
+}
