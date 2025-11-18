@@ -1,26 +1,11 @@
 "use client";
 
-import {
-  UseFormRegister,
-  UseFormTrigger,
-  UseFormWatch,
-  FieldErrors,
-} from "react-hook-form";
-
 import { cn } from "@/lib/utils";
-import { SignupFormValues } from "@/lib/validations/auth";
 import { useNicknameVerification } from "@/lib/hooks/useNicknameVerification";
 import { authApi } from "@/lib/api/auth";
 import { Input } from "@/components/_common/input";
 import Button from "@/components/_common/button";
-
-export interface NicknameSectionProps {
-  register: UseFormRegister<SignupFormValues>;
-  trigger: UseFormTrigger<SignupFormValues>;
-  watch: UseFormWatch<SignupFormValues>;
-  errors: Pick<FieldErrors<SignupFormValues>, "nickname">;
-  className?: string;
-}
+import { NicknameSectionProps } from "@/lib/types";
 
 export default function NicknameSection({
   register,
@@ -72,8 +57,8 @@ export default function NicknameSection({
             placeholder="닉네임을 입력해주세요"
             className={cn(
               "w-full",
-              errors.nickname && "border-red-500",
-              isChecked && !isAvailable && "border-red-500"
+              errors.nickname && "border-system-alert",
+              isChecked && !isAvailable && "border-system-alert"
             )}
             onChange={handleNicknameChange}
           />
@@ -82,7 +67,7 @@ export default function NicknameSection({
           type="button"
           onClick={handleCheckNickname}
           disabled={!watchedNickname || !!errors.nickname || isLoading}
-          className="w-full min-w-[92px] px-5 py-3 text-sm sm:w-auto"
+          className="w-full min-w-[92px] cursor-pointer px-5 py-3 text-sm sm:w-auto"
           variant="secondary"
         >
           {isLoading ? "확인중..." : "중복확인"}
@@ -91,10 +76,10 @@ export default function NicknameSection({
 
       {/* 닉네임 에러 메시지 */}
       {errors.nickname && (
-        <p className="text-sm text-red-500">{errors.nickname.message}</p>
+        <p className="text-system-alert text-sm">{errors.nickname.message}</p>
       )}
       {isChecked && !isAvailable && (
-        <p className="text-sm text-red-500">{message}</p>
+        <p className="text-system-alert text-sm">{message}</p>
       )}
       {isChecked && isAvailable && (
         <p className="text-primary-50 text-sm">{message}</p>

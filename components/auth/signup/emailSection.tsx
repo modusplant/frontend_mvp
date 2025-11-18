@@ -1,25 +1,10 @@
 "use client";
-
-import { UseFormRegister, UseFormTrigger, UseFormWatch } from "react-hook-form";
-import { Eye, EyeOff } from "lucide-react";
-
 import { cn } from "@/lib/utils";
-import { SignupFormValues } from "@/lib/validations/auth";
 import { useEmailVerification } from "@/lib/hooks/useEmailVerification";
 import { authApi } from "@/lib/api/auth";
 import { Input } from "@/components/_common/input";
 import Button from "@/components/_common/button";
-
-export interface EmailSectionProps {
-  register: UseFormRegister<SignupFormValues>;
-  trigger: UseFormTrigger<SignupFormValues>;
-  watch: UseFormWatch<SignupFormValues>;
-  errors: {
-    email?: { message?: string };
-    verificationCode?: { message?: string };
-  };
-  className?: string;
-}
+import { EmailSectionProps } from "@/lib/types";
 
 export default function EmailSection({
   register,
@@ -85,7 +70,7 @@ export default function EmailSection({
             disabled={isVerified}
             className={cn(
               "w-full",
-              errors.email && "border-red-500",
+              errors.email && "border-system-alert",
               isVerified && "border-primary-50"
             )}
           />
@@ -101,7 +86,7 @@ export default function EmailSection({
             (isCodeSent && !canResend) ||
             isVerified
           }
-          className="w-full min-w-[92px] px-5 py-3 text-sm sm:w-auto"
+          className="w-full min-w-[92px] cursor-pointer px-5 py-3 text-sm sm:w-auto"
         >
           {canResend ? "재요청" : "인증요청"}
         </Button>
@@ -109,7 +94,7 @@ export default function EmailSection({
 
       {/* 이메일 에러 메시지 */}
       {errors.email && (
-        <p className="text-sm text-red-500">{errors.email.message}</p>
+        <p className="text-system-alert text-sm">{errors.email.message}</p>
       )}
 
       {/* 인증코드 입력 */}
@@ -142,7 +127,7 @@ export default function EmailSection({
 
           {/* 인증코드 에러 메시지 */}
           {errors.verificationCode && (
-            <p className="text-sm text-red-500">
+            <p className="text-system-alert text-sm">
               {errors.verificationCode.message}
             </p>
           )}

@@ -1,22 +1,52 @@
 "use client";
 
-import { UseFormRegister, FieldErrors } from "react-hook-form";
-
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { SignupFormValues } from "@/lib/validations/auth";
 import { Input } from "@/components/_common/input";
-
-export interface PasswordSectionProps {
-  register: UseFormRegister<SignupFormValues>;
-  errors: Pick<FieldErrors<SignupFormValues>, "password" | "passwordConfirm">;
-  className?: string;
-}
+import { PasswordSectionProps } from "@/lib/types";
+import { validatePassword } from "@/lib/utils/auth";
 
 export default function PasswordSection({
   register,
   errors,
+  watch,
   className,
 }: PasswordSectionProps) {
+  const [passwordError, setPasswordError] = useState<string>("");
+  const [confirmError, setConfirmError] = useState<string>("");
+
+  const password = watch?.("password") || "";
+  const passwordConfirm = watch?.("passwordConfirm") || "";
+
+  // 비밀번호 실시간 검증
+  useEffect(() => {
+    if (!password) {
+      setPasswordError("");
+      return;
+    }
+
+    const validation = validatePassword(password);
+    if (!validation.isValid) {
+      setPasswordError("올바르지 않은 비밀번호 입니다.");
+    } else {
+      setPasswordError("");
+    }
+  }, [password]);
+
+  // 비밀번호 확인 실시간 검증
+  useEffect(() => {
+    if (!passwordConfirm) {
+      setConfirmError("");
+      return;
+    }
+
+    if (password !== passwordConfirm) {
+      setConfirmError("비밀번호가 서로 일치하지 않습니다");
+    } else {
+      setConfirmError("");
+    }
+  }, [password, passwordConfirm]);
+
   return (
     <div className={cn("space-y-2", className)}>
       <label className="text-neutral-20 block text-sm font-medium">
@@ -25,40 +55,54 @@ export default function PasswordSection({
 
       <div className="space-y-3">
         {/* 비밀번호 입력 */}
-        <Input
-          {...register("password")}
-          type="password"
-          placeholder="비밀번호를 입력해주세요"
-          showPasswordToggle
-          className={cn("w-full", errors.password && "border-red-500")}
-        />
+        <div>
+          <Input
+            {...register("password")}
+            type="password"
+            placeholder="비밀번호를 입력해주세요"
+            showPasswordToggle
+            className={cn(
+              "w-full",
+              (errors.password || passwordError) && "border-system-alert"
+            )}
+          />
+
+          {passwordError && !errors.password && (
+            <p className="text-system-alert mt-1 text-sm">{passwordError}</p>
+          )}
+          {errors.password && (
+            <p className="text-system-alert mt-1 text-sm">
+              {errors.password.message}
+            </p>
+          )}
+        </div>
 
         {/* 비밀번호 확인 입력 */}
-        <Input
-          {...register("passwordConfirm")}
-          type="password"
-          placeholder="비밀번호를 다시 한번 입력해주세요"
-          showPasswordToggle
-          className={cn("w-full", errors.passwordConfirm && "border-red-500")}
-        />
-      </div>
+        <div>
+          <Input
+            {...register("passwordConfirm")}
+            type="password"
+            placeholder="비밀번호를 다시 한번 입력해주세요"
+            showPasswordToggle
+            className={cn(
+              "w-full",
+              (errors.passwordConfirm || confirmError) && "border-system-alert"
+            )}
+          />
+          {confirmError && !errors.passwordConfirm && (
+            <p className="text-system-alert mt-1 text-sm">{confirmError}</p>
+          )}
+          {errors.passwordConfirm && (
+            <p className="text-system-alert mt-1 text-sm">
+              {errors.passwordConfirm.message}
+            </p>
+          )}
+        </div>
 
-      {/* 비밀번호 안내 및 에러 메시지 */}
-      <div className="space-y-1">
-        {!errors.password && (
-          <p className="text-neutral-60 text-sm">
-            영문 대소문자, 숫자, 특수문자를 포함한 8자 이상의 비밀번호로
-            입력해주세요.
-          </p>
-        )}
-        {errors.password && (
-          <p className="text-sm text-red-500">{errors.password.message}</p>
-        )}
-        {errors.passwordConfirm && (
-          <p className="text-sm text-red-500">
-            {errors.passwordConfirm.message}
-          </p>
-        )}
+        <p className="text-neutral-60 mt-1 text-sm">
+          영문 대소문자, 숫자, 특수문자를 포함한 8자 이상의 비밀번호로
+          입력해주세요.
+        </p>
       </div>
     </div>
   );

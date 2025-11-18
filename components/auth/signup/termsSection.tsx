@@ -1,17 +1,9 @@
 "use client";
 
-import { UseFormRegister, FieldErrors, UseFormSetValue } from "react-hook-form";
-import { SignupFormValues } from "@/lib/validations/auth";
 import { useTermsAgreement } from "@/lib/hooks/useTermsAgreement";
 import { Checkbox } from "@/components/_common/checkbox";
 import { TERMS_MAP, TERMS_LABELS, REQUIRED_TERMS } from "@/lib/constants/terms";
-
-interface TermsSectionProps {
-  register: UseFormRegister<SignupFormValues>;
-  errors: FieldErrors<SignupFormValues>;
-  watch: (name: keyof SignupFormValues) => any;
-  setValue: UseFormSetValue<SignupFormValues>;
-}
+import { TermsSectionProps } from "@/lib/types";
 
 export default function TermsSection({
   register,
@@ -76,7 +68,7 @@ export default function TermsSection({
             <button
               type="button"
               onClick={() => toggleContent("showTermsContent")}
-              className="text-neutral-60 text-sm underline"
+              className="text-neutral-60 cursor-pointer text-sm underline"
             >
               {contentState.showTermsContent ? "접기" : "보기"}
             </button>
@@ -109,7 +101,7 @@ export default function TermsSection({
             <button
               type="button"
               onClick={() => toggleContent("showPrivacyContent")}
-              className="text-neutral-60 text-sm underline"
+              className="text-neutral-60 cursor-pointer text-sm underline"
             >
               {contentState.showPrivacyContent ? "접기" : "보기"}
             </button>
@@ -142,7 +134,7 @@ export default function TermsSection({
             <button
               type="button"
               onClick={() => toggleContent("showCommunityContent")}
-              className="text-neutral-60 text-sm underline"
+              className="text-neutral-60 cursor-pointer text-sm underline"
             >
               {contentState.showCommunityContent ? "접기" : "보기"}
             </button>
@@ -164,7 +156,9 @@ export default function TermsSection({
       {(errors.agreeToTerms ||
         errors.agreeToPrivacy ||
         errors.agreeToCommunity) && (
-        <p className="mt-2 text-sm text-red-500">필수 약관에 동의해주세요.</p>
+        <p className="text-system-alert mt-2 text-sm">
+          필수 약관에 동의해주세요.
+        </p>
       )}
     </div>
   );
