@@ -47,13 +47,6 @@ export default function PostCard({ post, className }: PostCardProps) {
     return "전체";
   };
 
-  // 북마크 토글 (실제로는 API 호출)
-  const handleBookmarkToggle = (e: React.MouseEvent) => {
-    e.preventDefault(); // Link 동작 방지
-    setIsBookmarked(!isBookmarked);
-    // TODO: API 호출
-  };
-
   // 기본 이미지 (게시글에 이미지 없는 경우)
   const defaultThumbnail = "/images/default-plant.jpg";
 
