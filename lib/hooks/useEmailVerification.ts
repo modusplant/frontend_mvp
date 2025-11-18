@@ -119,6 +119,14 @@ export const useEmailVerification = ({
   // 인증코드 확인
   const verifyCode = useCallback(
     async (email: string, code: string) => {
+      // 시간 만료 체크
+      if (verificationState.isCodeSent && verificationState.timeRemaining === 0) {
+        return { 
+          success: false, 
+          message: "인증 시간이 만료되었습니다. 인증코드를 재발송해주세요." 
+        };
+      }
+
       try {
         let response;
 
@@ -143,7 +151,7 @@ export const useEmailVerification = ({
         return { success: false, message: "인증 확인에 실패했습니다." };
       }
     },
-    [onVerifyCode]
+    [onVerifyCode, verificationState.isCodeSent, verificationState.timeRemaining]
   );
 
   // 상태 초기화
