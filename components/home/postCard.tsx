@@ -46,7 +46,7 @@ export default function PostCard({ post, className }: PostCardProps) {
   };
 
   // 기본 이미지 (게시글에 이미지 없는 경우)
-  const defaultThumbnail = "/images/default-plant.jpg";
+  const defaultThumbnail = "/post/image_01.png";
 
   return (
     <Link
