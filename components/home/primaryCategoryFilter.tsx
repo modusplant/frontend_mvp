@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { PrimaryCategory } from "@/lib/types";
-import { primaryCategoryLabels } from "@/lib/data/posts";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 
 export interface PrimaryCategoryFilterProps {
-  selectedCategory: PrimaryCategory;
-  onCategoryChange: (category: PrimaryCategory) => void;
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
   className?: string;
 }
 
@@ -25,7 +23,7 @@ export default function PrimaryCategoryFilter({
 }: PrimaryCategoryFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const categories: PrimaryCategory[] = ["all", "daily", "qna", "tip"];
+  const categories = ["전체", "일상", "Q&A", "팁"];
 
   // 외부 클릭 감지
   useEffect(() => {
@@ -47,7 +45,7 @@ export default function PrimaryCategoryFilter({
     };
   }, [isOpen]);
 
-  const handleSelect = (category: PrimaryCategory) => {
+  const handleSelect = (category: string) => {
     onCategoryChange(category);
     setIsOpen(false);
   };
@@ -70,7 +68,7 @@ export default function PrimaryCategoryFilter({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        <span>{primaryCategoryLabels[selectedCategory]}</span>
+        <span>{selectedCategory}</span>
         <ChevronDown
           className={cn(
             "text-neutral-60 ml-2 h-4 w-4 transition-transform md:h-5 md:w-5",
@@ -99,7 +97,7 @@ export default function PrimaryCategoryFilter({
               role="option"
               aria-selected={selectedCategory === category}
             >
-              {primaryCategoryLabels[category]}
+              {category}
             </button>
           ))}
         </div>

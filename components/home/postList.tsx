@@ -1,26 +1,25 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { PrimaryCategory, SecondaryCategory } from "@/lib/types";
+import { PostData } from "@/lib/types/api.type";
 import { dummyPosts } from "@/lib/data/posts";
 import PostCard from "@/components/home/postCard";
 import PrimaryCategoryFilter from "@/components/home/primaryCategoryFilter";
 import SecondaryCategoryFilter from "@/components/home/secondaryCategoryFilter";
 
 export default function PostList() {
-  const [primaryCategory, setPrimaryCategory] =
-    useState<PrimaryCategory>("all");
+  const [primaryCategory, setPrimaryCategory] = useState<string>("전체");
   const [selectedSecondaryCategories, setSelectedSecondaryCategories] =
-    useState<SecondaryCategory[]>(["all"]);
+    useState<string[]>(["전체"]);
   const [appliedSecondaryCategories, setAppliedSecondaryCategories] = useState<
-    SecondaryCategory[]
-  >(["all"]);
+    string[]
+  >(["전체"]);
 
   // 필터링된 게시물
   const filteredPosts = useMemo(() => {
     let result = dummyPosts;
 
-    if (primaryCategory === "all") {
+    if (primaryCategory === "전체") {
       return result;
     } else {
       result = result.filter(
@@ -29,7 +28,7 @@ export default function PostList() {
     }
 
     // 2차 카테고리 필터링 (저장 버튼 클릭 후 적용된 값 사용)
-    if (!appliedSecondaryCategories.includes("all")) {
+    if (!appliedSecondaryCategories.includes("전체")) {
       result = result.filter((post) =>
         appliedSecondaryCategories.includes(post.secondaryCategory)
       );
@@ -69,7 +68,7 @@ export default function PostList() {
       {/* 게시물 목록 (모바일 1열, 태블릿 2열, PC 3열) */}
       <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-x-8 md:gap-y-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-10">
         {filteredPosts.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard key={post.postId} post={post} />
         ))}
       </div>
 

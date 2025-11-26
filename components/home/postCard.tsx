@@ -2,18 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Post } from "@/lib/types";
+import { PostData } from "@/lib/types/api.type";
 import Badge from "@/components/_common/badge";
-import {
-  secondaryCategoryLabelsDaily,
-  secondaryCategoryLabelsQnA,
-} from "@/lib/data/posts";
+import { secondaryCategoryLabels } from "@/lib/constants/categories";
+import { getThumbnail, getExcerpt, formatPostDate } from "@/lib/utils/post";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 import { Bookmark, Heart, MessageSquare } from "lucide-react";
 
 export interface PostCardProps {
-  post: Post;
+  post: PostData;
   className?: string;
 }
 
@@ -23,40 +20,24 @@ export interface PostCardProps {
  * - 2차 카테고리, 본문 일부(말줄임표), 업로드 일자, 닉네임
  */
 export default function PostCard({ post, className }: PostCardProps) {
+  // 썸네일 이미지 (content에서 추출)
+  const thumbnail = getThumbnail(post);
+
+  // 본문 요약 (content에서 추출)
+  const excerpt = getExcerpt(post);
+
   // 날짜 포맷팅
-  const formattedDate = new Intl.DateTimeFormat("ko-KR", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(post.createdAt);
-
-  // 2차 카테고리 라벨 가져오기
-  const getSecondaryCategoryLabel = () => {
-    if (post.primaryCategory === "daily") {
-      return secondaryCategoryLabelsDaily[
-        post.secondaryCategory as keyof typeof secondaryCategoryLabelsDaily
-      ];
-    }
-    if (post.primaryCategory === "qna") {
-      return secondaryCategoryLabelsQnA[
-        post.secondaryCategory as keyof typeof secondaryCategoryLabelsQnA
-      ];
-    }
-    return "전체";
-  };
-
-  // 기본 이미지 (게시글에 이미지 없는 경우)
-  const defaultThumbnail = "/post/image_01.png";
+  const formattedDate = formatPostDate(post.publishedAt);
 
   return (
     <Link
-      href={`/community/${post.id}`}
+      href={`/community/${post.postId}`}
       className={cn("group block overflow-hidden", className)}
     >
       {/* 썸네일 이미지 */}
       <div className="relative aspect-4/3 w-full overflow-hidden">
         <Image
-          src={post.thumbnail || defaultThumbnail}
+          src={thumbnail}
           alt={post.title}
           fill
           className="rounded-xl object-cover"
@@ -73,7 +54,8 @@ export default function PostCard({ post, className }: PostCardProps) {
             size="md"
             className="bg-surface-98 font-medium"
           >
-            {getSecondaryCategoryLabel()}
+            {secondaryCategoryLabels[post.secondaryCategory] ||
+              post.secondaryCategory}
           </Badge>
         </div>
 
@@ -84,9 +66,9 @@ export default function PostCard({ post, className }: PostCardProps) {
           </h3>
 
           {/* 본문 일부 (말줄임표) */}
-          {post.excerpt && (
+          {excerpt && (
             <p className="text-neutral-40 line-clamp-2 text-sm md:min-h-10 lg:min-h-10">
-              {post.excerpt}
+              {excerpt}
             </p>
           )}
         </div>
@@ -95,18 +77,14 @@ export default function PostCard({ post, className }: PostCardProps) {
         <div className="text-neutral-60 flex items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             {/* 작성자 / 통계 (좋아요, 댓글) / 날짜 */}
-            <span className="text-neutral-60 max-w-20">
-              {post.author.nickname}
-            </span>
+            <span className="text-neutral-60 max-w-20">{post.nickname}</span>
             <span className="flex items-center gap-1">
               <Heart
                 className="md:h-4 md:w-4"
-                color="red"
-                fill="red"
-                // stroke={post.likes > 0 ? "currentColor" : "none"}
-                // fill={post.likes > 0 ? "currentColor" : "none"}
+                color={post.isLiked ? "red" : "currentColor"}
+                fill={post.isLiked ? "red" : "none"}
               />
-              <span>{post.likes}</span>
+              <span>{post.likeCount}</span>
             </span>
             <span className="flex items-center gap-1">
               <MessageSquare className="md:h-4 md:w-4" />

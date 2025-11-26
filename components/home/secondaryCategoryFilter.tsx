@@ -1,24 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import {
-  PrimaryCategory,
-  SecondaryCategory,
-  SecondaryCategoryDaily,
-  SecondaryCategoryQnA,
-} from "@/lib/types";
-import {
-  secondaryCategoryLabelsDaily,
-  secondaryCategoryLabelsQnA,
-  secondaryCategoryLabelsTip,
-} from "@/lib/data/posts";
+import { secondaryCategoriesByPrimary } from "@/lib/constants/categories";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 
 export interface SecondaryCategoryFilterProps {
-  primaryCategory: PrimaryCategory;
-  selectedCategories: SecondaryCategory[];
-  onCategoriesChange: (categories: SecondaryCategory[]) => void;
+  primaryCategory: string;
+  selectedCategories: string[];
+  onCategoriesChange: (categories: string[]) => void;
   onApply: () => void;
   className?: string;
 }
@@ -60,47 +50,22 @@ export default function SecondaryCategoryFilter({
   }, [isOpen]);
 
   // 1차 카테고리에 따른 2차 카테고리 옵션
-  const getSecondaryCategoryOptions = (): {
-    value: SecondaryCategory;
-    label: string;
-  }[] => {
-    if (primaryCategory === "all") {
-      return [{ value: "all", label: "전체" }];
-    }
-
-    if (primaryCategory === "daily") {
-      return Object.entries(secondaryCategoryLabelsDaily).map(
-        ([value, label]) => ({
-          value: value as SecondaryCategoryDaily,
-          label,
-        })
-      );
-    }
-
-    if (primaryCategory === "qna" || primaryCategory === "tip") {
-      return Object.entries(secondaryCategoryLabelsQnA).map(
-        ([value, label]) => ({
-          value: value as SecondaryCategoryQnA,
-          label,
-        })
-      );
-    }
-
-    return [{ value: "all", label: "전체" }];
+  const getSecondaryCategoryOptions = (): string[] => {
+    return secondaryCategoriesByPrimary[primaryCategory] || ["전체"];
   };
 
   const secondaryOptions = getSecondaryCategoryOptions();
 
   // 카테고리 토글
-  const toggleCategory = (category: SecondaryCategory) => {
-    if (category === "all") {
+  const toggleCategory = (category: string) => {
+    if (category === "전체") {
       // 전체 선택
-      onCategoriesChange(["all"]);
+      onCategoriesChange(["전체"]);
       return;
     }
 
     // 전체가 선택되어 있으면 해제하고 현재 카테고리만 선택
-    if (selectedCategories.includes("all")) {
+    if (selectedCategories.includes("전체")) {
       onCategoriesChange([category]);
       return;
     }
@@ -109,7 +74,7 @@ export default function SecondaryCategoryFilter({
     if (selectedCategories.includes(category)) {
       const newCategories = selectedCategories.filter((c) => c !== category);
       // 아무것도 선택되지 않으면 전체 선택
-      onCategoriesChange(newCategories.length === 0 ? ["all"] : newCategories);
+      onCategoriesChange(newCategories.length === 0 ? ["전체"] : newCategories);
     } else {
       // 새로운 카테고리 추가
       onCategoriesChange([...selectedCategories, category]);
@@ -118,17 +83,17 @@ export default function SecondaryCategoryFilter({
 
   // 초기화
   const handleReset = () => {
-    onCategoriesChange(["all"]);
+    onCategoriesChange(["전체"]);
   };
 
   // 1차 카테고리 변경 시 2차 카테고리 자동 초기화
   useEffect(() => {
-    onCategoriesChange(["all"]);
+    onCategoriesChange(["전체"]);
   }, [primaryCategory]);
 
   // 선택된 카테고리 개수 표시
   const getSelectedLabel = () => {
-    if (selectedCategories.includes("all")) {
+    if (selectedCategories.includes("전체")) {
       return "전체";
     }
     const count = selectedCategories.length;
@@ -178,13 +143,13 @@ export default function SecondaryCategoryFilter({
           {/* 칩 영역 */}
           <div className="mb-4 flex flex-wrap items-center gap-1.5 md:gap-2">
             {secondaryOptions.map((option) => {
-              const isSelected = selectedCategories.includes(option.value);
+              const isSelected = selectedCategories.includes(option);
 
               return (
                 <button
-                  key={option.value}
+                  key={option}
                   type="button"
-                  onClick={() => toggleCategory(option.value)}
+                  onClick={() => toggleCategory(option)}
                   className={cn(
                     "rounded-full px-3.5 py-2.5 text-xs font-medium whitespace-nowrap transition-all md:px-4 md:py-2 md:text-sm",
                     {
@@ -196,7 +161,7 @@ export default function SecondaryCategoryFilter({
                   role="option"
                   aria-selected={isSelected}
                 >
-                  {option.label}
+                  {option}
                 </button>
               );
             })}
