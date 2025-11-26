@@ -1,10 +1,10 @@
 import { apiClient } from "@/lib/api/client";
+import { ApiResponse } from "@/lib/types/common";
 import {
   GetPostsRequest,
   GetPostsResponseData,
-  ApiResponse,
-} from "@/lib/types/api.type";
-import { PostDetail } from "@/lib/types";
+  PostDetail,
+} from "@/lib/types/post";
 
 /**
  * 게시글 관련 API

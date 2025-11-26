@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { PostContent as PostContentType } from "@/lib/types";
+import { PostContent as PostContentType } from "@/lib/types/post";
 import ImageModal from "./imageModal";
 
 interface PostContentProps {

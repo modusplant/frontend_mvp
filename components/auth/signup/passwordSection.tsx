@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/_common/input";
-import { PasswordSectionProps } from "@/lib/types";
+import { PasswordSectionProps } from "@/lib/types/auth";
 import { validatePassword } from "@/lib/utils/auth";
 
 export default function PasswordSection({

@@ -1,4 +1,5 @@
-import { PostDetail, Comment } from "@/lib/types";
+import { PostDetail } from "@/lib/types/post";
+import { Comment } from "@/lib/types/comment";
 
 /**
  * 게시글 상세 더미 데이터 (postId: "1")

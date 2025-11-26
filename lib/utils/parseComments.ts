@@ -1,4 +1,4 @@
-import { Comment } from "@/lib/types";
+import { Comment } from "@/lib/types/comment";
 
 /**
  * 플랫 배열로 받은 댓글을 계층 구조(트리)로 변환

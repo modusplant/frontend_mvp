@@ -1,4 +1,4 @@
-import { PostData } from "@/lib/types/api.type";
+import { PostData } from "@/lib/types/post";
 
 /**
  * 더미 게시물 데이터 (API 응답 구조에 맞춤)

@@ -1,4 +1,4 @@
-import { ApiResponse, ApiError } from "../types/api.type";
+import { ApiResponse, ApiError } from "../types/common";
 
 const BASE_URL = "";
 const ACCESS_TOKEN_KEY =

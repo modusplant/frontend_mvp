@@ -1,6 +1,6 @@
 import { apiClient } from "@/lib/api/client";
-import { ApiResponse } from "@/lib/types/api.type";
-import { Comment, CommentCreatePayload } from "@/lib/types";
+import { ApiResponse } from "@/lib/types/common";
+import { Comment, CommentCreatePayload } from "@/lib/types/comment";
 
 /**
  * 댓글 관련 API

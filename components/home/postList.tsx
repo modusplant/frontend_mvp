@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { PostData } from "@/lib/types/api.type";
 import { dummyPosts } from "@/lib/data/posts";
 import PostCard from "@/components/home/postCard";
 import PrimaryCategoryFilter from "@/components/home/primaryCategoryFilter";

@@ -1,9 +1,9 @@
 "use client";
 
-import { useTermsAgreement } from "@/lib/hooks/useTermsAgreement";
+import { useTermsAgreement } from "@/lib/hooks/auth/useTermsAgreement";
 import { Checkbox } from "@/components/_common/checkbox";
-import { TERMS_MAP, TERMS_LABELS, REQUIRED_TERMS } from "@/lib/constants/terms";
-import { TermsSectionProps } from "@/lib/types";
+import { TERMS_MAP, TERMS_LABELS } from "@/lib/constants/terms";
+import { TermsSectionProps } from "@/lib/types/auth";
 
 export default function TermsSection({
   register,

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { PostData } from "@/lib/types/api.type";
+import { PostData } from "@/lib/types/post";
 import Badge from "@/components/_common/badge";
 import { secondaryCategoryLabels } from "@/lib/constants/categories";
 import { getThumbnail, getExcerpt, formatPostDate } from "@/lib/utils/post";

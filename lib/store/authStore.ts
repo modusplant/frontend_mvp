@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { removeAccessToken, refreshAccessToken } from "@/lib/api/client";
-import { User, AuthStore } from "@/lib/types/index";
+import { User, AuthStore } from "@/lib/types/auth";
 import { decodeJWT } from "@/lib/utils/auth";
 import { authApi } from "@/lib/api/auth";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { PostDetail as PostDetailType } from "@/lib/types";
+import { PostDetail as PostDetailType } from "@/lib/types/post";
 import PostContent from "./postContent";
 import PostActions from "./postActions";
 import PostInteractions from "./postInteractions";

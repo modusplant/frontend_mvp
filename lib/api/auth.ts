@@ -1,15 +1,15 @@
 import { apiClient, setAccessToken, removeAccessToken } from "./client";
+import { ApiResponse } from "@/lib/types/common";
 import {
-  ApiResponse,
+  LoginRequest,
   LoginResponseData,
+  User,
+  UserAuthInfoResponseData,
+  SignupRequest,
   EmailVerificationResponseData,
   NicknameCheckResponseData,
-  LoginRequest,
-  SignupRequest,
-  UserAuthInfoResponseData,
-} from "../types/api.type";
+} from "@/lib/types/auth";
 import { decodeJWT } from "@/lib/utils/auth";
-import { User } from "@/lib/types";
 
 /**
  * 인증 API

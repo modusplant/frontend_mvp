@@ -1,5 +1,8 @@
 import { FieldErrors } from "react-hook-form";
-import { EmailVerificationState, NicknameVerificationState } from "@/lib/types";
+import {
+  EmailVerificationState,
+  NicknameVerificationState,
+} from "@/lib/types/auth";
 import { z } from "zod";
 
 /**

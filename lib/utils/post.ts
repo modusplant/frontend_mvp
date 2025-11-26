@@ -1,4 +1,4 @@
-import { PostData } from "@/lib/types/api.type";
+import { PostData } from "@/lib/types/post";
 
 /**
  * 썸네일 추출 헬퍼 함수
