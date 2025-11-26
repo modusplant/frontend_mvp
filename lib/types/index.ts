@@ -84,22 +84,57 @@ export interface Post {
 }
 
 /**
- * 댓글 타입
+ * 게시글 상세 콘텐츠 타입 (API 응답)
+ */
+export interface PostContent {
+  type: "text" | "image";
+  order: number;
+  filename?: string;
+  data: string; // 텍스트 내용 or base64 이미지
+}
+
+/**
+ * 게시글 상세 타입 (API 응답)
+ */
+export interface PostDetail {
+  authorUuid: string;
+  authorNickname: string;
+  title: string;
+  content: PostContent[];
+  primaryCategory: string;
+  secondaryCategory: string;
+  viewCount: number;
+  likeCount: number;
+  bookmarkCount: number;
+  commentCount: number;
+  createdAt: string;
+  updatedAt: string;
+  isLiked: boolean; // 현재 사용자의 좋아요 여부
+  isBookmarked: boolean; // 현재 사용자의 북마크 여부
+}
+
+/**
+ * 댓글 타입 (API 응답 기반)
  */
 export interface Comment {
-  id: string;
-  postId: string;
-  author: {
-    id: string;
-    name: string;
-    avatar?: string;
-  };
+  nickname: string;
+  path: string; // "0", "0.1", "0.1.2" 형식의 계층 경로
   content: string;
-  createdAt: Date;
-  updatedAt?: Date;
-  likes: number;
-  parentId?: string; // 대댓글인 경우 부모 댓글 ID
-  replies?: Comment[]; // 대댓글 목록
+  likeCount: number;
+  createdAt: string;
+  isDeleted: boolean;
+  isLiked?: boolean; // 현재 사용자의 좋아요 여부
+  children?: Comment[]; // 재귀 렌더링용 (파싱 후 추가)
+  depth?: number; // UI 들여쓰기용 (파싱 후 추가)
+}
+
+/**
+ * 댓글 작성 요청 페이로드
+ */
+export interface CommentCreatePayload {
+  postId: string; // ulid
+  path: string; // "0" or "0.1" or "0.1.2"
+  content: string;
 }
 
 /**
@@ -179,6 +214,7 @@ export interface NicknameCheckResponse {
  */
 export interface User {
   id: string;
+  uuid: string; // 사용자 UUID (게시글 작성자 비교용)
   email: string;
   nickname: string;
   roles: string;
