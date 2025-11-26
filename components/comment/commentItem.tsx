@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Comment } from "@/lib/types";
-import { commentApi } from "@/lib/api/comment";
+import { Comment } from "@/lib/types/comment";
 import { useAuthStore } from "@/lib/store/authStore";
 import { formatRelativeTime } from "@/lib/utils/formatTime";
 import { Heart, MessageCircle, Trash2 } from "lucide-react";
-import CommentForm from "./commentForm";
+import { useCommentLike } from "@/lib/hooks/comment/useCommentLike";
+import { useCommentMutations } from "@/lib/hooks/comment/useCommentMutations";
+import CommentInput from "./commentInput";
 
 interface CommentItemProps {
   comment: Comment;
@@ -21,58 +22,28 @@ export default function CommentItem({
 }: CommentItemProps) {
   const { user, isAuthenticated } = useAuthStore();
   const [showReplyForm, setShowReplyForm] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isLiked, setIsLiked] = useState(comment.isLiked || false);
-  const [likeCount, setLikeCount] = useState(comment.likeCount);
-  const [isLiking, setIsLiking] = useState(false);
 
   const isMyComment = isAuthenticated && user?.nickname === comment.nickname;
 
   // 들여쓰기 계산 (depth * 32px)
   const indentClass = comment.depth ? `ml-${comment.depth * 8}` : "";
 
-  const handleDelete = async () => {
-    if (!window.confirm("댓글을 삭제하시겠습니까?")) {
-      return;
-    }
+  // 좋아요 훅
+  const { likeCount, isLiked, isLiking, handleLike } = useCommentLike({
+    postId,
+    commentPath: comment.path,
+    initialLikeCount: comment.likeCount,
+    initialIsLiked: comment.isLiked,
+  });
 
-    setIsDeleting(true);
+  // 삭제 훅
+  const { deleteComment, isDeleting } = useCommentMutations({
+    postId,
+    onSuccess: onUpdate,
+  });
 
-    try {
-      await commentApi.deleteComment(postId, comment.path);
-      onUpdate();
-    } catch (error) {
-      window.alert("댓글 삭제에 실패했습니다.");
-      setIsDeleting(false);
-    }
-  };
-
-  const handleLike = async () => {
-    if (!isAuthenticated || !user) {
-      window.alert("로그인이 필요합니다.");
-      return;
-    }
-
-    setIsLiking(true);
-
-    try {
-      if (isLiked) {
-        // 좋아요 취소
-        await commentApi.unlikeComment(user.id, postId, comment.path);
-        setLikeCount((prev) => prev - 1);
-        setIsLiked(false);
-      } else {
-        // 좋아요
-        await commentApi.likeComment(user.id, postId, comment.path);
-        setLikeCount((prev) => prev + 1);
-        setIsLiked(true);
-      }
-    } catch (error) {
-      console.error("댓글 좋아요 처리 실패:", error);
-      window.alert("좋아요 처리에 실패했습니다.");
-    } finally {
-      setIsLiking(false);
-    }
+  const handleDelete = () => {
+    deleteComment({ commentPath: comment.path });
   };
 
   return (
@@ -137,10 +108,10 @@ export default function CommentItem({
             </button>
           </div>
 
-          {/* 답글 작성 폼 */}
+          {/* 답글 작성 입력창 */}
           {showReplyForm && (
             <div className="mt-4">
-              <CommentForm
+              <CommentInput
                 postId={postId}
                 parentPath={comment.path}
                 siblingCount={comment.children?.length || 0}

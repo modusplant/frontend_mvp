@@ -1,55 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { commentApi } from "@/lib/api/comment";
-import { Comment } from "@/lib/types";
-import { buildCommentTree } from "@/lib/utils/parseComments";
+import { useCommentTree } from "@/lib/hooks/comment/useCommentTree";
+import { useCommentsQuery } from "@/lib/hooks/comment/useCommentsQuery";
 import CommentList from "./commentList";
-import CommentForm from "./commentForm";
-import { dummyComments } from "@/lib/data/postDetail";
+import CommentInput from "./commentInput";
 
 interface CommentSectionProps {
   postId: string;
 }
 
 export default function CommentSection({ postId }: CommentSectionProps) {
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // React Query로 댓글 조회
+  const { comments, isLoading, refetch } = useCommentsQuery({ postId });
 
-  // 댓글 목록 조회
-  const fetchComments = async () => {
-    try {
-      const response = await commentApi.getComments(postId);
-      if (response.data) {
-        setComments(response.data);
-      }
-    } catch (error) {
-      console.error("댓글 조회 실패:", error);
-      const response = { data: dummyComments };
-      setComments(response.data);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchComments();
-  }, [postId]);
-
-  // 플랫 배열 → 트리 구조 변환
-  const commentTree = buildCommentTree(comments);
+  // 댓글 트리 구조 생성
+  const { commentTree, totalCount } = useCommentTree({ comments });
 
   return (
     <div className="border-surface-stroke mt-16 border-t pt-12">
       <h2 className="font-nanum text-neutral-0 mb-8 text-[34px] font-semibold">
-        댓글 {comments.length.toLocaleString()}개
+        댓글 {totalCount.toLocaleString()}개
       </h2>
 
-      {/* 댓글 작성 폼 */}
-      <CommentForm
+      {/* 댓글 작성 입력창 */}
+      <CommentInput
         postId={postId}
-        onSuccess={fetchComments}
-        currentCommentCount={comments.length}
+        onSuccess={refetch}
+        currentCommentCount={totalCount}
       />
 
       {/* 댓글 목록 */}
@@ -65,7 +42,7 @@ export default function CommentSection({ postId }: CommentSectionProps) {
         <CommentList
           comments={commentTree}
           postId={postId}
-          onUpdate={fetchComments}
+          onUpdate={refetch}
         />
       )}
     </div>

@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { commentApi } from "@/lib/api/comment";
 import { useAuthStore } from "@/lib/store/authStore";
-import { generateCommentPath } from "@/lib/utils/parseComments";
+import { useCommentMutations } from "@/lib/hooks/comment/useCommentMutations";
 
-interface CommentFormProps {
+interface CommentInputProps {
   postId: string;
   parentPath?: string | null; // 답글인 경우 부모 path
   onSuccess: () => void;
@@ -14,17 +13,25 @@ interface CommentFormProps {
   siblingCount?: number; // 형제 댓글 개수 (답글용)
 }
 
-export default function CommentForm({
+export default function CommentInput({
   postId,
   parentPath = null,
   onSuccess,
   onCancel,
   currentCommentCount = 0,
   siblingCount = 0,
-}: CommentFormProps) {
+}: CommentInputProps) {
   const { isAuthenticated } = useAuthStore();
   const [content, setContent] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { createComment, isCreating } = useCommentMutations({
+    postId,
+    onSuccess: () => {
+      setContent("");
+      onSuccess();
+      onCancel?.();
+    },
+  });
 
   // 페이지 이탈 경고
   useEffect(() => {
@@ -46,41 +53,12 @@ export default function CommentForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!isAuthenticated) {
-      window.alert("로그인이 필요합니다.");
-      return;
-    }
-
-    if (content.trim().length === 0) {
-      window.alert("댓글 내용을 입력해주세요.");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      // path 생성: 최상위 댓글이면 현재 댓글 개수 사용, 답글이면 형제 개수 사용
-      const path = parentPath
-        ? generateCommentPath(parentPath, siblingCount)
-        : currentCommentCount.toString();
-
-      await commentApi.createComment({
-        postId,
-        path,
-        content: content.trim(),
-      });
-
-      setContent("");
-      onSuccess();
-
-      if (onCancel) {
-        onCancel();
-      }
-    } catch (error) {
-      window.alert("댓글 작성에 실패했습니다.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    await createComment({
+      parentPath,
+      currentCommentCount,
+      siblingCount,
+      content,
+    });
   };
 
   if (!isAuthenticated) {
@@ -108,7 +86,7 @@ export default function CommentForm({
         }
         className="border-neutral-90 font-pretendard text-neutral-20 placeholder:text-neutral-60 focus:border-primary-50 w-full resize-none rounded-lg border px-4 py-3 text-base leading-relaxed focus:outline-none"
         rows={4}
-        disabled={isSubmitting}
+        disabled={isCreating}
       />
 
       <div className="mt-3 flex justify-end gap-2">
@@ -124,10 +102,10 @@ export default function CommentForm({
 
         <button
           type="submit"
-          disabled={isSubmitting || content.trim().length === 0}
-          className="bg-primary-50 hover:bg-primary-70 rounded-lg px-6 py-2 text-sm font-semibold text-white transition-colors disabled:opacity-50"
+          disabled={isCreating || content.trim().length === 0}
+          className="bg-primary-50 hover:bg-primary-70 rounded-lg px-6 py-2 text-sm font-medium text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {isSubmitting ? "작성 중..." : parentPath ? "답글 작성" : "댓글 작성"}
+          {isCreating ? "작성 중..." : parentPath ? "답글 작성" : "댓글 작성"}
         </button>
       </div>
     </form>
