@@ -138,7 +138,7 @@ export const dummyPostsData: PostData[] = [
     publishedAt: "2024-11-04T11:00:00",
   },
   {
-    postId: "01JY3PPG5YJ41H7BPD0DSQW2R8",
+    postId: "01JY3PPG5YJ41H7BPD0DSQW2R81",
     primaryCategory: "팁",
     secondaryCategory: "전체",
     nickname: "물꽂이마스터",
@@ -157,7 +157,7 @@ export const dummyPostsData: PostData[] = [
     publishedAt: "2024-11-03T13:30:00",
   },
   {
-    postId: "01JY3PPG5YJ41H7BPD0DSQW2R8",
+    postId: "01JY3PPG5YJ41H7BPD0DSQW2R82",
     primaryCategory: "팁",
     secondaryCategory: "전체",
     nickname: "물꽂이마스터",
@@ -176,7 +176,7 @@ export const dummyPostsData: PostData[] = [
     publishedAt: "2024-11-03T13:30:00",
   },
   {
-    postId: "01JY3PPG5YJ41H7BPD0DSQW2R8",
+    postId: "01JY3PPG5YJ41H7BPD0DSQW2R83",
     primaryCategory: "팁",
     secondaryCategory: "전체",
     nickname: "물꽂이마스터",
@@ -195,7 +195,7 @@ export const dummyPostsData: PostData[] = [
     publishedAt: "2024-11-03T13:30:00",
   },
   {
-    postId: "01JY3PPG5YJ41H7BPD0DSQW2R8",
+    postId: "01JY3PPG5YJ41H7BPD0DSQW2R48",
     primaryCategory: "팁",
     secondaryCategory: "전체",
     nickname: "물꽂이마스터",
@@ -214,7 +214,7 @@ export const dummyPostsData: PostData[] = [
     publishedAt: "2024-11-03T13:30:00",
   },
   {
-    postId: "01JY3PPG5YJ41H7BPD0DSQW2R8",
+    postId: "01JY3PPG5YJ41H7BPD0DSQW2R85",
     primaryCategory: "팁",
     secondaryCategory: "전체",
     nickname: "물꽂이마스터",
@@ -233,7 +233,7 @@ export const dummyPostsData: PostData[] = [
     publishedAt: "2024-11-03T13:30:00",
   },
   {
-    postId: "01JY3PPG5YJ41H7BPD0DSQW2R8",
+    postId: "01JY3PPG5YJ41H7BPD0DSQW2R86",
     primaryCategory: "팁",
     secondaryCategory: "전체",
     nickname: "물꽂이마스터",
@@ -252,7 +252,7 @@ export const dummyPostsData: PostData[] = [
     publishedAt: "2024-11-03T13:30:00",
   },
   {
-    postId: "01JY3PPG5YJ41H7BPD0DSQW2R8",
+    postId: "01JY3PPG5YJ41H7BPD0DSQW2R87",
     primaryCategory: "팁",
     secondaryCategory: "전체",
     nickname: "물꽂이마스터",
@@ -271,7 +271,7 @@ export const dummyPostsData: PostData[] = [
     publishedAt: "2024-11-03T13:30:00",
   },
   {
-    postId: "01JY3PPG5YJ41H7BPD0DSQW2R8",
+    postId: "01JY3PPG5YJ41H7BPD0DSQW2R88",
     primaryCategory: "팁",
     secondaryCategory: "전체",
     nickname: "물꽂이마스터",
@@ -290,7 +290,7 @@ export const dummyPostsData: PostData[] = [
     publishedAt: "2024-11-03T13:30:00",
   },
   {
-    postId: "01JY3PPG5YJ41H7BPD0DSQW2R8",
+    postId: "01JY3PPG5YJ41H7BPD0DSQW2R89",
     primaryCategory: "팁",
     secondaryCategory: "전체",
     nickname: "물꽂이마스터",
@@ -309,7 +309,7 @@ export const dummyPostsData: PostData[] = [
     publishedAt: "2024-11-03T13:30:00",
   },
   {
-    postId: "01JY3PPG5YJ41H7BPD0DSQW2R8",
+    postId: "01JY3PPG5YJ41H7BP1D0DSQW2R8",
     primaryCategory: "팁",
     secondaryCategory: "전체",
     nickname: "물꽂이마스터",
