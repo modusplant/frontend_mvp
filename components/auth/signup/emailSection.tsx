@@ -1,10 +1,10 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { useEmailVerification } from "@/lib/hooks/useEmailVerification";
+import { useEmailVerification } from "@/lib/hooks/auth/useEmailVerification";
 import { authApi } from "@/lib/api/auth";
 import { Input } from "@/components/_common/input";
 import Button from "@/components/_common/button";
-import { EmailSectionProps } from "@/lib/types";
+import { EmailSectionProps } from "@/lib/types/auth";
 
 export default function EmailSection({
   register,

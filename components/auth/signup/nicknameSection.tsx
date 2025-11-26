@@ -1,11 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useNicknameVerification } from "@/lib/hooks/useNicknameVerification";
+import { useNicknameVerification } from "@/lib/hooks/auth/useNicknameVerification";
 import { authApi } from "@/lib/api/auth";
 import { Input } from "@/components/_common/input";
 import Button from "@/components/_common/button";
-import { NicknameSectionProps } from "@/lib/types";
+import { NicknameSectionProps } from "@/lib/types/auth";
 
 export default function NicknameSection({
   register,
