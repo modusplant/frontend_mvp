@@ -22,7 +22,7 @@ export default function Header({ className }: HeaderProps) {
         {/* 로고 */}
         <Link href="/" className="transition-opacity hover:opacity-80">
           <Image
-            src="logo_favicon/Logo_white.svg"
+            src="/logo_favicon/Logo_white.svg"
             alt="모두의식물 로고"
             width={117}
             height={26}
