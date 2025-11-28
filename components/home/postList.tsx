@@ -3,8 +3,8 @@
 import { useState, useMemo } from "react";
 import { dummyPosts } from "@/lib/data/posts";
 import PostCard from "@/components/home/postCard";
-import PrimaryCategoryFilter from "@/components/home/primaryCategoryFilter";
-import SecondaryCategoryFilter from "@/components/home/secondaryCategoryFilter";
+import PrimaryCategoryFilter from "@/components/_common/primaryCategoryFilter";
+import SecondaryCategoryFilter from "@/components/_common/secondaryCategoryFilter";
 import { useAuthStore } from "@/lib/store/authStore";
 import BlurOverlay from "@/components/_layout/blurOverlay";
 
