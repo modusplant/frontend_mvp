@@ -5,6 +5,7 @@ import { useCommentsQuery } from "@/lib/hooks/comment/useCommentsQuery";
 import CommentList from "./commentList";
 import CommentInput from "./commentInput";
 import { dummyComments } from "@/lib/data/postDetail";
+import BlurOverlay from "../_layout/blurOverlay";
 
 interface CommentSectionProps {
   postId: string;
@@ -35,22 +36,25 @@ export default function CommentSection({ postId }: CommentSectionProps) {
         currentCommentCount={totalCount}
       />
 
-      {/* 댓글 목록 */}
-      {isLoading ? (
-        <div className="text-neutral-60 py-12 text-center">
-          댓글을 불러오는 중...
-        </div>
-      ) : commentTree.length === 0 ? (
-        <div className="text-neutral-60 py-12 text-center">
-          첫 댓글을 작성해보세요!
-        </div>
-      ) : (
-        <CommentList
-          comments={commentTree}
-          postId={postId}
-          onUpdate={refetch}
-        />
-      )}
+      <div className="relative">
+        {/* 댓글 목록 */}
+        {isLoading ? (
+          <div className="text-neutral-60 py-12 text-center">
+            댓글을 불러오는 중...
+          </div>
+        ) : commentTree.length === 0 ? (
+          <div className="text-neutral-60 py-12 text-center">
+            첫 댓글을 작성해보세요!
+          </div>
+        ) : (
+          <CommentList
+            comments={commentTree}
+            postId={postId}
+            onUpdate={refetch}
+          />
+        )}
+        <BlurOverlay variant="comment" />
+      </div>
     </div>
   );
 }
