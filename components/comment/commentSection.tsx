@@ -4,6 +4,7 @@ import { useCommentTree } from "@/lib/hooks/comment/useCommentTree";
 import { useCommentsQuery } from "@/lib/hooks/comment/useCommentsQuery";
 import CommentList from "./commentList";
 import CommentInput from "./commentInput";
+import { dummyComments } from "@/lib/data/postDetail";
 
 interface CommentSectionProps {
   postId: string;
@@ -11,7 +12,12 @@ interface CommentSectionProps {
 
 export default function CommentSection({ postId }: CommentSectionProps) {
   // React Query로 댓글 조회
-  const { comments, isLoading, refetch } = useCommentsQuery({ postId });
+  // const { comments, isLoading, refetch } = useCommentsQuery({ postId });
+
+  // 더미 데이터 사용
+  const comments = dummyComments;
+  const isLoading = false;
+  const refetch = () => {};
 
   // 댓글 트리 구조 생성
   const { commentTree, totalCount } = useCommentTree({ comments });

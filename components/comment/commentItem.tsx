@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Comment } from "@/lib/types/comment";
 import { useAuthStore } from "@/lib/store/authStore";
 import { formatRelativeTime } from "@/lib/utils/formatTime";
-import { Heart, MessageCircle, Trash2 } from "lucide-react";
+import { Heart, MessageSquare, Trash2 } from "lucide-react";
 import { useCommentLike } from "@/lib/hooks/comment/useCommentLike";
 import { useCommentMutations } from "@/lib/hooks/comment/useCommentMutations";
 import CommentInput from "./commentInput";
@@ -52,17 +52,12 @@ export default function CommentItem({
         // 삭제된 댓글
         <div className="text-neutral-60 py-4 text-sm">삭제된 댓글입니다</div>
       ) : (
-        <div className="bg-surface-99 rounded-lg p-4">
+        <div className="rounded-lg bg-neutral-100 p-4">
           {/* 작성자 정보 */}
           <div className="mb-2 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-neutral-20 font-medium">
-                {comment.nickname}
-              </span>
-              <span className="text-neutral-60 text-sm">
-                {formatRelativeTime(comment.createdAt)}
-              </span>
-            </div>
+            <span className="text-neutral-20 font-medium">
+              {comment.nickname}
+            </span>
 
             {isMyComment && (
               <button
@@ -83,6 +78,9 @@ export default function CommentItem({
 
           {/* 액션 버튼 */}
           <div className="flex items-center gap-4 text-sm">
+            <span className="text-neutral-60 text-sm">
+              {formatRelativeTime(comment.createdAt)}
+            </span>
             <button
               onClick={handleLike}
               disabled={isLiking}
@@ -103,8 +101,8 @@ export default function CommentItem({
               onClick={() => setShowReplyForm(!showReplyForm)}
               className="text-neutral-60 hover:text-primary-50 flex items-center gap-1.5 transition-colors"
             >
-              <MessageCircle className="h-4 w-4" />
-              답글
+              <MessageSquare className="h-4 w-4" />
+              답글 쓰기
             </button>
           </div>
 
