@@ -1,5 +1,6 @@
 import PostList from "@/components/home/postList";
 import HeroBanner from "@/components/home/heroBanner";
+import ScrollToTop from "@/components/home/scrollToTop";
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
       <HeroBanner />
 
       {/* Post List Section */}
-      <section className="w-full py-8 md:py-12 lg:py-16">
+      <section className="relative w-full py-8 md:py-12 lg:py-16">
         <div className="mx-auto flex w-full max-w-[1320px] flex-col px-4 md:px-6 lg:px-8">
           {/* 섹션 타이틀 */}
           <div className="flex flex-col gap-2.5">
@@ -22,6 +23,7 @@ export default function Home() {
           <PostList />
         </div>
       </section>
+      <ScrollToTop />
     </div>
   );
 }
