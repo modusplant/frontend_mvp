@@ -23,15 +23,15 @@ export default function BlurOverlay({
   const lines = messages[variant].split("\n");
 
   return (
-    <div className={cn("absolute inset-0 z-10 min-h-[3ㅏ0vh]", className)}>
+    <div className={cn("absolute inset-0 z-10 min-h-[30vh]", className)}>
       {/* 배경 블러 + 반투명 화이트 */}
-      <div className="h-full w-full bg-white/80 backdrop-blur-sm">
+      <div className="h-full w-full bg-white/80 py-32 backdrop-blur-sm">
         {/* 중앙 정렬 컨테이너 */}
         <div
           className={cn(
             "px-4",
             sticky
-              ? "sticky top-1/2 translate-y-36"
+              ? "sticky top-1/2"
               : "flex h-full items-center justify-center"
           )}
         >
