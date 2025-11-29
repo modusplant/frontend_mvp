@@ -1,31 +1,30 @@
 import { ApiResponse, ApiError } from "../types/common";
+import { useAuthStore } from "../store/authStore";
 
 const BASE_URL = "";
-const ACCESS_TOKEN_KEY =
-  process.env.NEXT_PUBLIC_ACCESS_TOKEN_KEY || "accessToken";
 
 /**
- * 세션 스토리지에서 액세스 토큰 가져오기
+ * authStore에서 액세스 토큰 가져오기
  */
 export const getAccessToken = (): string | null => {
   if (typeof window === "undefined") return null;
-  return sessionStorage.getItem(ACCESS_TOKEN_KEY);
+  return useAuthStore.getState().accessToken;
 };
 
 /**
- * 세션 스토리지에 액세스 토큰 저장
+ * authStore에 액세스 토큰 저장
  */
 export const setAccessToken = (token: string): void => {
   if (typeof window === "undefined") return;
-  sessionStorage.setItem(ACCESS_TOKEN_KEY, token);
+  useAuthStore.getState().setAccessToken(token);
 };
 
 /**
- * 세션 스토리지에서 액세스 토큰 제거
+ * authStore에서 액세스 토큰 제거
  */
 export const removeAccessToken = (): void => {
   if (typeof window === "undefined") return;
-  sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+  useAuthStore.getState().setAccessToken(null);
 };
 
 /**

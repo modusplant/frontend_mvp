@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { removeAccessToken, refreshAccessToken } from "@/lib/api/client";
+import { refreshAccessToken } from "@/lib/api/client";
 import { User, AuthStore } from "@/lib/types/auth";
 import { decodeJWT } from "@/lib/utils/auth";
 import { authApi } from "@/lib/api/auth";
@@ -10,6 +10,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   user: null,
   isAuthenticated: false,
   loginAttempts: 0,
+  accessToken: null,
 
   // 초기화 함수 (앱 시작 시 자동 로그인 체크)
   initialize: async () => {
@@ -43,13 +44,13 @@ export const useAuthStore = create<AuthStore>()((set) => ({
             roles: decoded.roles,
           },
           isAuthenticated: true,
+          accessToken: newAccessToken,
         });
       }
     } catch (error) {
       // RefreshToken도 만료되었거나 없는 경우 자동 로그인 정보 제거
       console.error("자동 로그인 실패:", error);
       localStorage.removeItem("rememberMe");
-      removeAccessToken();
     }
   },
 
@@ -73,9 +74,6 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   },
 
   logout: () => {
-    // 토큰 제거
-    removeAccessToken();
-
     // 서버에 로그아웃 요청 (비동기, 에러 무시)
     authApi.logout().catch(console.error);
 
@@ -83,6 +81,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
       user: null,
       isAuthenticated: false,
       loginAttempts: 0,
+      accessToken: null,
     });
 
     // 자동 로그인 정보 제거
@@ -105,5 +104,9 @@ export const useAuthStore = create<AuthStore>()((set) => ({
     set({
       loginAttempts: 0,
     });
+  },
+
+  setAccessToken: (token: string | null) => {
+    set({ accessToken: token });
   },
 }));

@@ -1,4 +1,4 @@
-import { apiClient, setAccessToken, removeAccessToken } from "./client";
+import { apiClient, removeAccessToken } from "./client";
 import { ApiResponse } from "@/lib/types/common";
 import {
   LoginRequest,
@@ -27,11 +27,8 @@ export const authApi = {
       skipAuth: true, // 로그인은 인증 불필요
     });
 
-    // 액세스 토큰 저장 및 사용자 정보 추출
+    // JWT에서 사용자 정보 추출
     if (response.data?.accessToken) {
-      setAccessToken(response.data.accessToken);
-
-      // JWT에서 사용자 정보 추출
       const decoded = decodeJWT(response.data.accessToken);
       if (decoded) {
         (response as any).user = {
