@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ImagePlus, X } from "lucide-react";
+import { Image as ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 
 interface ImageUploaderProps {
@@ -107,7 +107,7 @@ export default function ImageUploader({
   };
 
   return (
-    <div>
+    <div className="w-full">
       {/* 이미지 업로드 버튼 */}
       <div className="flex items-center gap-1 rounded-[40px] px-3 py-2.25">
         <input
@@ -122,7 +122,7 @@ export default function ImageUploader({
           onClick={() => fileInputRef.current?.click()}
           className="text-neutral-20 flex items-center gap-1 text-[15px] leading-normal font-medium tracking-[-0.01em]"
         >
-          <ImagePlus className="h-4.5 w-4.5" />
+          <ImageIcon className="h-4.5 w-4.5" />
           사진
         </button>
       </div>
@@ -130,7 +130,7 @@ export default function ImageUploader({
       {/* 이미지 미리보기 그리드 */}
       {images.length > 0 && (
         <div
-          className={`mt-4 grid grid-cols-5 gap-3 rounded-lg border-2 border-dashed p-4 ${
+          className={`mt-4 grid w-full grid-cols-5 gap-3 rounded-lg ${
             isDragging
               ? "border-primary-50 bg-primary-10"
               : "border-surface-stroke"
@@ -150,7 +150,7 @@ export default function ImageUploader({
               {/* 삭제 버튼 */}
               <button
                 onClick={() => handleRemoveImage(index)}
-                className="absolute top-1 right-1 rounded-full bg-black/50 p-1 opacity-0 transition-opacity group-hover:opacity-100"
+                className="bg-neutral-70 absolute -top-2 -right-2 rounded-full p-1"
                 aria-label="이미지 삭제"
               >
                 <X className="h-4 w-4 text-white" />
