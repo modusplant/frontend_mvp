@@ -1,26 +1,22 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Input } from "@/components/_common/input";
 import { Checkbox } from "@/components/_common/checkbox";
 import { Button } from "@/components/_common/button";
 import { useAuthStore } from "@/lib/store/authStore";
-import { authApi } from "@/lib/api/auth";
 import { loginSchema, LoginFormValues } from "@/lib/utils/auth";
+import { useLogin } from "@/lib/hooks/auth/useLogin";
 
 interface LoginFormProps {
   className?: string;
 }
 
 export default function LoginForm({ className }: LoginFormProps) {
-  const router = useRouter();
-  const { login, loginAttempts, incrementLoginAttempts } = useAuthStore();
-  const [serverError, setServerError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { loginAttempts } = useAuthStore();
+  const { handleLogin, serverError, isLoading } = useLogin();
 
   const {
     register,
@@ -36,58 +32,8 @@ export default function LoginForm({ className }: LoginFormProps) {
     },
   });
 
-  const onSubmit = async (data: LoginFormValues) => {
-    // 임시 로그인 데이터
-    // TODO: 추후 삭제
-    if (data.email === "test1234@naver.com" && data.password === "test1234") {
-      login(
-        {
-          uuid: "test-uuid-123",
-          id: "test@test.com",
-          email: "test@test.com",
-          nickname: "test_user",
-          roles: "ROLE_USER",
-        },
-        data.rememberMe || false
-      );
-      if (data.rememberMe) {
-        localStorage.setItem("rememberMe", "true");
-      } else {
-        localStorage.removeItem("rememberMe");
-      }
-      router.push("/");
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      setServerError(null);
-
-      // API 호출
-      const response = await authApi.login({
-        email: data.email,
-        password: data.password,
-      });
-
-      if (response.status === 200 && response.user) {
-        // 로그인 성공 - JWT에서 추출한 사용자 정보 저장
-        login(response.user, data.rememberMe || false);
-
-        console.log("로그인 성공");
-        router.push("/");
-      }
-    } catch (error: any) {
-      // 로그인 시도 횟수 증가
-      incrementLoginAttempts();
-
-      setServerError(error.message || "로그인 중 오류가 발생했습니다.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={className}>
+    <form onSubmit={handleSubmit(handleLogin)} className={className}>
       <div className="space-y-8">
         {/* 입력 필드 영역 */}
         <div className="space-y-2.5">
