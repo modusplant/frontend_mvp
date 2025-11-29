@@ -38,7 +38,7 @@ export default function Header({ className }: HeaderProps) {
               {/* 프로필 아이콘 (추후 드롭다운 추가) */}
               <Profile />
               {/* 글쓰기 버튼 */}
-              <Link href="/community/new">
+              <Link href="/community/write">
                 <Button variant="point" size="sm" className="h-10 rounded-2xl">
                   글쓰기
                 </Button>
