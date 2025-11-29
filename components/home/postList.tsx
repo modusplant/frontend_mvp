@@ -1,22 +1,24 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { dummyPosts } from "@/lib/data/posts";
 import PostCard from "@/components/home/postCard";
 import PrimaryCategoryFilter from "@/components/_common/primaryCategoryFilter";
 import SecondaryCategoryFilter from "@/components/_common/secondaryCategoryFilter";
 import { useAuthStore } from "@/lib/store/authStore";
 import BlurOverlay from "@/components/_layout/blurOverlay";
+import { useCategoryFilter } from "@/lib/hooks/category/useCategoryFilter";
 
 export default function PostList() {
-  const [primaryCategory, setPrimaryCategory] = useState<string>("전체");
-  const [selectedSecondaryCategories, setSelectedSecondaryCategories] =
-    useState<string[]>(["전체"]);
-  const [appliedSecondaryCategories, setAppliedSecondaryCategories] = useState<
-    string[]
-  >(["전체"]);
-
   const { isAuthenticated } = useAuthStore();
+  const {
+    primaryCategory,
+    primaryCategoryId,
+    handlePrimaryCategoryChange,
+    selectedSecondaryCategories,
+    selectedSecondaryCategoryIds,
+    handleSecondaryCategoriesChange,
+  } = useCategoryFilter();
 
   // 필터링된 게시물
   const filteredPosts = useMemo(() => {
@@ -31,14 +33,14 @@ export default function PostList() {
     }
 
     // 2차 카테고리 필터링 (저장 버튼 클릭 후 적용된 값 사용)
-    if (!appliedSecondaryCategories.includes("전체")) {
+    if (!selectedSecondaryCategories.includes("전체")) {
       result = result.filter((post) =>
-        appliedSecondaryCategories.includes(post.secondaryCategory)
+        selectedSecondaryCategories.includes(post.secondaryCategory)
       );
     }
 
     return result;
-  }, [primaryCategory, appliedSecondaryCategories]);
+  }, [primaryCategory, selectedSecondaryCategories]);
 
   // 게스트(비로그인) 상태에서 보여줄/가릴 목록 계산
   const isGuest = !isAuthenticated;
@@ -51,11 +53,6 @@ export default function PostList() {
     [isGuest, filteredPosts]
   );
 
-  // 2차 카테고리 저장 버튼 핸들러
-  const handleApplySecondaryCategories = () => {
-    setAppliedSecondaryCategories(selectedSecondaryCategories);
-  };
-
   return (
     <section className="w-full">
       {/* 카테고리 필터 */}
@@ -63,18 +60,22 @@ export default function PostList() {
         {/* 1차 카테고리 */}
         <div>
           <PrimaryCategoryFilter
-            selectedCategory={primaryCategory}
-            onCategoryChange={setPrimaryCategory}
+            selectedCategoryId={primaryCategoryId}
+            onCategoryChange={handlePrimaryCategoryChange}
+            variant="filter"
+            showAll={true}
           />
         </div>
 
         {/* 2차 카테고리 */}
         <div>
           <SecondaryCategoryFilter
-            primaryCategory={primaryCategory}
-            selectedCategories={selectedSecondaryCategories}
-            onCategoriesChange={setSelectedSecondaryCategories}
-            onApply={handleApplySecondaryCategories}
+            primaryCategoryId={primaryCategoryId}
+            selectedCategoryIds={selectedSecondaryCategoryIds}
+            onCategoriesChange={handleSecondaryCategoriesChange}
+            variant="filter"
+            multiSelect={true}
+            showAll={true}
           />
         </div>
       </div>
