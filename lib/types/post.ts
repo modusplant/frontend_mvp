@@ -58,33 +58,6 @@ export interface PostContentPart {
 }
 
 /**
- * 게시물 타입
- */
-export interface Post {
-  id: string;
-  primaryCategoryId: string; // UUID
-  secondaryCategoryId: string; // UUID
-  primaryCategory: PrimaryCategory;
-  secondaryCategory: SecondaryCategory;
-  title: string;
-  content: ContentPart[]; // 멀티파트 콘텐츠
-  excerpt?: string; // 본문 요약 (말줄임표 사용)
-  author: {
-    id: string;
-    nickname: string; // name -> nickname
-    avatar?: string;
-  };
-  thumbnail?: string; // 썸네일 이미지 (없으면 기본 이미지)
-  createdAt: Date;
-  updatedAt?: Date;
-  views?: number; // 조회수 (선택)
-  likes: number; // 좋아요 수
-  commentCount: number; // 댓글 수
-  isBookmarked: boolean; // 북마크 여부
-  isPublished: boolean; // 게시/임시저장
-}
-
-/**
  * 게시글 목록 조회 요청 파라미터
  */
 export interface GetPostsRequest {
