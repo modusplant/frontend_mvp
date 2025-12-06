@@ -19,8 +19,8 @@ export default function Header({ className }: HeaderProps) {
   const isRootPath = pathname.endsWith("/");
 
   const logo = isRootPath
-    ? "/logo_favicon/Logo_white.svg"
-    : "/logo_favicon/Logo_green.svg";
+    ? "/logo_favicon/Logo_v2_white.svg"
+    : "/logo_favicon/Logo_v2_black.svg";
 
   const handleLogout = () => {
     logout();
@@ -45,7 +45,9 @@ export default function Header({ className }: HeaderProps) {
           {isAuthenticated ? (
             <>
               {/* 프로필 아이콘 (추후 드롭다운 추가) */}
-              <Profile />
+              <Link href="/mypage">
+                <Profile />
+              </Link>
               {/* 글쓰기 버튼 */}
               <Link href="/community/write">
                 <Button variant="point" size="sm" className="h-10 rounded-2xl">

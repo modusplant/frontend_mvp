@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   title: "모두의식물",
   description: "식물에 관심 있는 사용자들을 위한 정보 제공 플랫폼",
   icons: {
-    icon: "/logo_favicon/favicon_green.svg",
+    icon: "/logo_favicon/favicon_v2_green.svg",
   },
 };
 
