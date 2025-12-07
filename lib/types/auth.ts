@@ -76,7 +76,7 @@ export interface UserAuthInfoResponseData {
  * 인증된 사용자 정보 타입
  */
 export interface User {
-  id: string;
+  id: string; // UUID
   email: string;
   nickname: string;
   roles: string;
