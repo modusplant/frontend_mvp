@@ -38,7 +38,6 @@ export const useAuthStore = create<AuthStore>()((set) => ({
         set({
           user: {
             id: decoded.sub,
-            uuid: decoded.sub, // JWT의 sub가 UUID
             email: email,
             nickname: decoded.nickname,
             roles: decoded.roles,
@@ -59,7 +58,6 @@ export const useAuthStore = create<AuthStore>()((set) => ({
     set({
       user: {
         ...user,
-        uuid: user.id, // id와 uuid 동기화
       },
       isAuthenticated: true,
       loginAttempts: 0, // 로그인 성공 시 시도 횟수 초기화

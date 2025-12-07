@@ -77,7 +77,6 @@ export interface UserAuthInfoResponseData {
  */
 export interface User {
   id: string;
-  uuid: string; // 사용자 UUID (게시글 작성자 비교용)
   email: string;
   nickname: string;
   roles: string;

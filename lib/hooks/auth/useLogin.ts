@@ -18,8 +18,7 @@ export function useLogin() {
     // TODO: 추후 삭제
     if (data.email === "test1234@naver.com" && data.password === "test1234") {
       const testUser = {
-        uuid: "test-uuid-123",
-        id: "test@test.com",
+        id: "test-uuid-123",
         email: "test@test.com",
         nickname: "test_user",
         roles: "ROLE_USER",
