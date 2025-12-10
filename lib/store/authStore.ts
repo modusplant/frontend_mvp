@@ -31,16 +31,12 @@ export const useAuthStore = create<AuthStore>()((set) => ({
       // 새 토큰에서 사용자 정보 추출
       const decoded = decodeJWT(newAccessToken);
       if (decoded) {
-        // 사용자 이메일 조회
-        const authInfoResponse = await authApi.getCurrentUser(decoded.sub);
-        const email = authInfoResponse.data?.email || "";
-
         set({
           user: {
             id: decoded.sub,
-            email: email,
+            email: decoded.email,
             nickname: decoded.nickname,
-            roles: decoded.roles,
+            role: decoded.role,
           },
           isAuthenticated: true,
           accessToken: newAccessToken,

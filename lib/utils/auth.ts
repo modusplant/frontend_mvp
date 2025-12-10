@@ -9,9 +9,11 @@ import { z } from "zod";
  * JWT 페이로드 타입
  */
 export interface JWTPayload {
-  sub: string; // 사용자 ID
+  /** 사용자 UUID */
+  sub: string;
   nickname: string;
-  roles: string;
+  email: string;
+  role: string;
   exp: number; // Unix timestamp (초 단위)
 }
 

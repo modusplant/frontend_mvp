@@ -33,9 +33,9 @@ export const authApi = {
       if (decoded) {
         (response as any).user = {
           id: decoded.sub,
-          email: data.email,
+          email: decoded.email,
           nickname: decoded.nickname,
-          roles: decoded.roles,
+          role: decoded.role,
         };
       }
     }

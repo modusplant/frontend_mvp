@@ -14,28 +14,6 @@ export function useLogin() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (data: LoginFormValues) => {
-    // 임시 로그인 데이터
-    // TODO: 추후 삭제
-    if (data.email === "test1234@naver.com" && data.password === "test1234") {
-      const testUser = {
-        id: "test-uuid-123",
-        email: "test@test.com",
-        nickname: "test_user",
-        roles: "ROLE_USER",
-      };
-
-      login(testUser, data.rememberMe || false);
-      setAccessToken("test-access-token");
-
-      if (data.rememberMe) {
-        localStorage.setItem("rememberMe", "true");
-      } else {
-        localStorage.removeItem("rememberMe");
-      }
-      router.back();
-      return;
-    }
-
     try {
       setIsLoading(true);
       setServerError(null);

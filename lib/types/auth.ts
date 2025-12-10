@@ -79,7 +79,7 @@ export interface User {
   id: string; // UUID
   email: string;
   nickname: string;
-  roles: string;
+  role: string;
 }
 
 /**
