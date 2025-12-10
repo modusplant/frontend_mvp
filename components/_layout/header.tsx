@@ -50,7 +50,7 @@ export default function Header({ className }: HeaderProps) {
               </Link>
               {/* 글쓰기 버튼 */}
               <Link href="/community/write">
-                <Button variant="point" size="sm" className="h-10 rounded-2xl">
+                <Button variant="point" size="sm" className="h-10 rounded-full">
                   글쓰기
                 </Button>
               </Link>
