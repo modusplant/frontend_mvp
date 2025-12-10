@@ -80,8 +80,11 @@ export async function apiClient<T = any>(
   const { skipAuth = false, isRetry = false, ...fetchConfig } = config;
 
   const url = `${BASE_URL}${endpoint}`;
+
+  // FormData인 경우 Content-Type을 자동으로 설정하도록 헤더에서 제외
+  const isFormData = fetchConfig.body instanceof FormData;
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
+    ...(!isFormData && { "Content-Type": "application/json" }),
     ...(fetchConfig.headers as Record<string, string>),
   };
 
