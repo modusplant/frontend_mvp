@@ -9,7 +9,6 @@ import {
   EmailVerificationResponseData,
   NicknameCheckResponseData,
 } from "@/lib/types/auth";
-import { decodeJWT } from "@/lib/utils/auth";
 
 /**
  * 인증 API
@@ -26,20 +25,6 @@ export const authApi = {
       body: JSON.stringify(data),
       skipAuth: true, // 로그인은 인증 불필요
     });
-
-    // JWT에서 사용자 정보 추출
-    if (response.data?.accessToken) {
-      const decoded = decodeJWT(response.data.accessToken);
-      if (decoded) {
-        (response as any).user = {
-          id: decoded.sub,
-          email: decoded.email,
-          nickname: decoded.nickname,
-          role: decoded.role,
-        };
-      }
-    }
-
     return response;
   },
 

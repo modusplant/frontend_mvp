@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
 import { authApi } from "@/lib/api/auth";
 import { LoginFormValues } from "@/lib/utils/auth";
+import { decodeJWT } from "@/lib/utils/auth";
+import { memberApi } from "@/lib/api/member";
 
 /**
  * 로그인 커스텀 훅
@@ -24,16 +26,33 @@ export function useLogin() {
         password: data.password,
       });
 
-      if (
-        response.status === 200 &&
-        response.user &&
-        response.data?.accessToken
-      ) {
+      if (response.status === 200 && response.data?.accessToken) {
         // AccessToken 저장 (메모리)
         setAccessToken(response.data.accessToken);
 
+        // JWT에서 사용자 정보 추출
+        const decoded = decodeJWT(response.data.accessToken);
+
+        if (!decoded) {
+          throw new Error("유효하지 않은 토큰입니다.");
+        }
+
+        // 토큰에서 추출한 ID로 추가 사용자 정보(image, introduction) 조회
+        const { data: profileResponse } = await memberApi.getProfile(
+          decoded.sub
+        );
+
+        const user = {
+          id: decoded.sub,
+          email: decoded.email,
+          nickname: decoded.nickname,
+          role: decoded.role,
+          image: profileResponse?.image || "",
+          introduction: profileResponse?.introduction || "",
+        };
+
         // 로그인 성공 - JWT에서 추출한 사용자 정보 저장
-        login(response.user, data.rememberMe || false);
+        login(user, data.rememberMe || false);
 
         console.log("로그인 성공");
         router.back();

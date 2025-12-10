@@ -8,7 +8,7 @@
 export interface ProfileData {
   id: string; // UUID
   image: string | null; // binary data or null
-  introduction: string;
+  introduction: string | null;
   nickname: string;
 }
 

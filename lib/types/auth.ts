@@ -80,6 +80,8 @@ export interface User {
   email: string;
   nickname: string;
   role: string;
+  image: string | null;
+  introduction: string | null;
 }
 
 /**

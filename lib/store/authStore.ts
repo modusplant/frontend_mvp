@@ -3,6 +3,7 @@ import { refreshAccessToken } from "@/lib/api/client";
 import { User, AuthStore } from "@/lib/types/auth";
 import { decodeJWT } from "@/lib/utils/auth";
 import { authApi } from "@/lib/api/auth";
+import { useProfileQuery } from "@/lib/hooks/mypage/useProfileQuery";
 
 // Zustand store 생성
 export const useAuthStore = create<AuthStore>()((set) => ({
@@ -31,12 +32,16 @@ export const useAuthStore = create<AuthStore>()((set) => ({
       // 새 토큰에서 사용자 정보 추출
       const decoded = decodeJWT(newAccessToken);
       if (decoded) {
+        // 토큰에서 추출한 ID로 추가 사용자 정보(image, introduction) 조회
+        const { data: profileResponse } = useProfileQuery(decoded.sub);
         set({
           user: {
             id: decoded.sub,
             email: decoded.email,
             nickname: decoded.nickname,
             role: decoded.role,
+            image: profileResponse?.data?.image || "",
+            introduction: profileResponse?.data?.introduction || "",
           },
           isAuthenticated: true,
           accessToken: newAccessToken,
