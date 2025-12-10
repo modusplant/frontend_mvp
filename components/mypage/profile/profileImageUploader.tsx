@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { Upload, Camera } from "lucide-react";
+import { Upload } from "lucide-react";
 import Image from "next/image";
 import Profile from "@/components/_common/profile";
 
@@ -50,11 +50,6 @@ export default function ProfileImageUploader({
               <Profile className="h-10 w-10" />
             </div>
           )}
-
-          {/* 카메라 아이콘 (오른쪽 하단) */}
-          <div className="bg-neutral-5 absolute right-0 bottom-0 flex h-[25px] w-[25px] items-center justify-center rounded-full border border-white">
-            <Camera className="text-neutral-30 h-4 w-4" />
-          </div>
         </div>
 
         {/* 이미지 삭제 버튼 */}

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { authApi } from "@/lib/api/auth";
 import { Input } from "@/components/_common/input";
+import Button from "@/components/_common/button";
 
 interface ProfileFormFieldsProps {
   nickname: string;
@@ -18,42 +19,32 @@ export default function ProfileFormFields({
   onIntroductionChange,
 }: ProfileFormFieldsProps) {
   const [nicknameError, setNicknameError] = useState<string>("");
-  const [isCheckingNickname, setIsCheckingNickname] = useState(false);
   const [initialNickname] = useState(nickname); // 초기 닉네임 저장
 
-  // 닉네임 검증 (디바운스)
-  useEffect(() => {
+  // 닉네임 중복 확인 핸들러
+  const handleNicknameCheck = async () => {
     // 초기 닉네임과 같으면 검증 안 함
     if (nickname === initialNickname) {
       setNicknameError("");
       return;
     }
-
     // 빈 값 체크
     if (!nickname.trim()) {
       setNicknameError("닉네임을 입력해주세요.");
       return;
     }
-
-    // 디바운스 타이머
-    const timer = setTimeout(async () => {
-      setIsCheckingNickname(true);
-      try {
-        const result = await authApi.checkNickname(nickname);
-        if (result.success && !result.available) {
-          setNicknameError("이미 사용중인 닉네임입니다.");
-        } else {
-          setNicknameError("");
-        }
-      } catch (error) {
-        setNicknameError("닉네임 확인에 실패했습니다.");
-      } finally {
-        setIsCheckingNickname(false);
+    try {
+      const result = await authApi.checkNickname(nickname);
+      if (result.success && !result.available) {
+        setNicknameError("이미 사용중인 닉네임입니다.");
+      } else {
+        setNicknameError("");
+        alert("사용 가능한 닉네임입니다.");
       }
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [nickname, initialNickname]);
+    } catch (error) {
+      setNicknameError("닉네임 확인에 실패했습니다.");
+    }
+  };
 
   return (
     <div className="flex flex-col gap-11">
@@ -68,19 +59,23 @@ export default function ProfileFormFields({
           </span>
         </div>
 
-        <div className="relative">
+        <div className="flex">
           <Input
             type="text"
             value={nickname}
             onChange={(e) => onNicknameChange(e.target.value)}
             placeholder="닉네임을 입력하세요"
-            className={`w-full ${nicknameError ? "border-system-alert" : ""}`}
+            className={`w-full flex-9 ${nicknameError ? "border-system-alert" : "rounded-r-none"}`}
           />
-          {isCheckingNickname && (
-            <span className="text-neutral-60 absolute top-1/2 right-4 -translate-y-1/2 text-sm">
-              확인 중...
-            </span>
-          )}
+          <Button
+            onClick={handleNicknameCheck}
+            variant="point"
+            size="md"
+            fullWidth={true}
+            className="flex-1 rounded-l-none"
+          >
+            중복 확인
+          </Button>
         </div>
 
         {nicknameError && (
