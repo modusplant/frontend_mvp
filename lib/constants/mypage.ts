@@ -24,7 +24,7 @@ export const MYPAGE_MENU_SECTIONS: MenuSection[] = [
   {
     title: "내 활동",
     items: [
-      { label: "최근에 본 글", href: "/mypage/recent", disabled: true },
+      { label: "최근에 본 글", href: "/mypage/recent" },
       { label: "내가 쓴 글", href: "/mypage/posts", disabled: true },
       { label: "내 댓글", href: "/mypage/comments", disabled: true },
       { label: "좋아요", href: "/mypage/likes", disabled: true },
