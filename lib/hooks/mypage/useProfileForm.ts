@@ -1,5 +1,6 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { ProfileFormData } from "@/lib/types/member";
+import { useAuthStore } from "@/lib/store/authStore";
 
 /**
  * 프로필 폼 상태 관리 훅
@@ -7,18 +8,26 @@ import { ProfileFormData } from "@/lib/types/member";
  * @param initialData - 초기 프로필 데이터
  * @returns 폼 상태 및 핸들러 함수들
  */
-export function useProfileForm(initialData?: {
-  nickname: string;
-  introduction: string;
-  image: string | null;
-}) {
+export function useProfileForm() {
+  const { user } = useAuthStore();
   const [formData, setFormData] = useState<ProfileFormData>({
-    nickname: initialData?.nickname || "",
-    introduction: initialData?.introduction || "",
+    nickname: user?.nickname || "",
+    introduction: user?.introduction || "",
     imageFile: null,
-    imagePreview: initialData?.image || null,
+    imagePreview: user?.image || null,
     shouldDeleteImage: false,
   });
+
+  // 사용자 정보가 변경될 때 폼 데이터 초기화(새로고침 대응)
+  // TODO: user 정보가 확실히 로드된 후에만 실행되도록 개선 필요(깜박임 문제 있음)
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      nickname: user?.nickname || "",
+      introduction: user?.introduction || "",
+      imagePreview: user?.image || null,
+    }));
+  }, [user]);
 
   const [hasChanges, setHasChanges] = useState(false);
 
@@ -57,18 +66,6 @@ export function useProfileForm(initialData?: {
     setHasChanges(true);
   }, []);
 
-  // 폼 초기화
-  const resetForm = useCallback(() => {
-    setFormData({
-      nickname: initialData?.nickname || "",
-      introduction: initialData?.introduction || "",
-      imageFile: null,
-      imagePreview: initialData?.image || null,
-      shouldDeleteImage: false,
-    });
-    setHasChanges(false);
-  }, [initialData]);
-
   // FormData 생성 (API 요청용)
   const createFormData = useCallback((): FormData => {
     const data = new FormData();
@@ -99,7 +96,6 @@ export function useProfileForm(initialData?: {
     handleIntroductionChange,
     handleImageSelect,
     handleImageDelete,
-    resetForm,
     createFormData,
   };
 }

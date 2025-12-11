@@ -1,20 +1,15 @@
 "use client";
 
 import { useAuthStore } from "@/lib/store/authStore";
-import { useProfileQuery } from "@/lib/hooks/mypage/useProfileQuery";
 import { useProfileMutation } from "@/lib/hooks/mypage/useProfileMutation";
 import { useProfileForm } from "@/lib/hooks/mypage/useProfileForm";
 import ProfileImageUploader from "./profileImageUploader";
 import ProfileFormFields from "./profileFormFields";
-import { useEffect } from "react";
+import Button from "@/components/_common/button";
 
 export default function ProfileSection() {
   const { user } = useAuthStore();
   const userId = user?.id || null;
-
-  // 프로필 데이터 조회
-  const { data: profileResponse, isLoading, error } = useProfileQuery(userId);
-  const profileData = profileResponse?.data;
 
   // 프로필 수정 Mutation
   const { mutate: updateProfile, isPending } = useProfileMutation();
@@ -27,20 +22,8 @@ export default function ProfileSection() {
     handleIntroductionChange,
     handleImageSelect,
     handleImageDelete,
-    resetForm,
     createFormData,
-  } = useProfileForm({
-    nickname: profileData?.nickname || "",
-    introduction: profileData?.introduction || "",
-    image: profileData?.image || null,
-  });
-
-  // 프로필 데이터 로드 시 폼 초기화
-  useEffect(() => {
-    if (profileData) {
-      resetForm();
-    }
-  }, [profileData, resetForm]);
+  } = useProfileForm();
 
   // 저장 핸들러
   const handleSave = () => {
@@ -60,26 +43,6 @@ export default function ProfileSection() {
       }
     );
   };
-
-  // 로딩 상태
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <p className="text-neutral-60">프로필 정보를 불러오는 중...</p>
-      </div>
-    );
-  }
-
-  // 에러 상태
-  if (error) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <p className="text-system-alert">
-          프로필 정보를 불러오는데 실패했습니다.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -109,17 +72,15 @@ export default function ProfileSection() {
 
       {/* 저장 버튼 */}
       <div className="border-surface-98 flex justify-end border-t pt-3">
-        <button
+        <Button
+          variant={hasChanges && !isPending ? "point" : "deactivate"}
+          size="md"
           onClick={handleSave}
           disabled={!hasChanges || isPending}
-          className={`rounded-[40px] px-5 py-[13px] text-[15px] leading-normal font-medium tracking-[-0.01em] transition-colors ${
-            hasChanges && !isPending
-              ? "bg-primary-50 hover:bg-primary-70 text-white"
-              : "bg-neutral-90 text-neutral-60 cursor-not-allowed"
-          } `}
+          className="rounded-full"
         >
           {isPending ? "저장 중..." : "변경사항 저장"}
-        </button>
+        </Button>
       </div>
     </div>
   );
