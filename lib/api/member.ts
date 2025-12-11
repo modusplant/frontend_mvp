@@ -1,6 +1,6 @@
 import { apiClient } from "./client";
 import { ApiResponse } from "@/lib/types/common";
-import { ProfileData } from "@/lib/types/member";
+import { ProfileData, AuthInfo } from "@/lib/types/member";
 
 /**
  * 회원 프로필 API
@@ -32,6 +32,16 @@ export const memberApi = {
       headers: {
         // Content-Type을 명시하지 않으면 브라우저가 자동으로 multipart/form-data로 설정
       },
+    });
+  },
+
+  /**
+   * 회원 인증 정보 조회
+   * POST /api/v1/members/{id}/auth-info
+   */
+  async getAuthInfo(userId: string): Promise<ApiResponse<AuthInfo>> {
+    return apiClient<AuthInfo>(`/api/v1/members/${userId}/auth-info`, {
+      method: "POST",
     });
   },
 };
