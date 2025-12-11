@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { memberApi } from "@/lib/api/member";
 import { AuthInfo } from "@/lib/types/member";
-import { ApiResponse } from "@/lib/types/common";
 
 /**
  * 회원 인증 정보 조회 훅
