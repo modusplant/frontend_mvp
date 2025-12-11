@@ -1,6 +1,6 @@
 "use client";
 
-import MyPostList from "@/components/mypage/myposts/myPostList";
+import MyPostList from "@/components/mypage/posts/myPostList";
 
 /**
  * 마이페이지 - 내가 쓴 글 페이지
