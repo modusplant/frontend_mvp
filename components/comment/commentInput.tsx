@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useCommentMutations } from "@/lib/hooks/comment/useCommentMutations";
-import Profile from "@/components/_common/profile";
+import ProfileImage from "@/components/_common/profileImage";
+import { useAuthStore } from "@/lib/store/authStore";
 
 interface CommentInputProps {
   postId: string;
@@ -21,6 +22,7 @@ export default function CommentInput({
   currentCommentCount = 0,
   siblingCount = 0,
 }: CommentInputProps) {
+  const { user } = useAuthStore();
   const [content, setContent] = useState("");
 
   const { createComment, isCreating } = useCommentMutations({
@@ -63,7 +65,7 @@ export default function CommentInput({
   return (
     <div className="flex items-center gap-3">
       {/* 사용자 아이콘 */}
-      <Profile />
+      <ProfileImage base64Image={user?.image || null} />
       <form onSubmit={handleSubmit} className="h-14 w-full">
         <input
           value={content}

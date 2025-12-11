@@ -28,6 +28,7 @@ export interface ProfileFormData {
   nickname: string;
   introduction: string;
   imageFile: File | null;
+  /** Base64 인코딩된 이미지 데이터 */
   imagePreview: string | null; // 미리보기 URL
   shouldDeleteImage: boolean; // 이미지 삭제 플래그
 }

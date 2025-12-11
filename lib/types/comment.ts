@@ -9,6 +9,7 @@ export interface Comment {
   createdAt: string;
   isDeleted: boolean;
   isLiked?: boolean; // 현재 사용자의 좋아요 여부
+  image?: string | null; // 프로필 이미지 (base64)
   children?: Comment[]; // 재귀 렌더링용 (파싱 후 추가)
   depth?: number; // UI 들여쓰기용 (파싱 후 추가)
 }

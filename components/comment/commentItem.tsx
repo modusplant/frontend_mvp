@@ -8,7 +8,7 @@ import { Heart, MessageSquare, Trash2 } from "lucide-react";
 import { useCommentLike } from "@/lib/hooks/comment/useCommentLike";
 import { useCommentMutations } from "@/lib/hooks/comment/useCommentMutations";
 import CommentInput from "./commentInput";
-import Profile from "@/components/_common/profile";
+import ProfileImage from "@/components/_common/profileImage";
 
 interface CommentItemProps {
   comment: Comment;
@@ -54,7 +54,7 @@ export default function CommentItem({
         <div className="text-neutral-60 py-4 text-sm">삭제된 댓글입니다</div>
       ) : (
         <div className="mt-6 flex items-start gap-4">
-          <Profile />
+          <ProfileImage base64Image={comment.image} />
 
           <div className="w-full">
             <div className="mb-2 flex items-center justify-between">

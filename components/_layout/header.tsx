@@ -6,7 +6,7 @@ import { Button } from "@/components/_common/button";
 import { cn } from "@/lib/utils/tailwindHelper";
 import { useAuthStore } from "@/lib/store/authStore";
 import { usePathname } from "next/navigation";
-import Profile from "@/components/_common/profile";
+import Profile from "@/components/_common/profileImage";
 
 export interface HeaderProps {
   className?: string;
@@ -46,7 +46,9 @@ export default function Header({ className }: HeaderProps) {
             <>
               {/* 프로필 아이콘 (추후 드롭다운 추가) */}
               <Link href="/mypage">
-                <Profile />
+                <div className="relative h-10 w-10">
+                  <Profile base64Image={user?.image} />
+                </div>
               </Link>
               {/* 글쓰기 버튼 */}
               <Link href="/community/write">

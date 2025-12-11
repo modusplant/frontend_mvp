@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { Upload } from "lucide-react";
 import Image from "next/image";
-import Profile from "@/components/_common/profile";
+import Profile from "@/components/_common/profileImage";
 
 interface ProfileImageUploaderProps {
   imagePreview: string | null;
@@ -38,18 +38,10 @@ export default function ProfileImageUploader({
           <div className="bg-neutral-90 absolute inset-0 rounded-full" />
 
           {/* 프로필 이미지 또는 기본 아이콘 */}
-          {imagePreview ? (
-            <Image
-              src={imagePreview}
-              alt="프로필 이미지"
-              fill
-              className="rounded-full object-cover"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Profile className="h-10 w-10" />
-            </div>
-          )}
+
+          <div className="inset-0 flex items-center justify-center">
+            <Profile className="h-10 w-10" base64Image={imagePreview} />
+          </div>
         </div>
 
         {/* 이미지 삭제 버튼 */}
