@@ -23,16 +23,6 @@ export default function ProfileFormFields({
 
   // 닉네임 중복 확인 핸들러
   const handleNicknameCheck = async () => {
-    // 초기 닉네임과 같으면 검증 안 함
-    if (nickname === initialNickname) {
-      setNicknameError("");
-      return;
-    }
-    // 빈 값 체크
-    if (!nickname.trim()) {
-      setNicknameError("닉네임을 입력해주세요.");
-      return;
-    }
     try {
       const result = await authApi.checkNickname(nickname);
       if (result.success && !result.available) {
@@ -73,6 +63,7 @@ export default function ProfileFormFields({
             size="md"
             fullWidth={true}
             className="flex-1 rounded-l-none"
+            disabled={!nickname.trim() || nickname === initialNickname}
           >
             중복 확인
           </Button>
