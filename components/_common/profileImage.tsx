@@ -1,4 +1,3 @@
-import { User } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils/tailwindHelper";
 
@@ -16,8 +15,11 @@ export default function ProfileImage({ className, base64Image }: ProfileProps) {
       fill
     />
   ) : (
-    <div className={"bg-neutral-90 text-neutral-60 rounded-full p-2"}>
-      <User className={className} />
-    </div>
+    <Image
+      src="/icon/default_profile.svg"
+      alt="기본 프로필 이미지"
+      className={cn("rounded-full object-cover", className)}
+      fill
+    />
   );
 }
