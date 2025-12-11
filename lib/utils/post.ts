@@ -9,7 +9,7 @@ export function getThumbnail(post: PostData): string {
   const imageContent = post.content.find((c) => c.type === "image");
 
   if (imageContent?.data) {
-    return imageContent.data;
+    return `data:image/jpg;base64,${imageContent.data}`;
   }
 
   // postId의 마지막 문자를 사용하여 1-4 사이의 숫자로 변환
