@@ -314,4 +314,46 @@ export const postApi = {
       skipAuth: false, // 인증 필요
     });
   },
+
+  /**
+   * 내가 좋아요한 게시글 목록 조회 (페이지네이션)
+   * @param params 조회 파라미터
+   * @returns 내가 좋아요한 게시글 목록 응답
+   */
+  async getLikedPosts(
+    params: GetMyPostsRequest
+  ): Promise<ApiResponse<GetMyPostsResponseData>> {
+    const queryParams = new URLSearchParams({
+      page: params.page.toString(),
+      size: params.size.toString(),
+    });
+
+    const endpoint = `/api/v1/communication/posts/me/likes?${queryParams.toString()}`;
+
+    return apiClient<GetMyPostsResponseData>(endpoint, {
+      method: "GET",
+      skipAuth: false, // 인증 필요
+    });
+  },
+
+  /**
+   * 내가 북마크한 게시글 목록 조회 (페이지네이션)
+   * @param params 조회 파라미터
+   * @returns 내가 북마크한 게시글 목록 응답
+   */
+  async getBookmarkedPosts(
+    params: GetMyPostsRequest
+  ): Promise<ApiResponse<GetMyPostsResponseData>> {
+    const queryParams = new URLSearchParams({
+      page: params.page.toString(),
+      size: params.size.toString(),
+    });
+
+    const endpoint = `/api/v1/communication/posts/me/bookmarks?${queryParams.toString()}`;
+
+    return apiClient<GetMyPostsResponseData>(endpoint, {
+      method: "GET",
+      skipAuth: false, // 인증 필요
+    });
+  },
 };
