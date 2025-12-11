@@ -29,9 +29,13 @@ export function useProfileMutation() {
           queryKey: ["profile", variables.userId],
         });
 
-        // 2. authStore의 user 정보 업데이트 (닉네임만)
+        // 2. authStore의 user 정보 업데이트
         if (data.data?.nickname) {
-          updateUser({ nickname: data.data.nickname });
+          updateUser({
+            nickname: data.data.nickname,
+            image: data.data.image,
+            introduction: data.data.introduction,
+          });
         }
       },
       onError: (error) => {
