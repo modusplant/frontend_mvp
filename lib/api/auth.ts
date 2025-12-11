@@ -142,18 +142,4 @@ export const authApi = {
       };
     }
   },
-
-  /**
-   * 현재 사용자 인증 정보 조회
-   */
-  async getCurrentUser(
-    userId: string
-  ): Promise<ApiResponse<UserAuthInfoResponseData>> {
-    return apiClient<UserAuthInfoResponseData>(
-      `/api/v1/members/${userId}/auth-info`,
-      {
-        method: "POST",
-      }
-    );
-  },
 };
