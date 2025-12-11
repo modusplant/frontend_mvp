@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { dummyPosts } from "@/lib/data/posts";
-import PostCard from "@/components/home/postCard";
+import PostCard from "@/components/_common/postCard";
 import PrimaryCategoryFilter from "@/components/_common/primaryCategoryFilter";
 import SecondaryCategoryFilter from "@/components/_common/secondaryCategoryFilter";
 import { useAuthStore } from "@/lib/store/authStore";
