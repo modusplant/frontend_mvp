@@ -3,6 +3,8 @@ import { ApiResponse } from "@/lib/types/common";
 import {
   GetPostsRequest,
   GetPostsResponseData,
+  GetRecentPostsRequest,
+  GetRecentPostsResponseData,
   PostDetail,
   PostWritePayload,
 } from "@/lib/types/post";
@@ -262,13 +264,31 @@ export const postApi = {
       isPublished: "true",
     });
 
-    return apiClient<void>(
-      `/api/v1/communication/posts/${postId}?${params}`,
-      {
-        method: "PUT",
-        body: formData,
-        skipAuth: false,
-      }
-    );
+    return apiClient<void>(`/api/v1/communication/posts/${postId}?${params}`, {
+      method: "PUT",
+      body: formData,
+      skipAuth: false,
+    });
+  },
+
+  /**
+   * 최근에 본 게시글 목록 조회 (페이지네이션)
+   * @param params 조회 파라미터
+   * @returns 최근에 본 게시글 목록 응답
+   */
+  async getRecentPosts(
+    params: GetRecentPostsRequest
+  ): Promise<ApiResponse<GetRecentPostsResponseData>> {
+    const queryParams = new URLSearchParams({
+      page: params.page.toString(),
+      size: params.size.toString(),
+    });
+
+    const endpoint = `/api/v1/communication/posts/me/history?${queryParams.toString()}`;
+
+    return apiClient<GetRecentPostsResponseData>(endpoint, {
+      method: "GET",
+      skipAuth: false, // 인증 필요
+    });
   },
 };

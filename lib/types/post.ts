@@ -134,3 +134,24 @@ export interface PostWritePayload {
   textContent: string; // 본문 텍스트
   images: File[]; // 이미지 파일들 (최대 10개, 각 10MB)
 }
+
+/**
+ * 최근에 본 게시글 목록 조회 요청 파라미터
+ */
+export interface GetRecentPostsRequest {
+  page: number; // 페이지 번호 (1부터 시작)
+  size: number; // 페이지 크기
+}
+
+/**
+ * 최근에 본 게시글 목록 조회 응답 데이터
+ */
+export interface GetRecentPostsResponseData {
+  posts: PostData[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
+}
