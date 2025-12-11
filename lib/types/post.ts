@@ -155,3 +155,24 @@ export interface GetRecentPostsResponseData {
   hasNext: boolean;
   hasPrevious: boolean;
 }
+
+/**
+ * 내가 작성한 게시글 목록 조회 요청 파라미터
+ */
+export interface GetMyPostsRequest {
+  page: number; // 페이지 번호 (1부터 시작)
+  size: number; // 페이지 크기
+}
+
+/**
+ * 내가 작성한 게시글 목록 조회 응답 데이터
+ */
+export interface GetMyPostsResponseData {
+  posts: PostData[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
+}

@@ -1,6 +1,8 @@
 import { apiClient } from "@/lib/api/client";
 import { ApiResponse } from "@/lib/types/common";
 import {
+  GetMyPostsRequest,
+  GetMyPostsResponseData,
   GetPostsRequest,
   GetPostsResponseData,
   GetRecentPostsRequest,
@@ -287,6 +289,27 @@ export const postApi = {
     const endpoint = `/api/v1/communication/posts/me/history?${queryParams.toString()}`;
 
     return apiClient<GetRecentPostsResponseData>(endpoint, {
+      method: "GET",
+      skipAuth: false, // 인증 필요
+    });
+  },
+
+  /**
+   * 내가 작성한 게시글 목록 조회 (페이지네이션)
+   * @param params 조회 파라미터
+   * @returns 내가 작성한 게시글 목록 응답
+   */
+  async getMyPosts(
+    params: GetMyPostsRequest
+  ): Promise<ApiResponse<GetMyPostsResponseData>> {
+    const queryParams = new URLSearchParams({
+      page: params.page.toString(),
+      size: params.size.toString(),
+    });
+
+    const endpoint = `/api/v1/communication/posts/me?${queryParams.toString()}`;
+
+    return apiClient<GetMyPostsResponseData>(endpoint, {
       method: "GET",
       skipAuth: false, // 인증 필요
     });
