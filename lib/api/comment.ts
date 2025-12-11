@@ -1,6 +1,11 @@
 import { apiClient } from "@/lib/api/client";
 import { ApiResponse } from "@/lib/types/common";
-import { Comment, CommentCreatePayload } from "@/lib/types/comment";
+import {
+  Comment,
+  CommentCreatePayload,
+  GetMyCommentsRequest,
+  GetMyCommentsResponseData,
+} from "@/lib/types/comment";
 
 /**
  * 댓글 관련 API
@@ -95,6 +100,24 @@ export const commentApi = {
       `/api/v1/members/${memberId}/like/communication/post/${postUlid}/path/${path}`,
       {
         method: "DELETE",
+        skipAuth: false,
+      }
+    );
+  },
+
+  /**
+   * 내 댓글 목록 조회
+   * @param params 페이지네이션 파라미터
+   * @returns 내 댓글 목록
+   */
+  async getMyComments(
+    params: GetMyCommentsRequest
+  ): Promise<ApiResponse<GetMyCommentsResponseData>> {
+    const { page, size = 8, uuid } = params;
+    return apiClient<GetMyCommentsResponseData>(
+      `/api/v1/communication/comments/member/auth/${uuid}?page=${page}&size=${size}`,
+      {
+        method: "POST",
         skipAuth: false,
       }
     );
