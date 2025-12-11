@@ -18,7 +18,7 @@ export const MYPAGE_MENU_SECTIONS: MenuSection[] = [
     title: "내 정보",
     items: [
       { label: "프로필 설정", href: "/mypage/profile" },
-      { label: "계정 설정", href: "/mypage/account", disabled: true },
+      { label: "계정 설정", href: "/mypage/account" },
     ],
   },
   {
