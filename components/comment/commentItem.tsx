@@ -53,8 +53,10 @@ export default function CommentItem({
         // 삭제된 댓글
         <div className="text-neutral-60 py-4 text-sm">삭제된 댓글입니다</div>
       ) : (
-        <div className="mt-6 flex items-start gap-4">
-          <ProfileImage base64Image={comment.image} />
+        <div className="mt-6 flex gap-4">
+          <div className="relative h-10 w-10">
+            <ProfileImage base64Image={comment.image} className="h-10 w-10" />
+          </div>
 
           <div className="w-full">
             <div className="mb-2 flex items-center justify-between">
