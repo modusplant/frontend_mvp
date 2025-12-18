@@ -23,7 +23,7 @@ export default function PostWritePage() {
   // 수정 모드일 경우 기존 데이터 로드
   const { data: existingPost } = useQuery({
     queryKey: ["post", postId],
-    queryFn: () => postApi.getPostDetail(postId!),
+    queryFn: () => postApi.getEditPostDetail(postId!),
     enabled: isEditMode && !!postId,
   });
 
