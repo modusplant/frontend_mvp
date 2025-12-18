@@ -66,12 +66,12 @@ export const postApi = {
    * @param postId 게시글 ID (ULID)
    * @returns 성공 응답
    */
-  async incrementViewCount(postId: string): Promise<ApiResponse<void>> {
-    return apiClient<void>(`/api/v1/communication/posts/${postId}/views`, {
-      method: "PATCH",
-      skipAuth: false,
-    });
-  },
+  // async incrementViewCount(postId: string): Promise<ApiResponse<void>> {
+  //   return apiClient<void>(`/api/v1/communication/posts/${postId}/views`, {
+  //     method: "PATCH",
+  //     skipAuth: false,
+  //   });
+  // },
 
   /**
    * 게시글 삭제
