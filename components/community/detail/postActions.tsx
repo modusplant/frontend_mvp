@@ -7,17 +7,16 @@ import { useAuthStore } from "@/lib/store/authStore";
 
 interface PostActionsProps {
   postId: string;
-  authorUuid: string;
+  authorId: string;
 }
 
-export default function PostActions({ postId, authorUuid }: PostActionsProps) {
+export default function PostActions({ postId, authorId }: PostActionsProps) {
   const router = useRouter();
   const { user } = useAuthStore();
   const [isDeleting, setIsDeleting] = useState(false);
 
   // 본인 게시글 여부 확인
-  // const isAuthor = user?.uuid === authorUuid;
-  const isAuthor = true; // TODO: 인증 로직 완성 후 수정
+  const isAuthor = user?.id === authorId;
 
   if (!isAuthor) {
     return null;
