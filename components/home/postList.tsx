@@ -98,7 +98,7 @@ export default function PostList() {
           </div>
 
           {/* 블러 + 오버레이 컨텐츠 (재사용 컴포넌트) */}
-          <BlurOverlay variant="post" sticky />
+          <BlurOverlay variant="post" />
         </div>
       )}
 
