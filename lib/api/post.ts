@@ -8,6 +8,7 @@ import {
   GetRecentPostsRequest,
   GetRecentPostsResponseData,
   PostDetail,
+  PostEditData,
   PostWritePayload,
 } from "@/lib/types/post";
 
@@ -62,16 +63,19 @@ export const postApi = {
   },
 
   /**
-   * 게시글 조회수 증가
+   * 게시글 수정용 상세 조회
    * @param postId 게시글 ID (ULID)
-   * @returns 성공 응답
+   * @returns 게시글 상세 정보
    */
-  // async incrementViewCount(postId: string): Promise<ApiResponse<void>> {
-  //   return apiClient<void>(`/api/v1/communication/posts/${postId}/views`, {
-  //     method: "PATCH",
-  //     skipAuth: false,
-  //   });
-  // },
+  async getEditPostDetail(postId: string): Promise<ApiResponse<PostEditData>> {
+    return apiClient<PostEditData>(
+      `/api/v1/communication/posts/${postId}/data`,
+      {
+        method: "GET",
+        skipAuth: false,
+      }
+    );
+  },
 
   /**
    * 게시글 삭제
