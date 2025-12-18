@@ -1,60 +1,12 @@
 /**
- * 1차 카테고리 타입
- */
-export type PrimaryCategory = "all" | "daily" | "qna" | "tip";
-
-/**
- * 2차 카테고리 타입 (1차 카테고리별)
- */
-export type SecondaryCategoryDaily =
-  | "all"
-  | "foliage-wildflower"
-  | "geranium"
-  | "begonia"
-  | "succulent-cactus"
-  | "carnivorous-vine-bulb"
-  | "fern-moss-aquatic"
-  | "veranda-garden"
-  | "farm-vegetable"
-  | "plant-shopping"
-  | "etc";
-
-export type SecondaryCategoryQnA =
-  | "all"
-  | "watering-soil"
-  | "leaf-growth-pest"
-  | "water-leaf-cutting"
-  | "cutting-division"
-  | "repotting-pruning"
-  | "overwintering-seed"
-  | "plant-recommend"
-  | "etc";
-
-export type SecondaryCategoryTip = "all";
-
-export type SecondaryCategory =
-  | SecondaryCategoryDaily
-  | SecondaryCategoryQnA
-  | SecondaryCategoryTip;
-
-/**
  * 콘텐츠 타입 (멀티파트)
  */
 export interface ContentPart {
   type: "text" | "image" | "video" | "audio" | "file";
   order: number;
   filename: string;
-  data: string; // 텍스트는 문자열, 파일은 URL
-}
-
-/**
- * 게시글 콘텐츠 파트 (API 응답)
- */
-export interface PostContentPart {
-  type: "text" | "image" | "video" | "audio" | "file";
-  order: number;
-  filename: string;
-  data: string;
+  data?: string; // 텍스트인 경우만 존재
+  src?: string; // 이미지/비디오/오디오/파일 미리보기 URL
 }
 
 /**
@@ -76,7 +28,7 @@ export interface PostData {
   secondaryCategory: string; // "관엽/야생화", "기타" 등
   nickname: string;
   title: string;
-  content: PostContentPart[]; // 첫 번째 텍스트와 이미지만
+  content: ContentPart[]; // 첫 번째 텍스트와 이미지만
   likeCount: number;
   publishedAt: string; // ISO 8601 형식
   commentCount: number;
@@ -102,6 +54,21 @@ export interface PostDetail extends PostData {
   viewCount: number;
   isPublished: boolean;
   publishedAt: string;
+  updatedAt: string;
+}
+
+/**
+ * 게시글 수정용 데이터 타입 (API 응답)
+ */
+export interface PostEditData
+  extends Omit<
+    PostData,
+    "likeCount" | "commentCount" | "isLiked" | "isBookmarked"
+  > {
+  primaryCategoryId: string; // UUID
+  secondaryCategoryId: string; // UUID
+  authorUuid: string;
+  isPublished: boolean;
   updatedAt: string;
 }
 
