@@ -1,7 +1,9 @@
 import { ApiResponse, ApiError } from "../types/common";
 import { useAuthStore } from "../store/authStore";
 
-const BASE_URL = "";
+// 서버 사이드에서는 백엔드 직접 호출, 클라이언트에서는 상대 경로(rewrites 적용)
+const BASE_URL =
+  typeof window === "undefined" ? process.env.BASE_URL || "" : "";
 
 /**
  * authStore에서 액세스 토큰 가져오기
