@@ -41,7 +41,7 @@ export const memberApi = {
    */
   async getAuthInfo(userId: string): Promise<ApiResponse<AuthInfo>> {
     return apiClient<AuthInfo>(`/api/v1/members/${userId}/auth-info`, {
-      method: "POST",
+      method: "GET",
     });
   },
 };

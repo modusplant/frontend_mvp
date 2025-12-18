@@ -39,6 +39,6 @@ export interface ProfileFormData {
 export interface AuthInfo {
   id: string; // UUID
   email: string;
-  provider: "Basic" | "Google" | "Kakao" | "Naver"; // 인증 제공자
+  authProvider: "BASIC" | "Google" | "Kakao" | "Naver"; // 인증 제공자
   createdAt?: string; // 가입일 (추후 추가 예정)
 }

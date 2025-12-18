@@ -15,34 +15,26 @@ import { formatDate } from "@/lib/utils/formatTime";
  */
 export default function AccountSection() {
   const { user } = useAuthStore();
-  // 회원 인증 정보 조회(API 미구현)
-  // const { data: authInfo, isLoading, error } = useMemberAuthInfo(user?.id);
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="flex min-h-[400px] items-center justify-center">
-  //       <p className="text-neutral-60">로딩 중...</p>
-  //     </div>
-  //   );
-  // }
+  const { data: authInfo, isLoading, error } = useMemberAuthInfo(user?.id);
 
-  // if (error || !authInfo) {
-  //   return (
-  //     <div className="flex min-h-[400px] items-center justify-center">
-  //       <p className="text-system-alert">계정 정보를 불러올 수 없습니다.</p>
-  //     </div>
-  //   );
-  // }
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[400px] items-center justify-center">
+        <p className="text-neutral-60">로딩 중...</p>
+      </div>
+    );
+  }
 
-  // TODO: 임시 데이터 (API 구현 후 제거)
-  const authInfo = {
-    id: "user-uuid",
-    email: "asd@example.com",
-    provider: "Basic",
-    createdAt: "2023-01-15T10:20:30Z",
-  };
+  if (error || !authInfo) {
+    return (
+      <div className="flex min-h-[400px] items-center justify-center">
+        <p className="text-system-alert">계정 정보를 불러올 수 없습니다.</p>
+      </div>
+    );
+  }
 
-  const isBasicAuth = authInfo.provider === "Basic";
+  const isBasicAuth = authInfo.authProvider === "BASIC";
 
   if (isBasicAuth) {
     return (
@@ -65,7 +57,8 @@ export default function AccountSection() {
               className="flex-1"
             />
             <p className="text-neutral-60 text-sm leading-normal">
-              가입일: {formatDate(authInfo.createdAt)}
+              가입일:{" "}
+              {authInfo.createdAt ? formatDate(authInfo.createdAt) : "-"}
             </p>
             <hr className="border-surface-stroke-2" />
             <Link href="/mypage/account/change-email">
@@ -106,9 +99,9 @@ export default function AccountSection() {
         {/* 소셜 로그인 안내 (소셜 로그인인 경우) */}
         <div className="border-surface-stroke bg-surface-99 rounded-lg border p-6">
           <p className="text-neutral-60 text-sm leading-normal">
-            {authInfo.provider === "Google" && "구글"}
-            {authInfo.provider === "Kakao" && "카카오"}
-            {authInfo.provider === "Naver" && "네이버"} 간편 로그인으로
+            {authInfo.authProvider === "Google" && "구글"}
+            {authInfo.authProvider === "Kakao" && "카카오"}
+            {authInfo.authProvider === "Naver" && "네이버"} 간편 로그인으로
             가입하셨습니다.
             <br />
             이메일과 비밀번호는 해당 서비스에서 관리됩니다.
