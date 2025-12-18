@@ -1,15 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { PostDetail as PostDetailType } from "@/lib/types/post";
 import PostContent from "./postContent";
 import PostActions from "./postActions";
 import CommentSection from "../../comment/commentSection";
 import { formatRelativeTime } from "@/lib/utils/formatTime";
-import {
-  primaryCategoryLabels,
-  secondaryCategoryLabels,
-} from "@/lib/constants/categories";
 import { Heart, Bookmark } from "lucide-react";
 import { usePostInteraction } from "@/lib/hooks/community/usePostInteraction";
 
@@ -19,31 +14,17 @@ interface PostDetailProps {
 }
 
 export default function PostDetail({ postId, initialData }: PostDetailProps) {
-  const router = useRouter();
-
-  const getCategoryLabel = (
-    category: string,
-    type: "primary" | "secondary"
-  ) => {
-    if (type === "primary") {
-      return primaryCategoryLabels[category] || category;
-    }
-    return secondaryCategoryLabels[category] || category;
-  };
-
   const {
     likeCount,
     isLiked,
     isLiking,
     handleLike,
-    bookmarkCount,
     isBookmarked,
     isBookmarking,
     handleBookmark,
   } = usePostInteraction({
     postId,
     initialLikeCount: initialData.likeCount,
-    initialBookmarkCount: initialData.bookmarkCount,
     initialIsLiked: initialData.isLiked,
     initialIsBookmarked: initialData.isBookmarked,
   });
@@ -53,8 +34,7 @@ export default function PostDetail({ postId, initialData }: PostDetailProps) {
       {/* 헤더: 카테고리 + 작성자 정보 */}
       <div className="mb-6 flex items-center gap-3">
         <span className="bg-primary-10 text-primary-50 rounded-full px-4 py-1.5 text-sm font-semibold">
-          {getCategoryLabel(initialData.primaryCategory, "primary")} &gt;{" "}
-          {getCategoryLabel(initialData.secondaryCategory, "secondary")}
+          {initialData.primaryCategory} &gt; {initialData.secondaryCategory}
         </span>
       </div>
 
@@ -66,11 +46,11 @@ export default function PostDetail({ postId, initialData }: PostDetailProps) {
       <div className="mb-8 flex items-center gap-2">
         {/* 작성자 */}
         <span className="text-neutral-20 text-sm font-medium">
-          {initialData.authorNickname}
+          {initialData.nickname}
         </span>
         {/* 작성일 */}
         <span className="text-neutral-60 text-sm">
-          {formatRelativeTime(initialData.createdAt)}
+          {formatRelativeTime(initialData.publishedAt)}
         </span>
         {/* 조회수 */}
         <div className="text-neutral-60 flex items-center gap-1.5 text-sm">
@@ -112,7 +92,7 @@ export default function PostDetail({ postId, initialData }: PostDetailProps) {
         </div>
 
         {/* 수정/삭제 버튼 (작성자만) */}
-        <PostActions postId={postId} authorUuid={initialData.authorUuid} />
+        <PostActions postId={postId} authorId={initialData.authorId} />
       </div>
 
       {/* 댓글 섹션 */}
