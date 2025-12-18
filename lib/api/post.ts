@@ -34,11 +34,11 @@ export const postApi = {
     }
 
     if (params.primaryCategoryId) {
-      queryParams.append("primaryCategoryId", params.primaryCategoryId);
+      queryParams.append("primary_category_id", params.primaryCategoryId);
     }
 
     if (params.secondaryCategoryId) {
-      queryParams.append("secondaryCategoryId", params.secondaryCategoryId);
+      queryParams.append("secondary_category_id", params.secondaryCategoryId);
     }
 
     const endpoint = `/api/v1/communication/posts?${queryParams.toString()}`;
