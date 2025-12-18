@@ -6,7 +6,6 @@ import { useAuthStore } from "@/lib/store/authStore";
 interface UsePostInteractionProps {
   postId: string;
   initialLikeCount: number;
-  initialBookmarkCount: number;
   initialIsLiked?: boolean;
   initialIsBookmarked?: boolean;
 }
@@ -19,7 +18,6 @@ interface UsePostInteractionReturn {
   handleLike: () => void;
 
   // 북마크 상태
-  bookmarkCount: number;
   isBookmarked: boolean;
   isBookmarking: boolean;
   handleBookmark: () => void;
@@ -28,7 +26,6 @@ interface UsePostInteractionReturn {
 export function usePostInteraction({
   postId,
   initialLikeCount,
-  initialBookmarkCount,
   initialIsLiked = false,
   initialIsBookmarked = false,
 }: UsePostInteractionProps): UsePostInteractionReturn {
@@ -39,7 +36,6 @@ export function usePostInteraction({
   const [isLiked, setIsLiked] = useState(initialIsLiked);
 
   // 북마크 상태
-  const [bookmarkCount, setBookmarkCount] = useState(initialBookmarkCount);
   const [isBookmarked, setIsBookmarked] = useState(initialIsBookmarked);
 
   // 좋아요 mutation
@@ -84,12 +80,10 @@ export function usePostInteraction({
     },
     onMutate: async (currentIsBookmarked) => {
       // 낙관적 업데이트
-      setBookmarkCount((prev) => prev + (currentIsBookmarked ? -1 : 1));
       setIsBookmarked(!currentIsBookmarked);
     },
     onError: (error: Error, currentIsBookmarked) => {
       // 에러 시 롤백
-      setBookmarkCount((prev) => prev + (currentIsBookmarked ? 1 : -1));
       setIsBookmarked(currentIsBookmarked);
       console.error("북마크 처리 실패:", error);
       window.alert(error.message || "북마크 처리에 실패했습니다.");
@@ -101,7 +95,6 @@ export function usePostInteraction({
     isLiked,
     isLiking: likeMutation.isPending,
     handleLike: () => likeMutation.mutate(isLiked),
-    bookmarkCount,
     isBookmarked,
     isBookmarking: bookmarkMutation.isPending,
     handleBookmark: () => bookmarkMutation.mutate(isBookmarked),
