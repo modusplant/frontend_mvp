@@ -56,16 +56,6 @@ export default function Header({ className }: HeaderProps) {
                   글쓰기
                 </Button>
               </Link>
-              {/* 로그아웃 버튼 */}
-              {/* TODO: 추후 삭제 */}
-              <Button
-                variant="default"
-                size="sm"
-                className="rounded-full"
-                onClick={handleLogout}
-              >
-                로그아웃
-              </Button>
             </>
           ) : (
             <>
