@@ -14,12 +14,7 @@ interface CommentSectionProps {
 
 export default function CommentSection({ postId }: CommentSectionProps) {
   // React Query로 댓글 조회
-  // const { comments, isLoading, refetch } = useCommentsQuery({ postId });
-
-  // 더미 데이터 사용
-  const comments = dummyComments;
-  const isLoading = false;
-  const refetch = () => {};
+  const { comments, isLoading, refetch } = useCommentsQuery({ postId });
 
   // 댓글 트리 구조 생성
   const { commentTree, totalCount } = useCommentTree({ comments });
