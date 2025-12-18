@@ -127,10 +127,10 @@ export default function ImageUploader({
         </button>
       </div>
 
-      {/* 이미지 미리보기 그리드 */}
+      {/* 이미지 미리보기 스크롤 */}
       {images.length > 0 && (
         <div
-          className={`mt-4 grid w-full grid-cols-5 gap-3 rounded-lg ${
+          className={`mt-4 overflow-x-auto rounded-lg pb-2 ${
             isDragging
               ? "border-primary-50 bg-primary-10"
               : "border-surface-stroke"
@@ -139,24 +139,29 @@ export default function ImageUploader({
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
-          {images.map((image, index) => (
-            <div key={index} className="group relative aspect-square">
-              <Image
-                src={getPreviewUrl(image)}
-                alt={`업로드 이미지 ${index + 1}`}
-                fill
-                className="rounded-lg object-cover"
-              />
-              {/* 삭제 버튼 */}
-              <button
-                onClick={() => handleRemoveImage(index)}
-                className="bg-neutral-70 absolute -top-2 -right-2 rounded-full p-1"
-                aria-label="이미지 삭제"
+          <div className="flex min-w-min gap-3 px-2 py-2">
+            {images.map((image, index) => (
+              <div
+                key={index}
+                className="group relative h-[200px] w-[200px] shrink-0"
               >
-                <X className="h-4 w-4 text-white" />
-              </button>
-            </div>
-          ))}
+                <Image
+                  src={getPreviewUrl(image)}
+                  alt={`업로드 이미지 ${index + 1}`}
+                  fill
+                  className="rounded-lg object-cover"
+                />
+                {/* 삭제 버튼 */}
+                <button
+                  onClick={() => handleRemoveImage(index)}
+                  className="bg-neutral-70 absolute -top-2 -right-2 z-10 rounded-full p-1"
+                  aria-label="이미지 삭제"
+                >
+                  <X className="h-4 w-4 text-white" />
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
