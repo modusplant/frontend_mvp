@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { PostContent as PostContentType } from "@/lib/types/post";
+import { ContentPart } from "@/lib/types/post";
 import ImageModal from "./imageModal";
 
 interface PostContentProps {
-  content: PostContentType[];
+  content: ContentPart[];
 }
 
 export default function PostContent({ content }: PostContentProps) {
