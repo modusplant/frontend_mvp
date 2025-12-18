@@ -95,33 +95,14 @@ export interface GetPostsResponseData {
 }
 
 /**
- * 게시글 상세 콘텐츠 타입 (API 응답)
- */
-export interface PostContent {
-  type: "text" | "image";
-  order: number;
-  filename?: string;
-  data: string; // 텍스트 내용 or base64 이미지
-}
-
-/**
  * 게시글 상세 타입 (API 응답)
  */
-export interface PostDetail {
-  authorUuid: string;
-  authorNickname: string;
-  title: string;
-  content: PostContent[];
-  primaryCategory: string;
-  secondaryCategory: string;
+export interface PostDetail extends PostData {
+  authorId: string;
   viewCount: number;
-  likeCount: number;
-  bookmarkCount: number;
-  commentCount: number;
-  createdAt: string;
+  isPublished: boolean;
+  publishedAt: string;
   updatedAt: string;
-  isLiked: boolean; // 현재 사용자의 좋아요 여부
-  isBookmarked: boolean; // 현재 사용자의 북마크 여부
 }
 
 /**
