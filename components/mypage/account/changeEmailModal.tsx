@@ -11,6 +11,7 @@ import { emailSchema, verificationCodeSchema } from "@/lib/utils/auth";
 import { showModal } from "@/lib/store/modalStore";
 import { memberApi } from "@/lib/api/member";
 import { useAuthStore } from "@/lib/store/authStore";
+import { useRouter } from "next/navigation";
 
 interface ChangeEmailModalProps {
   userId?: string;
@@ -40,7 +41,7 @@ export default function ChangeEmailModal({
   } = useForm<ChangeEmailFormValues>({
     resolver: zodResolver(changeEmailSchema),
   });
-
+  const router = useRouter();
   const { logout } = useAuthStore();
   const watchedNewEmail = watch("newEmail");
 
@@ -75,7 +76,7 @@ export default function ChangeEmailModal({
     }
 
     // 재발송
-    if (canResend) {
+    if (canResend && !isVerified) {
       await handleResendVerification(watchedNewEmail);
       return;
     }
@@ -92,17 +93,17 @@ export default function ChangeEmailModal({
     if (isVerified) {
       // 이메일 변경 처리
       await memberApi.changeEmail(userId!, email, watchedNewEmail);
+      close?.();
       showModal({
         type: "one-button",
         title: "이메일이 변경 되었습니다.",
         description: "변경된 이메일로 다시 로그인 해주세요.",
         buttonText: "로그인 하기",
         onConfirm: () => {
-          close?.();
-          window.location.href = "/";
+          router.push("/login");
           setTimeout(() => {
             logout();
-          }, 0);
+          }, 500);
         },
       });
     }
