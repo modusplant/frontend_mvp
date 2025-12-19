@@ -5,6 +5,7 @@ import AuthInitializer from "@/components/_layout/authInitializer";
 import ConditionalLayout from "@/components/_layout/conditionalLayout";
 import QueryProvider from "@/components/_layout/queryProvider";
 import "./globals.css";
+import ModalProvider from "@/components/_layout/modalProvider";
 
 // Emphasis 폰트: Nanum Myeongjo (제목, 강조)
 const nanumMyeongjo = Nanum_Myeongjo({
@@ -70,6 +71,7 @@ export default function RootLayout({
         <QueryProvider>
           <AuthInitializer />
           <ConditionalLayout>{children}</ConditionalLayout>
+          <ModalProvider />
         </QueryProvider>
       </body>
     </html>
