@@ -67,15 +67,27 @@ export const loginSchema = z.object({
 });
 
 /**
+ * 공통 이메일 스키마
+ */
+export const emailSchema = z
+  .string()
+  .min(1, "이메일을 입력해주세요")
+  .email("올바른 이메일을 입력해주세요");
+
+/**
+ * 공통 인증코드 스키마
+ */
+export const verificationCodeSchema = z
+  .string()
+  .min(1, "인증코드를 입력해주세요");
+
+/**
  * 회원가입 폼 스키마
  */
 export const signupSchema = z
   .object({
-    email: z
-      .string()
-      .min(1, "이메일을 입력해주세요")
-      .email("올바른 이메일을 입력해주세요"),
-    verificationCode: z.string().min(1, "인증코드를 입력해주세요"),
+    email: emailSchema,
+    verificationCode: verificationCodeSchema,
     password: z
       .string()
       .min(
