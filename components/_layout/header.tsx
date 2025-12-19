@@ -22,9 +22,6 @@ export default function Header({ className }: HeaderProps) {
     ? "/logo_favicon/Logo_v2_white.svg"
     : "/logo_favicon/Logo_v2_black.svg";
 
-  const handleLogout = () => {
-    logout();
-  };
   return (
     <header
       className={cn(isRootPath ? "sticky top-0" : "", "z-50 w-full", className)}
