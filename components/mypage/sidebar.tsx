@@ -5,16 +5,25 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils/tailwindHelper";
 import { useAuthStore } from "@/lib/store/authStore";
 import { MYPAGE_MENU_SECTIONS } from "@/lib/constants/mypage";
+import { showModal } from "@/lib/store/modalStore";
 
 export default function Sidebar() {
   const pathname = usePathname();
   const { logout } = useAuthStore();
 
   const handleLogout = () => {
-    if (confirm("로그아웃 하시겠습니까?")) {
-      logout();
-      window.location.href = "/";
-    }
+    showModal({
+      type: "two-button",
+      title: "로그아웃 하시겠습니까?",
+      description: "메인페이지로 이동합니다.",
+      buttonText: "로그아웃",
+      onConfirm: () => {
+        window.location.href = "/";
+        setTimeout(() => {
+          logout();
+        }, 0);
+      },
+    });
   };
 
   return (
