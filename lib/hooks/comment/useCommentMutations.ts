@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { commentApi } from "@/lib/api/comment";
 import { useAuthStore } from "@/lib/store/authStore";
 import { generateCommentPath } from "@/lib/utils/parseComments";
+import { showModal } from "@/lib/store/modalStore";
 
 interface UseCommentMutationsProps {
   postId: string;
@@ -45,7 +46,11 @@ export function useCommentMutations({
       content,
     }: CreateCommentParams) => {
       if (!isAuthenticated) {
-        throw new Error("로그인이 필요합니다.");
+        showModal({
+          description: "로그인이 필요합니다.",
+          type: "snackbar",
+        });
+        return;
       }
 
       if (content.trim().length === 0) {
