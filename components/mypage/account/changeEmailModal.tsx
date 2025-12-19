@@ -51,6 +51,7 @@ export default function ChangeEmailModal({
     timeRemaining,
     formattedTime,
     handleRequestVerification,
+    handleResendVerification,
     handleVerifyCode,
   } = useEmailVerification({ trigger, watch });
 
@@ -70,6 +71,12 @@ export default function ChangeEmailModal({
       }
 
       await handleRequestVerification(watchedNewEmail);
+      return;
+    }
+
+    // 재발송
+    if (canResend) {
+      await handleResendVerification(watchedNewEmail);
       return;
     }
 
@@ -150,6 +157,11 @@ export default function ChangeEmailModal({
                   요청 시간 {formattedTime}
                 </p>
               )}
+              {timeRemaining === 0 && (
+                <p className="text-system-alert text-sm">
+                  인증 요청 시간이 만료되었습니다. 인증 코드를 재발송해주세요.
+                </p>
+              )}
               {errors.verificationCode && (
                 <p className="text-system-alert text-sm">
                   {errors.verificationCode.message}
@@ -167,9 +179,11 @@ export default function ChangeEmailModal({
           >
             {isVerified
               ? "이메일 변경하기"
-              : isCodeSent
-                ? "확인"
-                : "인증 코드 발송"}
+              : canResend
+                ? "인증 코드 재발송"
+                : isCodeSent
+                  ? "확인"
+                  : "인증 코드 발송"}
           </Button>
         </div>
       </div>
