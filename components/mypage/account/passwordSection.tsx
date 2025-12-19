@@ -18,7 +18,7 @@ export default function PasswordSection() {
         </p>
         <hr className="border-surface-stroke-2" />
         <div className="flex items-center gap-3">
-          <Link href="/mypage/account/change-password">
+          <Link href="/reset-password">
             <Button variant="point2" size="md">
               비밀번호 변경하기
             </Button>
