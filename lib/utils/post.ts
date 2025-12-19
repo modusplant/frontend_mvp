@@ -24,9 +24,9 @@ export function getThumbnail(post: PostData): string {
  * 본문 첫 텍스트 추출 헬퍼 함수
  * - content 배열에서 첫 번째 텍스트를 찾아 반환
  */
-export function getExcerpt(post: PostData): string {
+export function getExcerpt(post: PostData): string | undefined {
   const textContent = post.content.find((c) => c.type === "text");
-  if (!textContent) return "";
+  if (!textContent) return undefined;
 
   return textContent.data;
 }

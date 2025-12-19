@@ -4,7 +4,6 @@ import { useCommentTree } from "@/lib/hooks/comment/useCommentTree";
 import { useCommentsQuery } from "@/lib/hooks/comment/useCommentsQuery";
 import CommentList from "./commentList";
 import CommentInput from "./commentInput";
-import { dummyComments } from "@/lib/data/postDetail";
 import BlurOverlay from "../_layout/blurOverlay";
 import { useAuthStore } from "@/lib/store/authStore";
 

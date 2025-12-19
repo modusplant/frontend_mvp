@@ -38,7 +38,7 @@ export default function PostContent({ content }: PostContentProps) {
               <div
                 key={`image-${index}`}
                 className="my-6 cursor-pointer"
-                onClick={() => setSelectedImage(item.data)}
+                onClick={() => setSelectedImage(item.src || null)}
               >
                 <Image
                   src={`data:image/png;base64,${item.data}`}
