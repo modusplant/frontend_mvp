@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/utils/formatTime";
 interface EmailInfoSectionProps {
   email: string;
   createdAt?: string;
+  onChangeEmail?: () => void;
 }
 
 /**
@@ -17,6 +18,7 @@ interface EmailInfoSectionProps {
 export default function EmailInfoSection({
   email,
   createdAt,
+  onChangeEmail,
 }: EmailInfoSectionProps) {
   return (
     <div className="border-surface-98 flex flex-col gap-[30px] rounded-xl border bg-white p-10">
@@ -33,11 +35,11 @@ export default function EmailInfoSection({
           가입일: {createdAt ? formatDate(createdAt) : "-"}
         </p>
         <hr className="border-surface-stroke-2" />
-        <Link href="/mypage/account/change-email">
-          <Button variant="point2" size="md">
+        <div>
+          <Button variant="point2" size="md" onClick={onChangeEmail}>
             이메일 변경하기
           </Button>
-        </Link>
+        </div>
       </div>
     </div>
   );
