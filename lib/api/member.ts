@@ -44,4 +44,22 @@ export const memberApi = {
       method: "GET",
     });
   },
+
+  /**
+   * 이메일 변경
+   * POST /api/v1/members/{id}/modify/email
+   */
+  async changeEmail(
+    userId: string,
+    currentEmail: string,
+    newEmail: string
+  ): Promise<ApiResponse<void>> {
+    return apiClient<void>(`/api/v1/members/${userId}/modify/email`, {
+      method: "POST",
+      body: JSON.stringify({
+        currentEmail,
+        newEmail,
+      }),
+    });
+  },
 };
