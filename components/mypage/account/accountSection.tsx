@@ -5,6 +5,8 @@ import { useMemberAuthInfo } from "@/lib/hooks/mypage/useMemberAuthInfo";
 import EmailInfoSection from "./emailInfoSection";
 import PasswordSection from "./passwordSection";
 import SocialLoginInfo from "./socialLoginInfo";
+import ChangeEmailModal from "./changeEmailModal";
+import { useState } from "react";
 
 /**
  * 계정 설정 섹션
@@ -14,6 +16,7 @@ import SocialLoginInfo from "./socialLoginInfo";
  */
 export default function AccountSection() {
   const { user } = useAuthStore();
+  const [emailModalVisible, setEmailModalVisible] = useState(false);
 
   const { data: authInfo, isLoading, error } = useMemberAuthInfo(user?.id);
 
@@ -38,9 +41,17 @@ export default function AccountSection() {
   if (isBasicAuth) {
     return (
       <div className="flex flex-col gap-6">
+        {emailModalVisible && (
+          <ChangeEmailModal
+            userId={user!.id}
+            email={authInfo.email}
+            close={() => setEmailModalVisible(false)}
+          />
+        )}
         <EmailInfoSection
           email={authInfo.email}
           createdAt={authInfo.createdAt}
+          onChangeEmail={() => setEmailModalVisible(true)}
         />
         <PasswordSection />
       </div>
