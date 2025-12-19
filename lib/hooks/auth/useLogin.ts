@@ -55,7 +55,7 @@ export function useLogin() {
         login(user, data.rememberMe || false);
 
         console.log("로그인 성공");
-        router.back();
+        router.push("/");
       }
     } catch (error: any) {
       // 로그인 시도 횟수 증가
