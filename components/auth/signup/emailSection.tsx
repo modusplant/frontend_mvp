@@ -1,7 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils/tailwindHelper";
 import { useEmailVerification } from "@/lib/hooks/auth/useEmailVerification";
-import { authApi } from "@/lib/api/auth";
 import { Input } from "@/components/_common/input";
 import Button from "@/components/_common/button";
 import { EmailSectionProps } from "@/lib/types/auth";
@@ -21,38 +20,10 @@ export default function EmailSection({
     canResend,
     timeRemaining,
     formattedTime,
-    requestVerification,
-    resendVerification,
-    verifyCode,
-  } = useEmailVerification({
-    onRequestVerification: authApi.requestEmailVerification,
-    onVerifyCode: authApi.verifyEmailCode,
-  });
-
-  // 인증 요청 핸들러
-  const handleRequestVerification = async () => {
-    const emailValid = await trigger("email");
-    if (!emailValid) return;
-
-    const result = await requestVerification(watchedEmail);
-    window.alert(result.message);
-  };
-
-  // 재요청 핸들러
-  const handleResendVerification = async () => {
-    const result = await resendVerification(watchedEmail);
-    window.alert(result.message);
-  };
-
-  // 인증코드 확인 핸들러
-  const handleVerifyCode = async () => {
-    const codeValid = await trigger("verificationCode");
-    if (!codeValid) return;
-
-    const verificationCode = watch("verificationCode");
-    const result = await verifyCode(watchedEmail, verificationCode);
-    window.alert(result.message);
-  };
+    handleRequestVerification,
+    handleResendVerification,
+    handleVerifyCode,
+  } = useEmailVerification({ trigger, watch });
 
   return (
     <div className={cn("space-y-2", className)}>
@@ -77,8 +48,10 @@ export default function EmailSection({
         </div>
         <Button
           type="button"
-          onClick={
-            canResend ? handleResendVerification : handleRequestVerification
+          onClick={() =>
+            canResend
+              ? handleResendVerification(watchedEmail)
+              : handleRequestVerification(watchedEmail)
           }
           disabled={
             !watchedEmail ||
@@ -111,7 +84,7 @@ export default function EmailSection({
             </div>
             <Button
               type="button"
-              onClick={handleVerifyCode}
+              onClick={() => handleVerifyCode(watchedEmail)}
               disabled={!watch("verificationCode")}
               className="w-full min-w-[92px] px-5 py-3 text-sm sm:w-auto"
               variant="secondary"
