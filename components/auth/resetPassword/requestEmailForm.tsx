@@ -30,7 +30,7 @@ export default function RequestEmailForm() {
     register,
     handleSubmit,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<EmailFormValues>({
     resolver: zodResolver(requestEmailSchema),
     defaultValues: {
@@ -113,7 +113,7 @@ export default function RequestEmailForm() {
           variant="point"
           size="lg"
           className="rounded-lg"
-          disabled={isSubmitting}
+          disabled={isSubmitting || isSubmitSuccessful}
         >
           전송하기
         </Button>
