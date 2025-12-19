@@ -142,4 +142,39 @@ export const authApi = {
       };
     }
   },
+
+  /**
+   * 비밀번호 재설정 이메일 요청
+   */
+  async requestPasswordResetEmail(email: string): Promise<ApiResponse<void>> {
+    return apiClient<void>("/api/auth/reset-password-request/send", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+      skipAuth: true,
+    });
+  },
+
+  /**
+   * 비밀번호 재설정 이메일 검증
+   */
+  async verifyPasswordResetEmail(uuid: string): Promise<ApiResponse<void>> {
+    return apiClient<void>(
+      `/api/auth/reset-password-request/verify/email?uuid=${uuid}`,
+      {
+        method: "POST",
+        skipAuth: true,
+      }
+    );
+  },
+
+  /**
+   * 비밀번호 재설정
+   */
+  async resetPassword(password: string): Promise<ApiResponse<void>> {
+    return apiClient<void>("/api/auth/reset-password-request/verify/input", {
+      method: "POST",
+      body: JSON.stringify({ password }),
+      skipAuth: true,
+    });
+  },
 };
