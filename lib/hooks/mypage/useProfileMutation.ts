@@ -30,10 +30,10 @@ export function useProfileMutation() {
         });
 
         // 2. authStore의 user 정보 업데이트
-        if (data.data?.nickname) {
+        if (data.data) {
           updateUser({
             nickname: data.data.nickname,
-            image: data.data.image,
+            image: data.data.imageUrl,
             introduction: data.data.introduction,
           });
         }
