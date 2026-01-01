@@ -20,6 +20,16 @@ export interface GetPostsRequest {
 }
 
 /**
+ * 게시글 목록 조회 응답 데이터
+ */
+export interface GetPostsResponseData {
+  posts: PostData[];
+  nextPostId: string | null;
+  hasNext: boolean;
+  size: number;
+}
+
+/**
  * 게시글 목록 응답 데이터 (개별 게시글)
  */
 export interface PostData {
@@ -34,16 +44,6 @@ export interface PostData {
   commentCount: number;
   isLiked: boolean;
   isBookmarked: boolean;
-}
-
-/**
- * 게시글 목록 조회 응답 데이터
- */
-export interface GetPostsResponseData {
-  posts: PostData[];
-  nextPostId: string | null;
-  hasNext: boolean;
-  size: number;
 }
 
 /**
