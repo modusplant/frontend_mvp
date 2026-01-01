@@ -112,7 +112,8 @@ export default function SignupForm() {
       <Button
         type="submit"
         disabled={!isFormValid || isSubmitting}
-        className="w-full py-3 md:py-4"
+        className="w-full rounded-lg py-3 md:py-4"
+        variant={isFormValid || !isSubmitting ? "point" : "secondary"}
       >
         {isSubmitting ? "처리 중..." : "회원가입"}
       </Button>
