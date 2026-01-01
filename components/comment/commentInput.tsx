@@ -66,7 +66,7 @@ export default function CommentInput({
     <div className="flex items-center gap-3">
       {/* 사용자 아이콘 */}
       <div className="relative h-10 w-10">
-        <ProfileImage base64Image={user?.image || null} />
+        <ProfileImage imageSrc={user?.image || null} />
       </div>
       <form onSubmit={handleSubmit} className="h-14 w-full">
         <input

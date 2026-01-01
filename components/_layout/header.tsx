@@ -44,7 +44,7 @@ export default function Header({ className }: HeaderProps) {
               {/* 프로필 아이콘 (추후 드롭다운 추가) */}
               <Link href="/mypage">
                 <div className="relative h-10 w-10">
-                  <Profile base64Image={user?.image} />
+                  <Profile imageSrc={user?.image} />
                 </div>
               </Link>
               {/* 글쓰기 버튼 */}
