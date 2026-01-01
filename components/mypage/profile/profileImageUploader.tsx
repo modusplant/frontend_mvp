@@ -40,7 +40,7 @@ export default function ProfileImageUploader({
           {/* 프로필 이미지 또는 기본 아이콘 */}
 
           <div className="inset-0 flex items-center justify-center">
-            <Profile className="h-10 w-10" base64Image={imagePreview} />
+            <Profile className="h-10 w-10" imageSrc={imagePreview} />
           </div>
         </div>
 

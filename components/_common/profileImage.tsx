@@ -3,13 +3,13 @@ import { cn } from "@/lib/utils/tailwindHelper";
 
 type ProfileProps = {
   className?: string;
-  base64Image?: string | null;
+  imageSrc?: string | null;
 };
 
-export default function ProfileImage({ className, base64Image }: ProfileProps) {
-  return base64Image ? (
+export default function ProfileImage({ className, imageSrc }: ProfileProps) {
+  return imageSrc ? (
     <Image
-      src={`data:image/jpg;base64,${base64Image}`}
+      src={imageSrc}
       alt="프로필 이미지"
       className={cn("rounded-full object-cover", className)}
       fill
