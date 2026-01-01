@@ -20,8 +20,17 @@ export function decodeJWT(token: string): JWTPayload | null {
     const base64Url = token.split(".")[1];
     if (!base64Url) return null;
 
+    // base64url -> base64, 패딩 추가
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const payload = JSON.parse(window.atob(base64));
+    const pad = base64.length % 4 ? "=".repeat(4 - (base64.length % 4)) : "";
+    const base64WithPad = base64 + pad;
+
+    // atob로 얻은 바이너리 문자열을 UTF-8로 디코딩
+    const binary = window.atob(base64WithPad);
+    const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+    const decoded = new TextDecoder().decode(bytes);
+
+    const payload = JSON.parse(decoded);
     return payload as JWTPayload;
   } catch (error) {
     console.error("JWT 디코딩 실패:", error);

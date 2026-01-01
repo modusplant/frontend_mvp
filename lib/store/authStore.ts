@@ -40,7 +40,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
           user: {
             id: decoded.sub,
             email: decoded.email,
-            nickname: decoded.nickname,
+            nickname: profileResponse?.nickname || decoded.nickname,
             role: decoded.role,
             image: profileResponse?.image || "",
             introduction: profileResponse?.introduction || "",
