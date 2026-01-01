@@ -25,6 +25,9 @@ export default function EmailSection({
     handleVerifyCode,
   } = useEmailVerification({ trigger, watch });
 
+  const emailDisabled =
+    !watchedEmail || !!errors.email || (isCodeSent && !canResend) || isVerified;
+
   return (
     <div className={cn("space-y-2", className)}>
       <label className="text-neutral-20 block text-sm font-medium">
@@ -53,13 +56,9 @@ export default function EmailSection({
               ? handleResendVerification(watchedEmail)
               : handleRequestVerification(watchedEmail)
           }
-          disabled={
-            !watchedEmail ||
-            !!errors.email ||
-            (isCodeSent && !canResend) ||
-            isVerified
-          }
-          className="w-full min-w-[92px] cursor-pointer px-5 py-3 text-sm sm:w-auto"
+          disabled={emailDisabled}
+          className="w-full min-w-[92px] cursor-pointer rounded-lg px-5 py-3 text-sm sm:w-auto"
+          variant={!emailDisabled ? "point" : "secondary"}
         >
           {canResend ? "재요청" : "인증요청"}
         </Button>
@@ -86,8 +85,8 @@ export default function EmailSection({
               type="button"
               onClick={() => handleVerifyCode(watchedEmail)}
               disabled={!watch("verificationCode")}
-              className="w-full min-w-[92px] px-5 py-3 text-sm sm:w-auto"
-              variant="secondary"
+              className="w-full min-w-[92px] rounded-lg px-5 py-3 text-sm sm:w-auto"
+              variant={watch("verificationCode") ? "point" : "secondary"}
             >
               확인
             </Button>
