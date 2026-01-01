@@ -41,7 +41,7 @@ export default function PostContent({ content }: PostContentProps) {
                 onClick={() => setSelectedImage(item.src || null)}
               >
                 <Image
-                  src={`data:image/png;base64,${item.data}`}
+                  src={item.src || ""}
                   alt={item.filename || `이미지 ${index + 1}`}
                   width={800}
                   height={600}
