@@ -13,9 +13,8 @@ export interface HeaderProps {
 }
 
 export default function Header({ className }: HeaderProps) {
-  const { isAuthenticated, user, logout } = useAuthStore();
+  const { isAuthenticated, user } = useAuthStore();
   const pathname = usePathname();
-
   const isRootPath = pathname.endsWith("/");
 
   const logo = isRootPath
