@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { postApi } from "@/lib/api/post";
 import { useAuthStore } from "@/lib/store/authStore";
 import { showModal } from "@/lib/store/modalStore";
+import { set } from "zod";
 
 interface UsePostInteractionProps {
   postId: string;
-  initialLikeCount: number;
+  initialLikeCount?: number;
   initialIsLiked?: boolean;
   initialIsBookmarked?: boolean;
 }
@@ -26,7 +27,7 @@ interface UsePostInteractionReturn {
 
 export function usePostInteraction({
   postId,
-  initialLikeCount,
+  initialLikeCount = 0,
   initialIsLiked = false,
   initialIsBookmarked = false,
 }: UsePostInteractionProps): UsePostInteractionReturn {
@@ -38,6 +39,18 @@ export function usePostInteraction({
 
   // 북마크 상태
   const [isBookmarked, setIsBookmarked] = useState(initialIsBookmarked);
+
+  useEffect(() => {
+    setLikeCount(initialLikeCount);
+  }, [initialLikeCount]);
+
+  useEffect(() => {
+    setIsLiked(initialIsLiked);
+  }, [initialIsLiked]);
+
+  useEffect(() => {
+    setIsBookmarked(initialIsBookmarked);
+  }, [initialIsBookmarked]);
 
   // 좋아요 mutation
   const likeMutation = useMutation({
