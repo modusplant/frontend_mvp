@@ -7,13 +7,14 @@ import CommentSection from "../../comment/commentSection";
 import { formatRelativeTime } from "@/lib/utils/formatTime";
 import { Heart, Bookmark } from "lucide-react";
 import { usePostInteraction } from "@/lib/hooks/community/usePostInteraction";
-
+import usePostDetailQuery from "@/lib/hooks/community/usePostDetailQuery";
 interface PostDetailProps {
   postId: string;
-  initialData: PostDetailType;
 }
 
-export default function PostDetail({ postId, initialData }: PostDetailProps) {
+export default function PostDetail({ postId }: PostDetailProps) {
+  const { data: postQuery, isLoading, error } = usePostDetailQuery({ postId });
+
   const {
     likeCount,
     isLiked,
@@ -24,42 +25,54 @@ export default function PostDetail({ postId, initialData }: PostDetailProps) {
     handleBookmark,
   } = usePostInteraction({
     postId,
-    initialLikeCount: initialData.likeCount,
-    initialIsLiked: initialData.isLiked,
-    initialIsBookmarked: initialData.isBookmarked,
+    initialLikeCount: postQuery?.likeCount,
+    initialIsLiked: postQuery?.isLiked,
+    initialIsBookmarked: postQuery?.isBookmarked,
   });
+
+  if (isLoading) {
+    return <div className="mx-auto max-w-[1320px] px-5 py-12">로딩 중...</div>;
+  }
+
+  if (error || !postQuery) {
+    return (
+      <div className="mx-auto max-w-[1320px] px-5 py-12">
+        게시글을 불러오는데 실패했습니다.
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-[1320px] px-5 py-12">
       {/* 헤더: 카테고리 + 작성자 정보 */}
       <div className="mb-6 flex items-center gap-3">
         <span className="bg-primary-10 text-primary-50 rounded-full px-4 py-1.5 text-sm font-semibold">
-          {initialData.primaryCategory} &gt; {initialData.secondaryCategory}
+          {postQuery.primaryCategory} &gt; {postQuery.secondaryCategory}
         </span>
       </div>
 
       {/* 제목 */}
       <h1 className="font-nanum text-neutral-0 mb-2 text-[44px] leading-tight font-bold">
-        {initialData.title}
+        {postQuery.title}
       </h1>
 
       <div className="mb-8 flex items-center gap-2">
         {/* 작성자 */}
         <span className="text-neutral-20 text-sm font-medium">
-          {initialData.nickname}
+          {postQuery.nickname}
         </span>
         {/* 작성일 */}
         <span className="text-neutral-60 text-sm">
-          {formatRelativeTime(initialData.publishedAt)}
+          {formatRelativeTime(postQuery.publishedAt)}
         </span>
         {/* 조회수 */}
         <div className="text-neutral-60 flex items-center gap-1.5 text-sm">
-          <span>조회 {initialData.viewCount.toLocaleString()}</span>
+          <span>조회 {postQuery.viewCount.toLocaleString()}</span>
         </div>
       </div>
 
       {/* 본문 */}
-      <PostContent content={initialData.content} />
+      <PostContent content={postQuery.content} />
 
       {/* 액션 버튼 */}
       <div className="mt-12 flex items-center justify-between pt-6">
@@ -92,7 +105,7 @@ export default function PostDetail({ postId, initialData }: PostDetailProps) {
         </div>
 
         {/* 수정/삭제 버튼 (작성자만) */}
-        <PostActions postId={postId} authorId={initialData.authorId} />
+        <PostActions postId={postId} authorId={postQuery.authorId} />
       </div>
 
       {/* 댓글 섹션 */}
