@@ -45,14 +45,7 @@ export async function generateMetadata({
 export default async function PostPage({ params }: PostPageProps) {
   const { id } = await params;
   try {
-    // 실제 API 호출
-    const response = await postApi.getPostDetail(id);
-
-    if (!response.data) {
-      notFound();
-    }
-
-    return <PostDetail postId={id} initialData={response.data} />;
+    return <PostDetail postId={id} />;
   } catch (error) {
     notFound();
   }
