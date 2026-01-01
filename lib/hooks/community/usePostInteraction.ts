@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { postApi } from "@/lib/api/post";
 import { useAuthStore } from "@/lib/store/authStore";
+import { showModal } from "@/lib/store/modalStore";
 
 interface UsePostInteractionProps {
   postId: string;
@@ -61,7 +62,10 @@ export function usePostInteraction({
       setLikeCount((prev) => prev + (currentIsLiked ? 1 : -1));
       setIsLiked(currentIsLiked);
       console.error("좋아요 처리 실패:", error);
-      window.alert(error.message || "좋아요 처리에 실패했습니다.");
+      showModal({
+        type: "snackbar",
+        description: error.message,
+      });
     },
   });
 
@@ -86,7 +90,10 @@ export function usePostInteraction({
       // 에러 시 롤백
       setIsBookmarked(currentIsBookmarked);
       console.error("북마크 처리 실패:", error);
-      window.alert(error.message || "북마크 처리에 실패했습니다.");
+      showModal({
+        type: "snackbar",
+        description: error.message,
+      });
     },
   });
 

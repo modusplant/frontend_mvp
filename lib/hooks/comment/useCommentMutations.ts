@@ -59,7 +59,7 @@ export function useCommentMutations({
 
       const path = parentPath
         ? generateCommentPath(parentPath, siblingCount)
-        : currentCommentCount.toString();
+        : String(currentCommentCount + 1);
 
       await commentApi.createComment({
         postId,
@@ -73,7 +73,10 @@ export function useCommentMutations({
     },
     onError: (error: Error) => {
       console.error("댓글 작성 실패:", error);
-      window.alert(error.message || "댓글 작성에 실패했습니다.");
+      showModal({
+        type: "snackbar",
+        description: error.message,
+      });
     },
   });
 
@@ -92,7 +95,10 @@ export function useCommentMutations({
     onError: (error: Error) => {
       if (error.message !== "취소됨") {
         console.error("댓글 삭제 실패:", error);
-        window.alert("댓글 삭제에 실패했습니다.");
+        showModal({
+          type: "snackbar",
+          description: error.message,
+        });
       }
     },
   });

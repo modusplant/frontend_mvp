@@ -6,6 +6,7 @@ import { useProfileForm } from "@/lib/hooks/mypage/useProfileForm";
 import ProfileImageUploader from "./profileImageUploader";
 import ProfileFormFields from "./profileFormFields";
 import Button from "@/components/_common/button";
+import { showModal } from "@/lib/store/modalStore";
 
 export default function ProfileSection() {
   const { user } = useAuthStore();
@@ -35,10 +36,16 @@ export default function ProfileSection() {
       { userId, formData: data },
       {
         onSuccess: () => {
-          alert("프로필이 성공적으로 수정되었습니다.");
+          showModal({
+            type: "snackbar",
+            description: "프로필이 성공적으로 수정되었습니다.",
+          });
         },
         onError: (error) => {
-          alert(`프로필 수정에 실패했습니다: ${error.message}`);
+          showModal({
+            type: "snackbar",
+            description: error.message || "프로필 수정에 실패했습니다.",
+          });
         },
       }
     );

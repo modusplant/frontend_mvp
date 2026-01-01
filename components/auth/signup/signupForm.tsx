@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-
+import { showModal } from "@/lib/store/modalStore";
 import { signupSchema, SignupFormValues } from "@/lib/utils/auth";
 import { authApi } from "@/lib/api/auth";
 import { useAuthStore } from "@/lib/store/authStore";
@@ -58,17 +58,30 @@ export default function SignupForm() {
           // 3. JWT에서 추출한 사용자 정보로 로그인 처리
           login(loginResult.user, true); // rememberMe: true로 자동 로그인 활성화
 
-          alert("회원가입이 완료되었습니다!");
+          showModal({
+            type: "snackbar",
+            description: "회원가입이 완료되었습니다!",
+          });
           router.push("/"); // 메인 페이지로 이동
         } else {
           // 로그인 실패 시 로그인 페이지로 이동
-          alert("회원가입은 완료되었습니다. 로그인해주세요.");
-          router.push("/login");
+          showModal({
+            type: "one-button",
+            title: "회원가입이 완료되었습니다!",
+            description: "로그인을 진행해주세요.",
+            buttonText: "로그인",
+            onConfirm: () => {
+              router.push("/login");
+            },
+          });
         }
       }
     } catch (error: any) {
       console.error("회원가입 오류:", error);
-      alert(error.message || "회원가입 중 오류가 발생했습니다.");
+      showModal({
+        type: "snackbar",
+        description: error.message || "회원가입 중 오류가 발생했습니다.",
+      });
     }
   };
 
