@@ -42,7 +42,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
             email: decoded.email,
             nickname: profileResponse?.nickname || decoded.nickname,
             role: decoded.role,
-            image: profileResponse?.image || "",
+            image: profileResponse?.imageUrl || "",
             introduction: profileResponse?.introduction || "",
           },
           isAuthenticated: true,

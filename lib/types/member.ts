@@ -7,7 +7,7 @@
  */
 export interface ProfileData {
   id: string; // UUID
-  image: string | null; // binary data or null
+  imageUrl: string | null; // binary data or null
   introduction: string | null;
   nickname: string;
 }
