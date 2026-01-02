@@ -45,9 +45,9 @@ export function useLogin() {
         const user = {
           id: decoded.sub,
           email: decoded.email,
-          nickname: decoded.nickname,
+          nickname: profileResponse?.nickname || decoded.nickname,
           role: decoded.role,
-          image: profileResponse?.image || "",
+          image: profileResponse?.imageUrl || "",
           introduction: profileResponse?.introduction || "",
         };
 
