@@ -10,9 +10,9 @@ export interface Category {
  * 1차 카테고리 목록 (백엔드 실제 UUID)
  */
 export const PRIMARY_CATEGORIES: Category[] = [
-  { id: "03d2db83-39b2-4f10-a95b-572f810a80bf", name: "일상" },
-  { id: "346e7d70-4340-40e7-9519-175521f64081", name: "Q&A" },
-  { id: "d09f60e9-577e-48d5-9839-a723689b9428", name: "팁" },
+  { id: "0", name: "일상" },
+  { id: "1", name: "Q&A" },
+  { id: "2", name: "팁" },
 ];
 
 /**
@@ -20,36 +20,36 @@ export const PRIMARY_CATEGORIES: Category[] = [
  */
 export const SECONDARY_CATEGORIES: Record<string, Category[]> = {
   일상: [
-    { id: "6c4bca71-eb30-49fa-9bd3-c868a8f4cdfc", name: "관엽/야생화" },
-    { id: "06a09124-f49d-4733-8799-4d41cea1a9f5", name: "제라늄" },
-    { id: "76817fa7-9886-4b18-8b8f-2238dd083cf2", name: "베고니아" },
-    { id: "7594ef0f-fa30-4440-acff-813bb4824cdc", name: "다육/선인장" },
-    { id: "13027570-b80a-4463-ab6d-9bfd6826fa4b", name: "식충/덩굴/구근" },
-    { id: "aa67b251-0620-40ce-b792-d2c3832b263e", name: "고사리/이끼/수생" },
-    { id: "53ac2302-ad98-4ced-9e89-f964dedb2b4c", name: "베란다/정원" },
-    { id: "6dcfa99f-f099-43e7-a73f-75a128007447", name: "농사/텃밭" },
-    { id: "14941900-3d96-4d28-a096-813005f811b6", name: "식물 쇼핑" },
-    { id: "d2c60b6b-9e20-4c2e-abf6-3b1f714d2a54", name: "기타" },
+    { id: "0", name: "관엽/야생화" },
+    { id: "1", name: "제라늄" },
+    { id: "2", name: "베고니아" },
+    { id: "3", name: "다육/선인장" },
+    { id: "4", name: "식충/덩굴/구근" },
+    { id: "5", name: "고사리/이끼/수생" },
+    { id: "6", name: "베란다/정원" },
+    { id: "7", name: "농사/텃밭" },
+    { id: "8", name: "식물 쇼핑" },
+    { id: "9", name: "기타" },
   ],
   "Q&A": [
-    { id: "6f96c36a-5f8e-489a-9de5-b7e0a07866f8", name: "물주기/흙" },
-    { id: "7cf9ec83-4692-4906-a5df-761ae6576f16", name: "잎상태/성장/병충해" },
-    { id: "c1e36daa-ab68-4e91-af1f-00a617499ae1", name: "물꽂이/잎꽂이" },
-    { id: "69aacd7f-584a-4fc0-9beb-f81226dcb6cd", name: "삽목/포기 나누기" },
-    { id: "40f1e61a-ea6e-4663-b42d-7b298da59732", name: "분갈이/가지치기" },
-    { id: "5028e3bf-42c7-4de2-a831-96d151e96489", name: "월동/씨앗" },
-    { id: "dffecad3-0c6e-4e7e-a21c-456374933d2f", name: "식물 추천/품종" },
-    { id: "c28d5cac-948c-4e99-89e2-9e48350ff630", name: "기타" },
+    { id: "0", name: "물주기/흙" },
+    { id: "1", name: "잎상태/성장/병충해" },
+    { id: "2", name: "물꽂이/잎꽂이" },
+    { id: "3", name: "삽목/포기 나누기" },
+    { id: "4", name: "분갈이/가지치기" },
+    { id: "5", name: "월동/씨앗" },
+    { id: "6", name: "식물 추천/품종" },
+    { id: "7", name: "기타" },
   ],
   팁: [
-    { id: "7623292c-5a5a-41cc-bad1-84483464654d", name: "물주기/흙" },
-    { id: "ab69779d-aca1-4105-b8c3-8c277aff75f4", name: "잎상태/성장/병충해" },
-    { id: "c6be74b4-846f-4627-b94e-383a2e687e12", name: "물꽂이/잎꽂이" },
-    { id: "586880e8-20ff-4e72-b8f5-c1199bb5f49b", name: "삽목/포기 나누기" },
-    { id: "33caa287-52f3-4c93-9efa-cd610649d18a", name: "분갈이/가지치기" },
-    { id: "e8003db4-37e3-4f5d-925e-7e79b2d73609", name: "월동/씨앗" },
-    { id: "9c9b1edf-49a8-4df5-a1ca-16eed08f7dc3", name: "식물 추천/품종" },
-    { id: "7229046b-7a58-4179-bb9d-478fb0c8c5fd", name: "기타" },
+    { id: "0", name: "물주기/흙" },
+    { id: "1", name: "잎상태/성장/병충해" },
+    { id: "2", name: "물꽂이/잎꽂이" },
+    { id: "3", name: "삽목/포기 나누기" },
+    { id: "4", name: "분갈이/가지치기" },
+    { id: "5", name: "월동/씨앗" },
+    { id: "6", name: "식물 추천/품종" },
+    { id: "7", name: "기타" },
   ],
 };
 
