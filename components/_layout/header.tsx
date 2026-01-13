@@ -7,19 +7,27 @@ import { cn } from "@/lib/utils/tailwindHelper";
 import { useAuthStore } from "@/lib/store/authStore";
 import { usePathname } from "next/navigation";
 import Profile from "@/components/_common/profileImage";
+import { User } from "@/lib/types/auth";
+import { useEffect } from "react";
 
 export interface HeaderProps {
   className?: string;
+  initialUser: User | null;
 }
 
-export default function Header({ className }: HeaderProps) {
-  const { isAuthenticated, user } = useAuthStore();
+export default function Header({ className, initialUser: user }: HeaderProps) {
+  const { isAuthenticated, user: storeUser } = useAuthStore();
   const pathname = usePathname();
   const isRootPath = pathname.endsWith("/");
 
   const logo = isRootPath
     ? "/logo_favicon/Logo_v2_white.svg"
     : "/logo_favicon/Logo_v2_black.svg";
+
+  // Sync user state with zustand store
+  useEffect(() => {
+    user = isAuthenticated ? storeUser : null;
+  }, [isAuthenticated, storeUser]);
 
   return (
     <header
@@ -38,7 +46,7 @@ export default function Header({ className }: HeaderProps) {
 
         {/* 로그인 상태에 따른 버튼 */}
         <div className="flex items-center gap-2">
-          {isAuthenticated ? (
+          {user ? (
             <>
               {/* 프로필 아이콘 (추후 드롭다운 추가) */}
               <Link href="/mypage">
