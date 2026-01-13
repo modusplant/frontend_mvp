@@ -84,9 +84,9 @@ export default function PostDetail({ postId }: PostDetailProps) {
             className="flex cursor-pointer gap-1.5"
           >
             <Heart
-              className={`h-6 w-6 ${
-                isLiked ? "text-primary-50" : "text-neutral-60"
-              }`}
+              className="h-6 w-6"
+              color={"red"}
+              fill={isLiked ? "red" : "none"}
             />
             <span>{likeCount.toLocaleString()}</span>
           </button>
@@ -97,9 +97,9 @@ export default function PostDetail({ postId }: PostDetailProps) {
             className="flex cursor-pointer gap-1.5"
           >
             <Bookmark
-              className={`h-6 w-6 ${
-                isBookmarked ? "text-primary-50" : "text-neutral-60"
-              }`}
+              className="h-6 w-6"
+              fill={isBookmarked ? "#3a972e" : "none"}
+              color={"#3a972e"}
             />
           </button>
         </div>
