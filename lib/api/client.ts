@@ -70,6 +70,7 @@ export async function refreshAccessToken(): Promise<string> {
 interface RequestConfig extends RequestInit {
   skipAuth?: boolean; // 인증 헤더 스킵 여부
   isRetry?: boolean; // 재시도 여부
+  enableCache?: boolean; // 캐시 허용 여부 (기본: false)
 }
 
 /**
@@ -79,7 +80,12 @@ export async function apiClient<T = any>(
   endpoint: string,
   config: RequestConfig = {}
 ): Promise<ApiResponse<T>> {
-  const { skipAuth = false, isRetry = false, ...fetchConfig } = config;
+  const {
+    skipAuth = false,
+    isRetry = false,
+    enableCache = false,
+    ...fetchConfig
+  } = config;
 
   const url = `${BASE_URL}${endpoint}`;
 
@@ -87,6 +93,12 @@ export async function apiClient<T = any>(
   const isFormData = fetchConfig.body instanceof FormData;
   const headers: Record<string, string> = {
     ...(!isFormData && { "Content-Type": "application/json" }),
+    // 기본적으로 캐시 방지 헤더 추가 (enableCache=true일 경우 제외)
+    ...(!enableCache && {
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      Pragma: "no-cache",
+      Expires: "0",
+    }),
     ...(fetchConfig.headers as Record<string, string>),
   };
 
