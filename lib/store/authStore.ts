@@ -11,7 +11,6 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   user: null,
   isAuthenticated: false,
   loginAttempts: 0,
-  accessToken: null,
 
   // 초기화 함수 (앱 시작 시 자동 로그인 체크)
   initialize: async () => {
@@ -46,7 +45,6 @@ export const useAuthStore = create<AuthStore>()((set) => ({
             introduction: profileResponse?.introduction || "",
           },
           isAuthenticated: true,
-          accessToken: newAccessToken,
         });
       }
     } catch (error) {
@@ -82,7 +80,6 @@ export const useAuthStore = create<AuthStore>()((set) => ({
       user: null,
       isAuthenticated: false,
       loginAttempts: 0,
-      accessToken: null,
     });
 
     // 자동 로그인 정보 제거
@@ -105,9 +102,5 @@ export const useAuthStore = create<AuthStore>()((set) => ({
     set({
       loginAttempts: 0,
     });
-  },
-
-  setAccessToken: (token: string | null) => {
-    set({ accessToken: token });
   },
 }));

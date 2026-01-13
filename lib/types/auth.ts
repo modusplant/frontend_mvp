@@ -163,7 +163,6 @@ interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   loginAttempts: number;
-  accessToken: string | null;
 }
 
 /**
@@ -176,7 +175,6 @@ interface AuthActions {
   updateUser: (user: Partial<User>) => void;
   incrementLoginAttempts: () => void;
   resetLoginAttempts: () => void;
-  setAccessToken: (token: string | null) => void;
 }
 
 /**

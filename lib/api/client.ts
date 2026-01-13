@@ -1,32 +1,42 @@
 import { ApiResponse, ApiError } from "../types/common";
-import { useAuthStore } from "../store/authStore";
+import { getCookie, setCookie, deleteCookie } from "../utils/cookies";
 
 // 서버 사이드에서는 백엔드 직접 호출, 클라이언트에서는 상대 경로(rewrites 적용)
 const BASE_URL =
   typeof window === "undefined" ? process.env.BASE_URL || "" : "";
 
+const ACCESS_TOKEN_COOKIE_NAME = "accessToken";
+const ACCESS_TOKEN_MAX_AGE = 30 * 60; // 30분 (초 단위)
+
 /**
- * authStore에서 액세스 토큰 가져오기
+ * 쿠키에서 액세스 토큰 가져오기
  */
 export const getAccessToken = (): string | null => {
   if (typeof window === "undefined") return null;
-  return useAuthStore.getState().accessToken;
+  return getCookie(ACCESS_TOKEN_COOKIE_NAME);
 };
 
 /**
- * authStore에 액세스 토큰 저장
+ * 쿠키에 액세스 토큰 저장
  */
 export const setAccessToken = (token: string): void => {
   if (typeof window === "undefined") return;
-  useAuthStore.getState().setAccessToken(token);
+  setCookie(ACCESS_TOKEN_COOKIE_NAME, token, {
+    maxAge: ACCESS_TOKEN_MAX_AGE,
+    path: "/",
+    secure: true,
+    sameSite: "Lax",
+  });
 };
 
 /**
- * authStore에서 액세스 토큰 제거
+ * 쿠키에서 액세스 토큰 제거
  */
 export const removeAccessToken = (): void => {
   if (typeof window === "undefined") return;
-  useAuthStore.getState().setAccessToken(null);
+  deleteCookie(ACCESS_TOKEN_COOKIE_NAME, {
+    path: "/",
+  });
 };
 
 /**

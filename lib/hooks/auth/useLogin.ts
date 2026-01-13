@@ -5,13 +5,14 @@ import { authApi } from "@/lib/api/auth";
 import { LoginFormValues } from "@/lib/utils/auth";
 import { decodeJWT } from "@/lib/utils/auth";
 import { memberApi } from "@/lib/api/member";
+import { setAccessToken } from "@/lib/api/client";
 
 /**
  * 로그인 커스텀 훅
  */
 export function useLogin() {
   const router = useRouter();
-  const { login, incrementLoginAttempts, setAccessToken } = useAuthStore();
+  const { login, incrementLoginAttempts } = useAuthStore();
   const [serverError, setServerError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,7 +28,7 @@ export function useLogin() {
       });
 
       if (response.status === 200 && response.data?.accessToken) {
-        // AccessToken 저장 (메모리)
+        // AccessToken 저장 (쿠키)
         setAccessToken(response.data.accessToken);
 
         // JWT에서 사용자 정보 추출
