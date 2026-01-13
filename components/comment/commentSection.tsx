@@ -16,7 +16,7 @@ export default function CommentSection({ postId }: CommentSectionProps) {
   const { comments, isLoading, refetch } = useCommentsQuery({ postId });
 
   // 댓글 트리 구조 생성
-  const { commentTree, totalCount } = useCommentTree({ comments });
+  const { commentTree, totalCount, rootCount } = useCommentTree({ comments });
 
   // 인증 상태
   const { isAuthenticated } = useAuthStore();
@@ -31,7 +31,7 @@ export default function CommentSection({ postId }: CommentSectionProps) {
       <CommentInput
         postId={postId}
         onSuccess={refetch}
-        currentCommentCount={totalCount}
+        currentCommentCount={rootCount}
       />
 
       <div className="relative">
