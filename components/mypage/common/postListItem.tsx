@@ -59,7 +59,7 @@ export default function PostListItem({ post }: PostListItemProps) {
 
             {/* 본문 일부 (말줄임표, 최대 2줄) */}
             {excerpt && (
-              <p className="text-neutral-40 line-clamp-2 text-sm leading-normal tracking-[-0.03em]">
+              <p className="text-neutral-40 line-clamp-2 max-w-3xl text-sm leading-normal tracking-[-0.03em]">
                 {excerpt}
               </p>
             )}
