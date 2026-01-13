@@ -117,7 +117,7 @@ export const commentApi = {
     return apiClient<GetMyCommentsResponseData>(
       `/api/v1/communication/comments/member/auth/${uuid}?page=${page}&size=${size}`,
       {
-        method: "POST",
+        method: "GET",
         skipAuth: false,
       }
     );
