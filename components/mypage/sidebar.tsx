@@ -27,7 +27,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="border-surface-98 flex w-[248px] flex-col gap-5 rounded-xl border bg-white p-8">
+    <aside className="border-surface-98 flex h-fit w-[248px] flex-col gap-5 rounded-xl border bg-white p-8">
       {MYPAGE_MENU_SECTIONS.map((section, sectionIndex) => (
         <div key={section.title} className="flex flex-col gap-2.5">
           {/* 섹션 제목 */}
