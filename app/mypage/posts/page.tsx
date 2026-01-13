@@ -1,5 +1,3 @@
-"use client";
-
 import MyPostSection from "@/components/mypage/posts/myPostSection";
 
 /**

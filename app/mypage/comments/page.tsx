@@ -1,12 +1,8 @@
-"use client";
+import MyCommentSection from "@/components/mypage/comments/myCommentSection";
 
-import MyCommentList from "@/components/mypage/comments/myCommentList";
-
+/**
+ * 마이페이지 - 내가 쓴 댓글 페이지
+ */
 export default function MyCommentsPage() {
-  return (
-    <div className="space-y-6">
-      <h1 className="text-heading2 text-neutral-20">내 댓글</h1>
-      <MyCommentList />
-    </div>
-  );
+  return <MyCommentSection />;
 }
