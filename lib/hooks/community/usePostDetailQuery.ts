@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { postApi } from "@/lib/api/post";
+import { postApi } from "@/lib/api/client/post";
 import { PostDetail } from "@/lib/types/post";
 
 export default function usePostDetailQuery({ postId }: { postId: string }) {

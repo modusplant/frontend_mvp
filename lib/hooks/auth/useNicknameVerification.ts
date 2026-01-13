@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { NicknameVerificationState } from "@/lib/types/auth";
-import { authApi } from "@/lib/api/auth";
+import { authApi } from "@/lib/api/client/auth";
 
 export const useNicknameVerification = () => {
   const [verificationState, setVerificationState] =

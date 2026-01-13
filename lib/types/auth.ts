@@ -5,7 +5,7 @@ import {
   FieldErrors,
   UseFormSetValue,
 } from "react-hook-form";
-import { SignupFormValues } from "@/lib/utils/auth";
+import { SignupFormValues } from "@/lib/constants/schema";
 
 /**
  * 로그인 요청 데이터
@@ -169,7 +169,6 @@ interface AuthState {
  * 인증 액션 타입
  */
 interface AuthActions {
-  initialize: () => Promise<void>;
   login: (user: User, rememberMe: boolean) => void;
   logout: () => void;
   updateUser: (user: Partial<User>) => void;

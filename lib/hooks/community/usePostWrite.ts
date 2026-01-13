@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { postApi } from "@/lib/api/post";
+import { postApi } from "@/lib/api/client/post";
 import { PostWritePayload } from "@/lib/types/post";
 import { showModal } from "@/lib/store/modalStore";
 

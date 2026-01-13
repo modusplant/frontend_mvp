@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { memberApi } from "@/lib/api/member";
+import { memberApi } from "@/lib/api/client/member";
 import { ProfileData } from "@/lib/types/member";
 import { ApiResponse } from "@/lib/types/common";
 import { useAuthStore } from "@/lib/store/authStore";

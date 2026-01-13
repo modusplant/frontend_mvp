@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { postApi } from "@/lib/api/post";
+import { postApi } from "@/lib/api/client/post";
 import { useAuthStore } from "@/lib/store/authStore";
 import { showModal } from "@/lib/store/modalStore";
 import { set } from "zod";

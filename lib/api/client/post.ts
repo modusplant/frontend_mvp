@@ -1,4 +1,4 @@
-import { apiClient } from "@/lib/api/client";
+import { clientApiInstance } from "../instances/clientInstance";
 import { ApiResponse } from "@/lib/types/common";
 import {
   GetMyPostsRequest,
@@ -44,7 +44,7 @@ export const postApi = {
 
     const endpoint = `/api/v1/communication/posts?${queryParams.toString()}`;
 
-    return apiClient<GetPostsResponseData>(endpoint, {
+    return clientApiInstance<GetPostsResponseData>(endpoint, {
       method: "GET",
       skipAuth: false, // 인증 필요 (북마크 상태 등)
     });
@@ -56,10 +56,13 @@ export const postApi = {
    * @returns 게시글 상세 정보
    */
   async getPostDetail(postId: string): Promise<ApiResponse<PostDetail>> {
-    return apiClient<PostDetail>(`/api/v1/communication/posts/${postId}`, {
-      method: "GET",
-      skipAuth: false,
-    });
+    return clientApiInstance<PostDetail>(
+      `/api/v1/communication/posts/${postId}`,
+      {
+        method: "GET",
+        skipAuth: false,
+      }
+    );
   },
 
   /**
@@ -68,7 +71,7 @@ export const postApi = {
    * @returns 게시글 상세 정보
    */
   async getEditPostDetail(postId: string): Promise<ApiResponse<PostEditData>> {
-    return apiClient<PostEditData>(
+    return clientApiInstance<PostEditData>(
       `/api/v1/communication/posts/${postId}/data`,
       {
         method: "GET",
@@ -83,7 +86,7 @@ export const postApi = {
    * @returns 성공 응답
    */
   async deletePost(postId: string): Promise<ApiResponse<void>> {
-    return apiClient<void>(`/api/v1/communication/posts/${postId}`, {
+    return clientApiInstance<void>(`/api/v1/communication/posts/${postId}`, {
       method: "DELETE",
       skipAuth: false,
     });
@@ -99,7 +102,7 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/members/${memberId}/like/communication/post/${postUlid}`,
       {
         method: "PUT",
@@ -118,7 +121,7 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/members/${memberId}/like/communication/post/${postUlid}`,
       {
         method: "DELETE",
@@ -137,7 +140,7 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/members/${memberId}/bookmark/communication/post/${postUlid}`,
       {
         method: "PUT",
@@ -156,7 +159,7 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/members/${memberId}/bookmark/communication/post/${postUlid}`,
       {
         method: "DELETE",
@@ -212,7 +215,7 @@ export const postApi = {
       isPublished: "true", // 항상 게시 (임시저장 제외)
     });
 
-    return apiClient<void>(`/api/v1/communication/posts?${params}`, {
+    return clientApiInstance<void>(`/api/v1/communication/posts?${params}`, {
       method: "POST",
       body: formData,
       skipAuth: false,
@@ -270,11 +273,14 @@ export const postApi = {
       isPublished: "true",
     });
 
-    return apiClient<void>(`/api/v1/communication/posts/${postId}?${params}`, {
-      method: "PUT",
-      body: formData,
-      skipAuth: false,
-    });
+    return clientApiInstance<void>(
+      `/api/v1/communication/posts/${postId}?${params}`,
+      {
+        method: "PUT",
+        body: formData,
+        skipAuth: false,
+      }
+    );
   },
 
   /**
@@ -292,7 +298,7 @@ export const postApi = {
 
     const endpoint = `/api/v1/communication/posts/me/history?${queryParams.toString()}`;
 
-    return apiClient<GetRecentPostsResponseData>(endpoint, {
+    return clientApiInstance<GetRecentPostsResponseData>(endpoint, {
       method: "GET",
       skipAuth: false, // 인증 필요
     });
@@ -313,7 +319,7 @@ export const postApi = {
 
     const endpoint = `/api/v1/communication/posts/me?${queryParams.toString()}`;
 
-    return apiClient<GetMyPostsResponseData>(endpoint, {
+    return clientApiInstance<GetMyPostsResponseData>(endpoint, {
       method: "GET",
       skipAuth: false, // 인증 필요
     });
@@ -334,7 +340,7 @@ export const postApi = {
 
     const endpoint = `/api/v1/communication/posts/me/likes?${queryParams.toString()}`;
 
-    return apiClient<GetMyPostsResponseData>(endpoint, {
+    return clientApiInstance<GetMyPostsResponseData>(endpoint, {
       method: "GET",
       skipAuth: false, // 인증 필요
     });
@@ -355,7 +361,7 @@ export const postApi = {
 
     const endpoint = `/api/v1/communication/posts/me/bookmarks?${queryParams.toString()}`;
 
-    return apiClient<GetMyPostsResponseData>(endpoint, {
+    return clientApiInstance<GetMyPostsResponseData>(endpoint, {
       method: "GET",
       skipAuth: false, // 인증 필요
     });

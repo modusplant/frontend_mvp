@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { EmailVerificationState } from "@/lib/types/auth";
-import { authApi } from "@/lib/api/auth";
+import { authApi } from "@/lib/api/client/auth";
 import { showModal } from "@/lib/store/modalStore";
 
 const DEFAULT_EXPIRES_IN = 300; // 5분 = 300초

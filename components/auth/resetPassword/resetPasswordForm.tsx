@@ -6,14 +6,13 @@ import Button from "@/components/_common/button";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { authApi } from "@/lib/api/auth";
+import { authApi } from "@/lib/api/client/auth";
 import { ApiError } from "@/lib/types/common";
 import { showModal } from "@/lib/store/modalStore";
 import {
   newPasswordSchema,
   NewPasswordFormValues,
-  validatePassword,
-} from "@/lib/utils/auth";
+} from "@/lib/constants/schema";
 import { cn } from "@/lib/utils/tailwindHelper";
 
 interface ResetPasswordFormProps {

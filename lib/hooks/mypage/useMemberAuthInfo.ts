@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { memberApi } from "@/lib/api/member";
+import { memberApi } from "@/lib/api/client/member";
 import { AuthInfo } from "@/lib/types/member";
 
 /**

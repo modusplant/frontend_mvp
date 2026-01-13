@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { postApi } from "@/lib/api/post";
+import { postApi } from "@/lib/api/client/post";
 import { useAuthStore } from "@/lib/store/authStore";
 import { showModal } from "@/lib/store/modalStore";
 

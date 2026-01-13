@@ -5,11 +5,11 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
 import Button from "@/components/_common/button";
-import { authApi } from "@/lib/api/auth";
+import { authApi } from "@/lib/api/client/auth";
 import { ApiError } from "@/lib/types/common";
 import { showModal } from "@/lib/store/modalStore";
 import { z } from "zod";
-import { emailSchema } from "@/lib/utils/auth";
+import { emailSchema } from "@/lib/constants/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 

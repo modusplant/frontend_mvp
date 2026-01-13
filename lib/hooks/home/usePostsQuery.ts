@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { postApi } from "@/lib/api/post";
+import { postApi } from "@/lib/api/client/post";
 import { GetPostsRequest } from "@/lib/types/post";
 
 interface UsePostsQueryParams {

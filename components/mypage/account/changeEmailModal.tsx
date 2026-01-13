@@ -7,9 +7,9 @@ import Button from "@/components/_common/button";
 import { Input } from "@/components/_common/input";
 import { useEmailVerification } from "@/lib/hooks/auth/useEmailVerification";
 import { cn } from "@/lib/utils/tailwindHelper";
-import { emailSchema, verificationCodeSchema } from "@/lib/utils/auth";
+import { emailSchema, verificationCodeSchema } from "@/lib/constants/schema";
 import { showModal } from "@/lib/store/modalStore";
-import { memberApi } from "@/lib/api/member";
+import { memberApi } from "@/lib/api/client/member";
 import { useAuthStore } from "@/lib/store/authStore";
 import { useRouter } from "next/navigation";
 

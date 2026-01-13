@@ -1,4 +1,4 @@
-import { apiClient } from "./client";
+import { clientApiInstance } from "@/lib/api/instances/clientInstance";
 import { ApiResponse } from "@/lib/types/common";
 import { ProfileData, AuthInfo } from "@/lib/types/member";
 
@@ -11,7 +11,7 @@ export const memberApi = {
    * GET /api/v1/members/{id}/profile
    */
   async getProfile(userId: string): Promise<ApiResponse<ProfileData>> {
-    return apiClient<ProfileData>(`/api/v1/members/${userId}/profile`, {
+    return clientApiInstance<ProfileData>(`/api/v1/members/${userId}/profile`, {
       method: "GET",
     });
   },
@@ -25,7 +25,7 @@ export const memberApi = {
     userId: string,
     formData: FormData
   ): Promise<ApiResponse<ProfileData>> {
-    return apiClient<ProfileData>(`/api/v1/members/${userId}/profile`, {
+    return clientApiInstance<ProfileData>(`/api/v1/members/${userId}/profile`, {
       method: "PUT",
       body: formData,
       // FormData는 자동으로 Content-Type 설정됨
@@ -40,7 +40,7 @@ export const memberApi = {
    * POST /api/v1/members/{id}/auth-info
    */
   async getAuthInfo(userId: string): Promise<ApiResponse<AuthInfo>> {
-    return apiClient<AuthInfo>(`/api/v1/members/${userId}/auth-info`, {
+    return clientApiInstance<AuthInfo>(`/api/v1/members/${userId}/auth-info`, {
       method: "GET",
     });
   },
@@ -54,7 +54,7 @@ export const memberApi = {
     currentEmail: string,
     newEmail: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(`/api/v1/members/${userId}/modify/email`, {
+    return clientApiInstance<void>(`/api/v1/members/${userId}/modify/email`, {
       method: "POST",
       body: JSON.stringify({
         currentEmail,

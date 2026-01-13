@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { commentApi } from "@/lib/api/comment";
+import { commentApi } from "@/lib/api/client/comment";
 import { useAuthStore } from "@/lib/store/authStore";
 import { generateCommentPath } from "@/lib/utils/parseComments";
 import { showModal } from "@/lib/store/modalStore";
