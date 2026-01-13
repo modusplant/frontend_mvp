@@ -45,19 +45,27 @@ export default function MyCommentList() {
   return (
     <div className="space-y-6">
       {/* 댓글 목록 */}
-      <div className="space-y-4">
+      <div className="space-y-6">
         {commentList.map((comment, index) => (
-          <MyCommentItem key={`${comment.postId}-${index}`} comment={comment} />
+          <div key={`${comment.postId}-${index}`}>
+            <MyCommentItem comment={comment} />
+            {/* 마지막 아이템이 아니면 구분선 추가 */}
+            {index < commentList.length - 1 && (
+              <div className="mt-6 h-px w-full bg-[#EFEFEF]" />
+            )}
+          </div>
         ))}
       </div>
 
       {/* 페이지네이션 */}
       {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
+        <div className="flex justify-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </div>
       )}
     </div>
   );

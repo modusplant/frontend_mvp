@@ -31,7 +31,7 @@ export interface MyComment {
   createdAt: string; // yyyy-mm-dd
   postTitle: string; // 게시글 제목
   postId: string; // 게시글 ID (추가됨)
-  totalCommentsInPost: number; // 해당 게시글의 총 댓글 수
+  totalCommentsOfPost: number; // 해당 게시글의 총 댓글 수
 }
 
 /**
