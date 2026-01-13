@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PostDetail from "@/components/community/detail/postDetail";
-import { postApi } from "@/lib/api/post";
+import { postApi } from "@/lib/api/client/post";
 
 interface PostPageProps {
   params: {

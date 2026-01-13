@@ -10,7 +10,7 @@ import ContentEditor from "@/components/community/write/contentEditor";
 import PostWriteActions from "@/components/community/write/postWriteActions";
 import usePostWrite from "@/lib/hooks/community/usePostWrite";
 import { usePostWriteForm } from "@/lib/hooks/community/usePostWriteForm";
-import { postApi } from "@/lib/api/post";
+import { postApi } from "@/lib/api/client/post";
 
 export default function PostWritePage() {
   const params = useParams();

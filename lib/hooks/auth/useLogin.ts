@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
-import { authApi } from "@/lib/api/auth";
-import { LoginFormValues } from "@/lib/utils/auth";
+import { authApi } from "@/lib/api/client/auth";
+import { LoginFormValues } from "@/lib/constants/schema";
 import { decodeJWT } from "@/lib/utils/auth";
-import { memberApi } from "@/lib/api/member";
-import { setAccessToken } from "@/lib/api/client";
+import { memberApi } from "@/lib/api/client/member";
+import { setCookie } from "@/lib/utils/cookies/client";
+import {
+  ACCESS_TOKEN_COOKIE_NAME,
+  ACCESS_TOKEN_MAX_AGE,
+  REMEMBER_ME_MAX_AGE,
+} from "@/lib/constants/auth";
 
 /**
  * 로그인 커스텀 훅
@@ -29,7 +34,22 @@ export function useLogin() {
 
       if (response.status === 200 && response.data?.accessToken) {
         // AccessToken 저장 (쿠키)
-        setAccessToken(response.data.accessToken);
+        await setCookie(ACCESS_TOKEN_COOKIE_NAME, response.data.accessToken, {
+          maxAge: ACCESS_TOKEN_MAX_AGE,
+          path: "/",
+          secure: true,
+          sameSite: "Lax",
+        });
+
+        // rememberMe 쿠키 저장 (1주일)
+        if (data.rememberMe) {
+          await setCookie("rememberMe", "true", {
+            maxAge: REMEMBER_ME_MAX_AGE,
+            path: "/",
+            secure: true,
+            sameSite: "Lax",
+          });
+        }
 
         // JWT에서 사용자 정보 추출
         const decoded = decodeJWT(response.data.accessToken);
