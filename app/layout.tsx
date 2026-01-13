@@ -4,8 +4,9 @@ import localFont from "next/font/local";
 import AuthInitializer from "@/components/_layout/authInitializer";
 import ConditionalLayout from "@/components/_layout/conditionalLayout";
 import QueryProvider from "@/components/_layout/queryProvider";
-import "./globals.css";
 import ModalProvider from "@/components/_layout/modalProvider";
+import { getInitialAuthState } from "@/lib/utils/getInitialAuthState";
+import "./globals.css";
 
 // Emphasis 폰트: Nanum Myeongjo (제목, 강조)
 const nanumMyeongjo = Nanum_Myeongjo({
@@ -58,19 +59,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const initialUser = await getInitialAuthState();
+
   return (
     <html lang="ko">
       <body
         className={`${pretendard.className} ${nanumMyeongjo.variable} antialiased`}
       >
         <QueryProvider>
-          <AuthInitializer />
-          <ConditionalLayout>{children}</ConditionalLayout>
+          <AuthInitializer initialUser={initialUser} />
+          <ConditionalLayout initialUser={initialUser}>
+            {children}
+          </ConditionalLayout>
           <ModalProvider />
         </QueryProvider>
       </body>

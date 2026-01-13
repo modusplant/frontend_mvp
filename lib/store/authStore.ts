@@ -1,9 +1,7 @@
 import { create } from "zustand";
-import { refreshAccessToken } from "@/lib/api/client";
 import { User, AuthStore } from "@/lib/types/auth";
-import { decodeJWT } from "@/lib/utils/auth";
-import { authApi } from "@/lib/api/auth";
-import { memberApi } from "@/lib/api/member";
+import { authApi } from "@/lib/api/client/auth";
+import { deleteCookie } from "@/lib/utils/cookies/client";
 
 // Zustand store 생성
 export const useAuthStore = create<AuthStore>()((set) => ({
@@ -11,48 +9,6 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   user: null,
   isAuthenticated: false,
   loginAttempts: 0,
-
-  // 초기화 함수 (앱 시작 시 자동 로그인 체크)
-  initialize: async () => {
-    // 서버 환경에서는 실행하지 않음
-    if (typeof window === "undefined") return;
-
-    const rememberMe = localStorage.getItem("rememberMe") === "true";
-
-    // rememberMe가 false이면 종료
-    if (!rememberMe) {
-      return;
-    }
-
-    // RefreshToken(httpOnly 쿠키)으로 새 AccessToken 발급 시도
-    try {
-      const newAccessToken = await refreshAccessToken();
-
-      // 새 토큰에서 사용자 정보 추출
-      const decoded = decodeJWT(newAccessToken);
-      if (decoded) {
-        // 토큰에서 추출한 ID로 추가 사용자 정보(image, introduction) 조회
-        const { data: profileResponse } = await memberApi.getProfile(
-          decoded.sub
-        );
-        set({
-          user: {
-            id: decoded.sub,
-            email: decoded.email,
-            nickname: profileResponse?.nickname || decoded.nickname,
-            role: decoded.role,
-            image: profileResponse?.imageUrl || "",
-            introduction: profileResponse?.introduction || "",
-          },
-          isAuthenticated: true,
-        });
-      }
-    } catch (error) {
-      // RefreshToken도 만료되었거나 없는 경우 자동 로그인 정보 제거
-      console.error("자동 로그인 실패:", error);
-      localStorage.removeItem("rememberMe");
-    }
-  },
 
   // 액션들
   login: (user: User, rememberMe: boolean) => {
@@ -63,27 +19,22 @@ export const useAuthStore = create<AuthStore>()((set) => ({
       isAuthenticated: true,
       loginAttempts: 0, // 로그인 성공 시 시도 횟수 초기화
     });
-
-    // 자동 로그인 설정
-    if (rememberMe) {
-      localStorage.setItem("rememberMe", "true");
-    } else {
-      localStorage.removeItem("rememberMe");
-    }
   },
 
   logout: () => {
     // 서버에 로그아웃 요청 (비동기, 에러 무시)
     authApi.logout().catch(console.error);
 
+    // RememberMe 쿠키 삭제
+    deleteCookie("rememberMe", {
+      path: "/",
+    });
+
     set({
       user: null,
       isAuthenticated: false,
       loginAttempts: 0,
     });
-
-    // 자동 로그인 정보 제거
-    localStorage.removeItem("rememberMe");
   },
 
   updateUser: (userData: Partial<User>) => {
