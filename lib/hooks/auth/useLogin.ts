@@ -73,7 +73,7 @@ export function useLogin() {
         };
 
         // 로그인 성공 - JWT에서 추출한 사용자 정보 저장
-        login(user, data.rememberMe || false);
+        login(user);
 
         console.log("로그인 성공");
         router.push("/");
