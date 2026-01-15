@@ -8,26 +8,23 @@ import { useAuthStore } from "@/lib/store/authStore";
 import { usePathname } from "next/navigation";
 import Profile from "@/components/_common/profileImage";
 import { User } from "@/lib/types/auth";
-import { useEffect } from "react";
 
 export interface HeaderProps {
   className?: string;
   initialUser: User | null;
 }
 
-export default function Header({ className, initialUser: user }: HeaderProps) {
+export default function Header({ className, initialUser }: HeaderProps) {
   const { isAuthenticated, user: storeUser } = useAuthStore();
   const pathname = usePathname();
   const isRootPath = pathname.endsWith("/");
 
+  // Use store user if authenticated, otherwise use initialUser
+  const user = isAuthenticated ? storeUser : initialUser;
+
   const logo = isRootPath
     ? "/logo_favicon/Logo_v2_white.svg"
     : "/logo_favicon/Logo_v2_black.svg";
-
-  // Sync user state with zustand store
-  useEffect(() => {
-    user = isAuthenticated ? storeUser : null;
-  }, [isAuthenticated, storeUser]);
 
   return (
     <header
