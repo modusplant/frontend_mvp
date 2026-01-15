@@ -1,7 +1,21 @@
 import { create } from "zustand";
-import { User, AuthStore } from "@/lib/types/auth";
+import { User } from "@/lib/types/auth";
 import { authApi } from "@/lib/api/client/auth";
 import { deleteCookie } from "@/lib/utils/cookies/client";
+interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+  loginAttempts: number;
+}
+interface AuthActions {
+  login: (user: User) => void;
+  logout: () => void;
+  updateUser: (user: Partial<User>) => void;
+  incrementLoginAttempts: () => void;
+  resetLoginAttempts: () => void;
+}
+
+type AuthStore = AuthState & AuthActions;
 
 // Zustand store 생성
 export const useAuthStore = create<AuthStore>()((set) => ({
@@ -11,7 +25,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   loginAttempts: 0,
 
   // 액션들
-  login: (user: User, rememberMe: boolean) => {
+  login: (user: User) => {
     set({
       user: {
         ...user,
