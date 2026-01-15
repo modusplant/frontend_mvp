@@ -10,7 +10,7 @@ import { useCategoryFilter } from "@/lib/hooks/category/useCategoryFilter";
 import { usePostsQuery } from "@/lib/hooks/home/usePostsQuery";
 import LoadingState from "./loadingState";
 import ErrorState from "./errorState";
-import EmptyState from "./emptyState";
+import HomeEmptyState from "./homeEmptyState";
 
 export default function PostList() {
   const { isAuthenticated } = useAuthStore();
@@ -155,7 +155,7 @@ export default function PostList() {
           {isFetchingNextPage && <LoadingState />}
 
           {/* 게시물이 없을 때 */}
-          {allPosts.length === 0 && <EmptyState />}
+          {allPosts.length === 0 && <HomeEmptyState />}
         </>
       )}
     </section>
