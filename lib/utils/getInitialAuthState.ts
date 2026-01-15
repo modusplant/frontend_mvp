@@ -1,5 +1,5 @@
 import { memberApi } from "@/lib/api/server/member";
-import { decodeJWT } from "@/lib/utils/auth";
+import { decodeJWT } from "@/lib/utils/auth/decodeJWT";
 
 /**
  * 서버에서 초기 인증 상태 결정
