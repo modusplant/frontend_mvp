@@ -34,7 +34,7 @@ export default function CommentSection({ postId }: CommentSectionProps) {
         currentCommentCount={rootCount}
       />
 
-      <div className="relative">
+      <div className="relative min-h-[30vh] overflow-hidden">
         {/* 댓글 목록 */}
         {isLoading ? (
           <div className="text-neutral-60 py-12 text-center">
