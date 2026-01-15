@@ -8,7 +8,7 @@ import HeroBannerContent from "./heroBannerContent";
 
 export interface HeroBannerProps {
   images?: string[];
-  autoPlayInterval?: number; // 밀리초 단위 (기본 3000ms = 3초)
+  autoPlayInterval?: number; // 밀리초 단위 (기본 5000ms = 5초)
   className?: string;
   title?: string;
   subtitle?: string;
@@ -17,13 +17,13 @@ export interface HeroBannerProps {
 
 /**
  * 메인페이지 히어로 배너 (자동 슬라이드)
- * - 3개 이미지 자동 재생 (3초 간격)
+ * - 3개 이미지 자동 재생 (5초 간격)
  * - 좌우 화살표 네비게이션
  * - 루프 슬라이더
  */
 export default function HeroBanner({
   images = ["/banner/ban_01.png", "/banner/ban_02.png", "/banner/ban_01.png"],
-  autoPlayInterval = 3000,
+  autoPlayInterval = 5000,
   className,
   title,
   subtitle,
