@@ -9,6 +9,7 @@ import { authApi } from "@/lib/api/client/auth";
 import { useAuthStore } from "@/lib/store/authStore";
 import { TERMS_VERSIONS } from "@/lib/constants/terms";
 import { Button } from "@/components/_common/button";
+import { processSuccessfulAuth } from "@/lib/utils/auth/processSuccessfulAuth";
 
 // Sub-components
 import EmailSection from "./emailSection";
@@ -54,9 +55,15 @@ export default function SignupForm() {
           password: data.password,
         });
 
-        if (loginResult.status === 200 && loginResult.user) {
-          // 3. JWT에서 추출한 사용자 정보로 로그인 처리
-          login(loginResult.user, true); // rememberMe: true로 자동 로그인 활성화
+        if (loginResult.status === 200 && loginResult.data?.accessToken) {
+          // 3-6. 인증 성공 처리 (토큰 저장, 사용자 정보 조회 등)
+          const user = await processSuccessfulAuth(
+            loginResult.data.accessToken,
+            true // 회원가입 시 rememberMe 무조건 true
+          );
+
+          // 로그인 성공 - 사용자 정보 저장
+          login(user);
 
           showModal({
             type: "snackbar",
