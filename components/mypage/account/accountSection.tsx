@@ -44,12 +44,12 @@ export default function AccountSection() {
         {emailModalVisible && (
           <ChangeEmailModal
             userId={user!.id}
-            email={authInfo.email}
+            email={user?.email || authInfo.email}
             close={() => setEmailModalVisible(false)}
           />
         )}
         <EmailInfoSection
-          email={authInfo.email}
+          email={user?.email || authInfo.email}
           createdAt={authInfo.createdAt}
           onChangeEmail={() => setEmailModalVisible(true)}
         />

@@ -103,7 +103,7 @@ export default function ChangeEmailModal({
           router.push("/login");
           setTimeout(() => {
             logout();
-          }, 500);
+          }, 1000);
         },
       });
     }
