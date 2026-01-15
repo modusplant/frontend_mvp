@@ -1,4 +1,4 @@
-import EmptyState from "../mypage/common/emptyState";
+import EmptyState from "../_common/emptyState";
 
 export default function HomeEmptyState() {
   return (
