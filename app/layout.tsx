@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nanum_Myeongjo } from "next/font/google";
 import localFont from "next/font/local";
 import AuthInitializer from "@/components/_layout/authInitializer";
+import AuthGuard from "@/components/_layout/authGuard";
 import ConditionalLayout from "@/components/_layout/conditionalLayout";
 import QueryProvider from "@/components/_layout/queryProvider";
 import ModalProvider from "@/components/_layout/modalProvider";
@@ -74,7 +75,7 @@ export default async function RootLayout({
         <QueryProvider>
           <AuthInitializer initialUser={initialUser} />
           <ConditionalLayout initialUser={initialUser}>
-            {children}
+            <AuthGuard>{children}</AuthGuard>
           </ConditionalLayout>
           <ModalProvider />
         </QueryProvider>
