@@ -18,7 +18,7 @@ export function getCategoryNameById(
 
   // 1차 카테고리에서 검색
   if (!primaryCategoryId) {
-    const primaryCategory = PRIMARY_CATEGORIES.find((c) => c.id === categoryId);
+    const primaryCategory = PRIMARY_CATEGORIES.find((c) => c.id == categoryId);
     if (primaryCategory) {
       return primaryCategory.name;
     }
@@ -28,7 +28,7 @@ export function getCategoryNameById(
     const primaryCategoryName = getCategoryNameById(primaryCategoryId);
     const secondaryCategories = SECONDARY_CATEGORIES[primaryCategoryName] || [];
     const secondaryCategory = secondaryCategories.find(
-      (c) => c.id === categoryId
+      (c) => c.id == categoryId
     );
     if (secondaryCategory) {
       return secondaryCategory.name;

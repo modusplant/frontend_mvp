@@ -39,8 +39,8 @@ export default function PostWritePage() {
       .join("\n\n");
 
     return {
-      primaryCategoryId: post.primaryCategory,
-      secondaryCategoryId: post.secondaryCategory,
+      primaryCategoryId: post.primaryCategoryId,
+      secondaryCategoryId: post.secondaryCategoryId,
       title: post.title,
       textContent: textParts,
     };
@@ -94,6 +94,7 @@ export default function PostWritePage() {
           secondaryCategoryId={secondaryCategoryId}
           onPrimaryCategoryChange={setPrimaryCategoryId}
           onSecondaryCategoryChange={setSecondaryCategoryId}
+          isEditMode={hookIsEditMode}
         />
 
         {/* 제목 입력 */}

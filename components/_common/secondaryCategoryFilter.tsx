@@ -18,6 +18,7 @@ export interface SecondaryCategoryFilterProps {
   multiSelect?: boolean;
   showAll?: boolean;
   className?: string;
+  disableAutoReset?: boolean;
 }
 
 /**
@@ -33,6 +34,7 @@ export default function SecondaryCategoryFilter({
   multiSelect = true,
   showAll = true,
   className,
+  disableAutoReset = false,
 }: SecondaryCategoryFilterProps) {
   const { isOpen, dropdownRef, toggle, close } = useDropdownState();
   const isSelector = variant === "selector";
@@ -84,10 +86,12 @@ export default function SecondaryCategoryFilter({
 
   // 1차 카테고리 변경 시 2차 카테고리 자동 초기화
   useEffect(() => {
-    if (variant === "filter") {
-      onCategoriesChange(["all"]);
-    } else {
-      onCategoriesChange([]);
+    if (!disableAutoReset) {
+      if (variant === "filter") {
+        onCategoriesChange(["all"]);
+      } else {
+        onCategoriesChange([]);
+      }
     }
   }, [primaryCategoryId]);
 

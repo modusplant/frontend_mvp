@@ -65,8 +65,8 @@ export interface PostEditData
     PostData,
     "likeCount" | "commentCount" | "isLiked" | "isBookmarked"
   > {
-  primaryCategoryId: string; // UUID
-  secondaryCategoryId: string; // UUID
+  primaryCategoryId: string;
+  secondaryCategoryId: string;
   authorUuid: string;
   isPublished: boolean;
   updatedAt: string;
