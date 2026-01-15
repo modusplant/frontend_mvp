@@ -19,7 +19,7 @@ export default function DialogModal({
 }: DialogModalProps) {
   return (
     <div
-      className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center"
+      className="bg-opacity-50 fixed inset-0 z-99 flex items-center justify-center"
       onClick={hideModal}
     >
       <div
