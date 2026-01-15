@@ -39,9 +39,8 @@ export default function PostWritePage() {
       .join("\n\n");
 
     return {
-      // TODO: API 응답에서 UUID를 가져와야 함
-      primaryCategoryId: post.primaryCategory, // API에서 ID로 제공되어야 함
-      secondaryCategoryId: post.secondaryCategory, // API에서 ID로 제공되어야 함
+      primaryCategoryId: post.primaryCategory,
+      secondaryCategoryId: post.secondaryCategory,
       title: post.title,
       textContent: textParts,
     };

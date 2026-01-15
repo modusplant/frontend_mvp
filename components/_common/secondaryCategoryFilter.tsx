@@ -96,7 +96,7 @@ export default function SecondaryCategoryFilter({
     if (isSelector) {
       const firstId = selectedCategoryIds[0];
       return firstId
-        ? getCategoryNameById(firstId)
+        ? getCategoryNameById(firstId, primaryCategoryId)
         : "세부 주제를 선택해주세요(필수)";
     }
     if (selectedCategoryIds.includes("all")) {
