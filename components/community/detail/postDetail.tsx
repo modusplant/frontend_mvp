@@ -81,11 +81,11 @@ export default function PostDetail({ postId }: PostDetailProps) {
           <button
             onClick={handleLike}
             disabled={isLiking}
-            className="flex cursor-pointer gap-1.5"
+            className="group flex cursor-pointer gap-1.5"
           >
             <Heart
-              className="h-6 w-6"
-              color={"red"}
+              className={`h-6 w-6 transition-all ${isLiked ? "" : "group-hover:fill-neutral-90"}`}
+              color={isLiked ? "red" : "#919191"}
               fill={isLiked ? "red" : "none"}
             />
             <span>{likeCount.toLocaleString()}</span>
@@ -94,12 +94,12 @@ export default function PostDetail({ postId }: PostDetailProps) {
           <button
             onClick={handleBookmark}
             disabled={isBookmarking}
-            className="flex cursor-pointer gap-1.5"
+            className="group flex cursor-pointer gap-1.5"
           >
             <Bookmark
-              className="h-6 w-6"
+              className={`h-6 w-6 transition-all ${isBookmarked ? "" : "group-hover:fill-neutral-90"}`}
               fill={isBookmarked ? "#3a972e" : "none"}
-              color={"#3a972e"}
+              color={isBookmarked ? "#3a972e" : "#919191"}
             />
           </button>
         </div>
