@@ -40,6 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# dependency-cruiser
+dependency-graph*.html
+dependency-graph*.mmd
+dependency-graph*.svg
+
 .github
 .vscode
 /docs
