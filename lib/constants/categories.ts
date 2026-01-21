@@ -10,9 +10,9 @@ export interface Category {
  * 1차 카테고리 목록 (백엔드 실제 UUID)
  */
 export const PRIMARY_CATEGORIES: Category[] = [
-  { id: "0", name: "일상" },
-  { id: "1", name: "Q&A" },
-  { id: "2", name: "팁" },
+  { id: "1", name: "일상" },
+  { id: "2", name: "Q&A" },
+  { id: "3", name: "팁" },
 ];
 
 /**
@@ -20,36 +20,36 @@ export const PRIMARY_CATEGORIES: Category[] = [
  */
 export const SECONDARY_CATEGORIES: Record<string, Category[]> = {
   일상: [
-    { id: "0", name: "관엽/야생화" },
-    { id: "1", name: "제라늄" },
-    { id: "2", name: "베고니아" },
-    { id: "3", name: "다육/선인장" },
-    { id: "4", name: "식충/덩굴/구근" },
-    { id: "5", name: "고사리/이끼/수생" },
-    { id: "6", name: "베란다/정원" },
-    { id: "7", name: "농사/텃밭" },
-    { id: "8", name: "식물 쇼핑" },
-    { id: "9", name: "기타" },
+    { id: "1", name: "관엽/야생화" },
+    { id: "2", name: "제라늄" },
+    { id: "3", name: "베고니아" },
+    { id: "4", name: "다육/선인장" },
+    { id: "5", name: "식충/덩굴/구근" },
+    { id: "6", name: "고사리/이끼/수생" },
+    { id: "7", name: "베란다/정원" },
+    { id: "8", name: "농사/텃밭" },
+    { id: "9", name: "식물 쇼핑" },
+    { id: "10", name: "기타" },
   ],
   "Q&A": [
-    { id: "0", name: "물주기/흙" },
-    { id: "1", name: "잎상태/성장/병충해" },
-    { id: "2", name: "물꽂이/잎꽂이" },
-    { id: "3", name: "삽목/포기 나누기" },
-    { id: "4", name: "분갈이/가지치기" },
-    { id: "5", name: "월동/씨앗" },
-    { id: "6", name: "식물 추천/품종" },
-    { id: "7", name: "기타" },
+    { id: "1", name: "물주기/흙" },
+    { id: "2", name: "잎상태/성장/병충해" },
+    { id: "3", name: "물꽂이/잎꽂이" },
+    { id: "4", name: "삽목/포기 나누기" },
+    { id: "5", name: "분갈이/가지치기" },
+    { id: "6", name: "월동/씨앗" },
+    { id: "7", name: "식물 추천/품종" },
+    { id: "8", name: "기타" },
   ],
   팁: [
-    { id: "0", name: "물주기/흙" },
-    { id: "1", name: "잎상태/성장/병충해" },
-    { id: "2", name: "물꽂이/잎꽂이" },
-    { id: "3", name: "삽목/포기 나누기" },
-    { id: "4", name: "분갈이/가지치기" },
-    { id: "5", name: "월동/씨앗" },
-    { id: "6", name: "식물 추천/품종" },
-    { id: "7", name: "기타" },
+    { id: "1", name: "물주기/흙" },
+    { id: "2", name: "잎상태/성장/병충해" },
+    { id: "3", name: "물꽂이/잎꽂이" },
+    { id: "4", name: "삽목/포기 나누기" },
+    { id: "5", name: "분갈이/가지치기" },
+    { id: "6", name: "월동/씨앗" },
+    { id: "7", name: "식물 추천/품종" },
+    { id: "8", name: "기타" },
   ],
 };
 
