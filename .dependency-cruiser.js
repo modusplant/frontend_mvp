@@ -237,12 +237,12 @@ module.exports = {
     // true: detect dependencies in JSDoc-style import statements. 
     // Implies parser: 'tsc', which a.o. means the typescript compiler will need
     // to be installed in the same spot you run dependency-cruiser from.
-    detectJSDocImports: true,
+    detectJSDocImports: false,
 
     // false: don't look at process.getBuiltinModule calls (the default)
     // true: dependency-cruiser will detect calls to process.getBuiltinModule/
     // globalThis.process.getBuiltinModule as imports.
-    detectProcessBuiltinModuleCalls: true,
+    detectProcessBuiltinModuleCalls: false,
 
     // prefix for links in html, d2, mermaid and dot/ svg output (e.g. 'https://github.com/you/yourrepo/blob/main/'
     // to open it on your online repo or `vscode://file/${process.cwd()}/` to 
@@ -256,7 +256,7 @@ module.exports = {
     // false (the default): ignore dependencies that only exist before typescript-to-javascript compilation
     // true: also detect dependencies that only exist before typescript-to-javascript compilation
     // 'specify': for each dependency identify whether it only exists before compilation or also after
-    tsPreCompilationDeps: true,
+    tsPreCompilationDeps: false,
     
     // list of extensions to scan that aren't javascript or compile-to-javascript.
     // Empty by default. Only put extensions in here that you want to take into
