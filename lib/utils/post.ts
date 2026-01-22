@@ -33,10 +33,28 @@ export function getExcerpt(post: PostData): string | undefined {
 
 /**
  * 날짜 포맷팅 헬퍼 함수
- * - ISO 8601 날짜 문자열을 "YYYY.MM.DD" 형식으로 변환
+ * - 24시간 이내: n시간 전
+ * - 1~10일 전: n일 전
+ * - 11일 이후: YYYY년 MM월 DD일
  */
 export function formatPostDate(dateString: string): string {
   const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  // 24시간 이내
+  if (diffHours < 24) {
+    return `${diffHours}시간 전`;
+  }
+
+  // 1~10일 전
+  if (diffDays >= 1 && diffDays <= 10) {
+    return `${diffDays}일 전`;
+  }
+
+  // 11일 이후
   return new Intl.DateTimeFormat("ko-KR", {
     year: "numeric",
     month: "2-digit",
