@@ -34,7 +34,7 @@ export default function CategorySelector({
   };
 
   return (
-    <div className="flex items-center gap-2.5">
+    <div className="flex flex-col gap-2.5 md:flex-row md:items-center">
       <PrimaryCategoryFilter
         selectedCategoryId={primaryCategoryId}
         onCategoryChange={handlePrimaryChange}
