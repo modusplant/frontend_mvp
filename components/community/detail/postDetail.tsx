@@ -1,10 +1,9 @@
 "use client";
 
-import { PostDetail as PostDetailType } from "@/lib/types/post";
 import PostContent from "./postContent";
 import PostActions from "./postActions";
 import CommentSection from "../../comment/commentSection";
-import { formatRelativeTime } from "@/lib/utils/formatTime";
+import PostDetailHeader from "./postDetailHeader";
 import { Heart, Bookmark } from "lucide-react";
 import { usePostInteraction } from "@/lib/hooks/community/usePostInteraction";
 import usePostDetailQuery from "@/lib/hooks/community/usePostDetailQuery";
@@ -45,31 +44,14 @@ export default function PostDetail({ postId }: PostDetailProps) {
   return (
     <div className="mx-auto max-w-[1320px] px-5 py-12">
       {/* 헤더: 카테고리 + 작성자 정보 */}
-      <div className="mb-6 flex items-center gap-3">
-        <span className="bg-primary-10 text-primary-50 rounded-full px-4 py-1.5 text-sm font-semibold">
-          {postQuery.primaryCategory} &gt; {postQuery.secondaryCategory}
-        </span>
-      </div>
-
-      {/* 제목 */}
-      <h1 className="font-nanum text-neutral-0 mb-2 text-[44px] leading-tight font-bold">
-        {postQuery.title}
-      </h1>
-
-      <div className="mb-8 flex items-center gap-2">
-        {/* 작성자 */}
-        <span className="text-neutral-20 text-sm font-medium">
-          {postQuery.nickname}
-        </span>
-        {/* 작성일 */}
-        <span className="text-neutral-60 text-sm">
-          {formatRelativeTime(postQuery.publishedAt)}
-        </span>
-        {/* 조회수 */}
-        <div className="text-neutral-60 flex items-center gap-1.5 text-sm">
-          <span>조회 {postQuery.viewCount.toLocaleString()}</span>
-        </div>
-      </div>
+      <PostDetailHeader
+        secondaryCategory={postQuery.secondaryCategory}
+        title={postQuery.title}
+        nickname={postQuery.nickname}
+        publishedAt={postQuery.publishedAt}
+        viewCount={postQuery.viewCount}
+        isUpdated={postQuery.publishedAt !== postQuery.updatedAt}
+      />
 
       {/* 본문 */}
       <PostContent content={postQuery.content} />
