@@ -58,9 +58,7 @@ export default function PostDetailHeader({
         <span className="">{formatRelativeTime(publishedAt)}</span>
         <span>·</span>
         {/* 조회수 */}
-        <div className="flex gap-1.5">
-          <span>조회 {viewCount.toLocaleString()}</span>
-        </div>
+        <span>조회 {viewCount.toLocaleString()}</span>
         {isUpdated && (
           <>
             <span>·</span>

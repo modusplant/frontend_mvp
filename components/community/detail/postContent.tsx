@@ -56,7 +56,7 @@ export default function PostContent({ content }: PostContentProps) {
             return (
               <p
                 key={`text-${index}`}
-                className="font-pretendard text-neutral-20 mb-4 text-lg leading-relaxed break-words whitespace-pre-wrap"
+                className="text-neutral-20 mb-4 text-[16px] leading-relaxed break-words whitespace-pre-wrap"
               >
                 {parseTextWithLinks(item.data || "")}
               </p>
