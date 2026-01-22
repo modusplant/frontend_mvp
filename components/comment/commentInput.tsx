@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useCommentMutations } from "@/lib/hooks/comment/useCommentMutations";
 import ProfileImage from "@/components/_common/profileImage";
 import { useAuthStore } from "@/lib/store/authStore";
+import { ArrowUp } from "lucide-react";
 
 interface CommentInputProps {
   postId: string;
@@ -68,14 +69,34 @@ export default function CommentInput({
       <div className="relative h-10 w-10">
         <ProfileImage imageSrc={user?.image || null} />
       </div>
-      <form onSubmit={handleSubmit} className="h-14 w-full">
+      <form onSubmit={handleSubmit} className="relative h-14 w-full">
         <input
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={parentPath ? "답글 작성하기" : "댓글 작성하기"}
-          className="border-neutral-90 text-neutral-20 placeholder:text-neutral-60 focus:border-primary-50 h-full w-full resize-none rounded-lg border px-4 py-3 text-base leading-relaxed focus:outline-none"
+          className="border-neutral-90 text-neutral-20 placeholder:text-neutral-60 focus:border-primary-50 h-full w-full resize-none rounded-lg border px-4 py-3 pr-14 text-base leading-relaxed focus:outline-none"
           disabled={isCreating}
         />
+        {/* 전송 버튼 */}
+        <button
+          type="submit"
+          disabled={isCreating || content.trim().length === 0}
+          className={`absolute top-1/2 right-2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full transition-all duration-200 ${
+            content.trim().length === 0
+              ? "bg-surface-98 cursor-not-allowed"
+              : "bg-primary-50 hover:bg-primary-70 active:scale-95"
+          }`}
+          aria-label="댓글 전송"
+        >
+          <ArrowUp
+            className={`h-5 w-5 ${
+              content.trim().length === 0
+                ? "text-neutral-70"
+                : "text-neutral-100"
+            }`}
+            strokeWidth={2.5}
+          />
+        </button>
       </form>
     </div>
   );
