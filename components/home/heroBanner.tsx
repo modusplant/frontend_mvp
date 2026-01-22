@@ -37,7 +37,8 @@ export default function HeroBanner({
     totalSlides,
     handleNext,
     handlePrev,
-    togglePlayPause,
+    handlePlay,
+    handlePause,
     getDisplayIndex,
   } = useCarousel(images, { autoPlayInterval });
 
@@ -88,7 +89,8 @@ export default function HeroBanner({
         isPlaying={isPlaying}
         currentIndex={getDisplayIndex()}
         totalSlides={totalSlides}
-        onPlayPauseToggle={togglePlayPause}
+        onPlay={handlePlay}
+        onPause={handlePause}
         onPrev={handlePrev}
         onNext={handleNext}
       />
