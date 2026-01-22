@@ -84,7 +84,7 @@ export default function ProfileSection() {
           size="md"
           onClick={handleSave}
           disabled={!hasChanges || isPending}
-          className="rounded-full"
+          className="h-[50px] rounded-full px-5 text-[15px] font-medium"
         >
           {isPending ? "저장 중..." : "변경사항 저장"}
         </Button>
