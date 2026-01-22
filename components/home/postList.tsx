@@ -127,7 +127,7 @@ export default function PostList() {
       {/* 게시물 목록 */}
       {!isLoading && !isError && (
         <>
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-x-8 md:gap-y-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-10">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-x-8 md:gap-y-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-10">
             {visiblePosts.map((post) => (
               <PostCard key={post.postId} post={post} />
             ))}
@@ -137,7 +137,7 @@ export default function PostList() {
           {isGuest && hiddenPosts.length > 0 && (
             <div className="relative mt-12">
               {/* 가려질 게시물 영역 (실제 배치 유지) */}
-              <div className="pointer-events-none grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-x-8 md:gap-y-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-10">
+              <div className="pointer-events-none grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-x-8 md:gap-y-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-10">
                 {hiddenPosts.map((post) => (
                   <PostCard key={post.postId} post={post} />
                 ))}
