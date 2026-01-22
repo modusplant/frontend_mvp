@@ -42,18 +42,18 @@ export default function Header({ className, initialUser }: HeaderProps) {
         </Link>
 
         {/* 로그인 상태에 따른 버튼 */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 text-[13px] font-medium">
           {user ? (
             <>
               {/* 프로필 아이콘 (추후 드롭다운 추가) */}
               <Link href="/mypage">
-                <div className="relative h-10 w-10">
+                <div className="relative h-9 w-9">
                   <Profile imageSrc={user?.image} />
                 </div>
               </Link>
               {/* 글쓰기 버튼 */}
               <Link href="/community/write">
-                <Button variant="point" size="sm" className="h-10 rounded-full">
+                <Button variant="point" size="sm" className="h-9 rounded-full">
                   글쓰기
                 </Button>
               </Link>
@@ -65,7 +65,7 @@ export default function Header({ className, initialUser }: HeaderProps) {
                 <Button
                   variant="default"
                   size="sm"
-                  className="cursor-pointer rounded-full"
+                  className="h-9 cursor-pointer rounded-full border-none"
                 >
                   로그인
                 </Button>
@@ -74,7 +74,7 @@ export default function Header({ className, initialUser }: HeaderProps) {
                 <Button
                   variant="point"
                   size="sm"
-                  className="cursor-pointer rounded-full"
+                  className="h-9 cursor-pointer rounded-full border-none"
                 >
                   회원가입
                 </Button>
