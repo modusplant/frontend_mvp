@@ -40,7 +40,7 @@ export default function PostCard({ post, className }: PostCardProps) {
           src={thumbnail}
           alt={post.title}
           fill
-          className="rounded-lg object-cover"
+          className="rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
@@ -61,7 +61,7 @@ export default function PostCard({ post, className }: PostCardProps) {
 
         <div className="flex flex-col gap-1.5">
           {/* 제목 */}
-          <h3 className="text-neutral-20 group-hover:text-primary-50 line-clamp-1 text-lg font-semibold md:text-[17px]">
+          <h3 className="text-neutral-20 line-clamp-1 text-lg font-semibold md:text-[17px]">
             {post.title}
           </h3>
 
