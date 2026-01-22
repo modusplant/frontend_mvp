@@ -40,7 +40,7 @@ export default function PostCard({ post, className }: PostCardProps) {
           src={thumbnail}
           alt={post.title}
           fill
-          className="rounded-xl object-cover"
+          className="rounded-lg object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
