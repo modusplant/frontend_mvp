@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Heart, Bookmark } from "lucide-react";
+import { Heart, Bookmark, EllipsisVertical } from "lucide-react";
 import { postApi } from "@/lib/api/client/post";
 import { useAuthStore } from "@/lib/store/authStore";
 import { showModal } from "@/lib/store/modalStore";
@@ -26,6 +26,8 @@ export default function PostActions({
   const router = useRouter();
   const { user } = useAuthStore();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const {
     likeCount,
@@ -45,11 +47,33 @@ export default function PostActions({
   // 본인 게시글 여부 확인
   const isAuthor = user?.id === authorId;
 
+  // 드롭다운 외부 클릭 시 닫기
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
   const handleEdit = () => {
+    setIsDropdownOpen(false);
     router.push(`/community/write/edit/${postId}`);
   };
 
   const handleDelete = async () => {
+    setIsDropdownOpen(false);
     showModal({
       title: "게시글을 삭제하시겠습니까?",
       description: "삭제된 게시글은 복구할 수 없습니다.",
@@ -117,21 +141,33 @@ export default function PostActions({
 
       {/* 수정/삭제 버튼 (작성자만) */}
       {isAuthor && (
-        <div className="ml-2 flex items-center gap-2">
+        <div className="relative" ref={dropdownRef}>
           <button
-            onClick={handleEdit}
-            className="border-neutral-90 text-neutral-20 hover:bg-surface-98 rounded-lg border px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full"
+            aria-label="게시글 옵션"
           >
-            수정
+            <EllipsisVertical className="text-neutral-60 h-5 w-5" />
           </button>
 
-          <button
-            onClick={handleDelete}
-            disabled={isDeleting}
-            className="border-neutral-90 text-neutral-20 hover:bg-surface-98 rounded-lg border px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors"
-          >
-            {isDeleting ? "삭제 중..." : "삭제"}
-          </button>
+          {/* 드롭다운 메뉴 */}
+          {isDropdownOpen && (
+            <div className="border-surface-99 absolute top-12 right-0 z-50 w-24 rounded-lg border bg-neutral-100 text-sm font-medium shadow-sm">
+              <button
+                onClick={handleEdit}
+                className="text-neutral-20 hover:bg-surface-98 w-full cursor-pointer px-4 py-3 first:rounded-t-lg"
+              >
+                수정
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="text-neutral-20 hover:bg-surface-98 w-full cursor-pointer px-4 py-3 last:rounded-b-lg"
+              >
+                삭제
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
