@@ -66,10 +66,10 @@ export default function CommentInput({
   return (
     <div className="flex items-center gap-3">
       {/* 사용자 아이콘 */}
-      <div className="relative h-10 w-10">
+      <div className="relative h-7.5 w-7.5">
         <ProfileImage imageSrc={user?.image || null} />
       </div>
-      <form onSubmit={handleSubmit} className="relative h-14 w-full">
+      <form onSubmit={handleSubmit} className="relative h-11 w-full">
         <input
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -81,7 +81,7 @@ export default function CommentInput({
         <button
           type="submit"
           disabled={isCreating || content.trim().length === 0}
-          className={`absolute top-1/2 right-2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full transition-all duration-200 ${
+          className={`absolute top-1/2 right-2 flex h-6.5 w-6.5 -translate-y-1/2 items-center justify-center rounded-full transition-all duration-200 ${
             content.trim().length === 0
               ? "bg-surface-98 cursor-not-allowed"
               : "bg-primary-50 hover:bg-primary-70 active:scale-95"
@@ -89,7 +89,7 @@ export default function CommentInput({
           aria-label="댓글 전송"
         >
           <ArrowUp
-            className={`h-5 w-5 ${
+            className={`h-4 w-4 ${
               content.trim().length === 0
                 ? "text-neutral-70"
                 : "text-neutral-100"
