@@ -1,9 +1,14 @@
-import { apiClient } from "@/lib/api/client";
+import { clientApiInstance } from "../instances/clientInstance";
 import { ApiResponse } from "@/lib/types/common";
 import {
+  GetMyPostsRequest,
+  GetMyPostsResponseData,
   GetPostsRequest,
   GetPostsResponseData,
+  GetRecentPostsRequest,
+  GetRecentPostsResponseData,
   PostDetail,
+  PostEditData,
   PostWritePayload,
 } from "@/lib/types/post";
 
@@ -39,7 +44,7 @@ export const postApi = {
 
     const endpoint = `/api/v1/communication/posts?${queryParams.toString()}`;
 
-    return apiClient<GetPostsResponseData>(endpoint, {
+    return clientApiInstance<GetPostsResponseData>(endpoint, {
       method: "GET",
       skipAuth: false, // 인증 필요 (북마크 상태 등)
     });
@@ -51,22 +56,28 @@ export const postApi = {
    * @returns 게시글 상세 정보
    */
   async getPostDetail(postId: string): Promise<ApiResponse<PostDetail>> {
-    return apiClient<PostDetail>(`/api/v1/communication/posts/${postId}`, {
-      method: "GET",
-      skipAuth: false,
-    });
+    return clientApiInstance<PostDetail>(
+      `/api/v1/communication/posts/${postId}`,
+      {
+        method: "GET",
+        skipAuth: false,
+      }
+    );
   },
 
   /**
-   * 게시글 조회수 증가
+   * 게시글 수정용 상세 조회
    * @param postId 게시글 ID (ULID)
-   * @returns 성공 응답
+   * @returns 게시글 상세 정보
    */
-  async incrementViewCount(postId: string): Promise<ApiResponse<void>> {
-    return apiClient<void>(`/api/v1/communication/posts/${postId}/views`, {
-      method: "PATCH",
-      skipAuth: false,
-    });
+  async getEditPostDetail(postId: string): Promise<ApiResponse<PostEditData>> {
+    return clientApiInstance<PostEditData>(
+      `/api/v1/communication/posts/${postId}/data`,
+      {
+        method: "GET",
+        skipAuth: false,
+      }
+    );
   },
 
   /**
@@ -75,7 +86,7 @@ export const postApi = {
    * @returns 성공 응답
    */
   async deletePost(postId: string): Promise<ApiResponse<void>> {
-    return apiClient<void>(`/api/v1/communication/posts/${postId}`, {
+    return clientApiInstance<void>(`/api/v1/communication/posts/${postId}`, {
       method: "DELETE",
       skipAuth: false,
     });
@@ -91,7 +102,7 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/members/${memberId}/like/communication/post/${postUlid}`,
       {
         method: "PUT",
@@ -110,7 +121,7 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/members/${memberId}/like/communication/post/${postUlid}`,
       {
         method: "DELETE",
@@ -129,7 +140,7 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/members/${memberId}/bookmark/communication/post/${postUlid}`,
       {
         method: "PUT",
@@ -148,7 +159,7 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/members/${memberId}/bookmark/communication/post/${postUlid}`,
       {
         method: "DELETE",
@@ -204,7 +215,7 @@ export const postApi = {
       isPublished: "true", // 항상 게시 (임시저장 제외)
     });
 
-    return apiClient<void>(`/api/v1/communication/posts?${params}`, {
+    return clientApiInstance<void>(`/api/v1/communication/posts?${params}`, {
       method: "POST",
       body: formData,
       skipAuth: false,
@@ -262,7 +273,7 @@ export const postApi = {
       isPublished: "true",
     });
 
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/communication/posts/${postId}?${params}`,
       {
         method: "PUT",
@@ -270,5 +281,89 @@ export const postApi = {
         skipAuth: false,
       }
     );
+  },
+
+  /**
+   * 최근에 본 게시글 목록 조회 (페이지네이션)
+   * @param params 조회 파라미터
+   * @returns 최근에 본 게시글 목록 응답
+   */
+  async getRecentPosts(
+    params: GetRecentPostsRequest
+  ): Promise<ApiResponse<GetRecentPostsResponseData>> {
+    const queryParams = new URLSearchParams({
+      page: params.page.toString(),
+      size: params.size.toString(),
+    });
+
+    const endpoint = `/api/v1/communication/posts/me/history?${queryParams.toString()}`;
+
+    return clientApiInstance<GetRecentPostsResponseData>(endpoint, {
+      method: "GET",
+      skipAuth: false, // 인증 필요
+    });
+  },
+
+  /**
+   * 내가 작성한 게시글 목록 조회 (페이지네이션)
+   * @param params 조회 파라미터
+   * @returns 내가 작성한 게시글 목록 응답
+   */
+  async getMyPosts(
+    params: GetMyPostsRequest
+  ): Promise<ApiResponse<GetMyPostsResponseData>> {
+    const queryParams = new URLSearchParams({
+      page: params.page.toString(),
+      size: params.size.toString(),
+    });
+
+    const endpoint = `/api/v1/communication/posts/me?${queryParams.toString()}`;
+
+    return clientApiInstance<GetMyPostsResponseData>(endpoint, {
+      method: "GET",
+      skipAuth: false, // 인증 필요
+    });
+  },
+
+  /**
+   * 내가 좋아요한 게시글 목록 조회 (페이지네이션)
+   * @param params 조회 파라미터
+   * @returns 내가 좋아요한 게시글 목록 응답
+   */
+  async getLikedPosts(
+    params: GetMyPostsRequest
+  ): Promise<ApiResponse<GetMyPostsResponseData>> {
+    const queryParams = new URLSearchParams({
+      page: params.page.toString(),
+      size: params.size.toString(),
+    });
+
+    const endpoint = `/api/v1/communication/posts/me/likes?${queryParams.toString()}`;
+
+    return clientApiInstance<GetMyPostsResponseData>(endpoint, {
+      method: "GET",
+      skipAuth: false, // 인증 필요
+    });
+  },
+
+  /**
+   * 내가 북마크한 게시글 목록 조회 (페이지네이션)
+   * @param params 조회 파라미터
+   * @returns 내가 북마크한 게시글 목록 응답
+   */
+  async getBookmarkedPosts(
+    params: GetMyPostsRequest
+  ): Promise<ApiResponse<GetMyPostsResponseData>> {
+    const queryParams = new URLSearchParams({
+      page: params.page.toString(),
+      size: params.size.toString(),
+    });
+
+    const endpoint = `/api/v1/communication/posts/me/bookmarks?${queryParams.toString()}`;
+
+    return clientApiInstance<GetMyPostsResponseData>(endpoint, {
+      method: "GET",
+      skipAuth: false, // 인증 필요
+    });
   },
 };

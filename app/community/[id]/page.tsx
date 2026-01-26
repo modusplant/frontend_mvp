@@ -1,42 +1,32 @@
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PostDetail from "@/components/community/detail/postDetail";
-import { postApi } from "@/lib/api/post";
-import { dummyPostDetail } from "@/lib/data/postDetail";
+import { serverPostApi } from "@/lib/api/server/post";
+import {
+  createPostMetadata,
+  notFoundPostMetadata,
+  errorPostMetadata,
+} from "@/lib/metadata/community";
 
 interface PostPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 /**
  * 게시글 상세 페이지 메타데이터 생성
  */
-export async function generateMetadata({
-  params,
-}: PostPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PostPageProps) {
+  const { id } = await params;
   try {
-    const response = await postApi.getPostDetail(params.id);
-
+    const response = await serverPostApi.getPostDetail(id);
     if (!response.data) {
-      return {
-        title: "게시글을 찾을 수 없습니다 | 모두의식물",
-      };
+      return notFoundPostMetadata;
     }
 
-    return {
-      title: `${response.data.title} | 모두의식물`,
-      description: response.data.content
-        .filter((c) => c.type === "text")
-        .map((c) => c.data)
-        .join(" ")
-        .slice(0, 150),
-    };
+    return createPostMetadata(response.data);
   } catch (error) {
-    return {
-      title: "게시글 | 모두의식물",
-    };
+    return errorPostMetadata;
   }
 }
 
@@ -44,23 +34,17 @@ export async function generateMetadata({
  * 게시글 상세 페이지
  */
 export default async function PostPage({ params }: PostPageProps) {
+  const { id } = await params;
+
   try {
-    // 실제 API 호출
-    // const response = await postApi.getPostDetail(params.id);
+    // 서버에서 초기 게시글 데이터 fetch
+    const response = await serverPostApi.getPostDetail(id);
 
-    // if (!response.data) {
-    //   notFound();
-    // }
+    if (!response.data || response.status !== 200) {
+      notFound();
+    }
 
-    // 더미 데이터 사용
-    const response = { data: dummyPostDetail };
-
-    // 조회수 증가 (비동기, 에러 무시)
-    postApi.incrementViewCount(params.id).catch(() => {
-      // 조회수 증가 실패는 무시
-    });
-
-    return <PostDetail postId={params.id} initialData={response.data} />;
+    return <PostDetail postId={id} initialData={response.data} />;
   } catch (error) {
     notFound();
   }

@@ -1,15 +1,14 @@
-import { apiClient, removeAccessToken } from "./client";
+import { deleteCookie } from "@/lib/utils/cookies";
 import { ApiResponse } from "@/lib/types/common";
 import {
   LoginRequest,
   LoginResponseData,
   User,
-  UserAuthInfoResponseData,
   SignupRequest,
   EmailVerificationResponseData,
   NicknameCheckResponseData,
 } from "@/lib/types/auth";
-import { decodeJWT } from "@/lib/utils/auth";
+import { clientApiInstance } from "../instances/clientInstance";
 
 /**
  * 인증 API
@@ -21,25 +20,14 @@ export const authApi = {
   async login(
     data: LoginRequest
   ): Promise<ApiResponse<LoginResponseData> & { user?: User }> {
-    const response = await apiClient<LoginResponseData>("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(data),
-      skipAuth: true, // 로그인은 인증 불필요
-    });
-
-    // JWT에서 사용자 정보 추출
-    if (response.data?.accessToken) {
-      const decoded = decodeJWT(response.data.accessToken);
-      if (decoded) {
-        (response as any).user = {
-          id: decoded.sub,
-          email: data.email,
-          nickname: decoded.nickname,
-          roles: decoded.roles,
-        };
+    const response = await clientApiInstance<LoginResponseData>(
+      "/api/auth/login",
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        skipAuth: true, // 로그인은 인증 불필요
       }
-    }
-
+    );
     return response;
   },
 
@@ -47,16 +35,18 @@ export const authApi = {
    * 로그아웃
    */
   async logout(): Promise<void> {
-    removeAccessToken();
+    await deleteCookie("accessToken", {
+      path: "/",
+    });
     // TODO: 필요시 서버에 로그아웃 요청 추가
-    // await apiClient('/api/auth/logout', { method: 'POST' });
+    // await clientApiInstance('/api/auth/logout', { method: 'POST' });
   },
 
   /**
    * 회원가입
    */
   async signup(data: SignupRequest): Promise<ApiResponse<void>> {
-    return apiClient<void>("/api/members/register", {
+    return clientApiInstance<void>("/api/members/register", {
       method: "POST",
       body: JSON.stringify(data),
       skipAuth: true,
@@ -70,11 +60,14 @@ export const authApi = {
     email: string
   ): Promise<{ success: boolean; message: string }> {
     try {
-      const response = await apiClient<void>("/api/members/verify-email/send", {
-        method: "POST",
-        body: JSON.stringify({ email }),
-        skipAuth: true,
-      });
+      const response = await clientApiInstance<void>(
+        "/api/members/verify-email/send",
+        {
+          method: "POST",
+          body: JSON.stringify({ email }),
+          skipAuth: true,
+        }
+      );
 
       return {
         success: response.status === 200,
@@ -99,7 +92,7 @@ export const authApi = {
     code: string
   ): Promise<{ success: boolean; message: string }> {
     try {
-      const response = await apiClient<EmailVerificationResponseData>(
+      const response = await clientApiInstance<EmailVerificationResponseData>(
         "/api/members/verify-email",
         {
           method: "POST",
@@ -133,7 +126,7 @@ export const authApi = {
     nickname: string
   ): Promise<{ success: boolean; available: boolean; message: string }> {
     try {
-      const response = await apiClient<NicknameCheckResponseData>(
+      const response = await clientApiInstance<NicknameCheckResponseData>(
         `/api/v1/members/check/nickname/${encodeURIComponent(nickname)}`,
         {
           method: "GET",
@@ -159,15 +152,39 @@ export const authApi = {
   },
 
   /**
-   * 현재 사용자 인증 정보 조회
+   * 비밀번호 재설정 이메일 요청
    */
-  async getCurrentUser(
-    userId: string
-  ): Promise<ApiResponse<UserAuthInfoResponseData>> {
-    return apiClient<UserAuthInfoResponseData>(
-      `/api/v1/members/${userId}/auth-info`,
+  async requestPasswordResetEmail(email: string): Promise<ApiResponse<void>> {
+    return clientApiInstance<void>("/api/auth/reset-password-request/send", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+      skipAuth: true,
+    });
+  },
+
+  /**
+   * 비밀번호 재설정 이메일 검증
+   */
+  async verifyPasswordResetEmail(uuid: string): Promise<ApiResponse<void>> {
+    return clientApiInstance<void>(
+      `/api/auth/reset-password-request/verify/email?uuid=${uuid}`,
       {
         method: "POST",
+        skipAuth: true,
+      }
+    );
+  },
+
+  /**
+   * 비밀번호 재설정
+   */
+  async resetPassword(password: string): Promise<ApiResponse<void>> {
+    return clientApiInstance<void>(
+      "/api/auth/reset-password-request/verify/input",
+      {
+        method: "POST",
+        body: JSON.stringify({ password }),
+        skipAuth: true,
       }
     );
   },

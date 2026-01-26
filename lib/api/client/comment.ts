@@ -1,6 +1,11 @@
-import { apiClient } from "@/lib/api/client";
+import { clientApiInstance } from "../instances/clientInstance";
 import { ApiResponse } from "@/lib/types/common";
-import { Comment, CommentCreatePayload } from "@/lib/types/comment";
+import {
+  Comment,
+  CommentCreatePayload,
+  GetMyCommentsRequest,
+  GetMyCommentsResponseData,
+} from "@/lib/types/comment";
 
 /**
  * 댓글 관련 API
@@ -12,7 +17,7 @@ export const commentApi = {
    * @returns 댓글 목록 (플랫 배열)
    */
   async getComments(postId: string): Promise<ApiResponse<Comment[]>> {
-    return apiClient<Comment[]>(
+    return clientApiInstance<Comment[]>(
       `/api/v1/communication/comments/post/${postId}`,
       {
         method: "GET",
@@ -29,7 +34,7 @@ export const commentApi = {
   async createComment(
     payload: CommentCreatePayload
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>("/api/v1/communication/comments", {
+    return clientApiInstance<void>("/api/v1/communication/comments", {
       method: "POST",
       skipAuth: false,
       headers: {
@@ -49,7 +54,7 @@ export const commentApi = {
     postUlid: string,
     path: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/communication/comments/post/${postUlid}/path/${path}`,
       {
         method: "DELETE",
@@ -70,7 +75,7 @@ export const commentApi = {
     postUlid: string,
     path: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/members/${memberId}/like/communication/post/${postUlid}/path/${path}`,
       {
         method: "PUT",
@@ -91,10 +96,28 @@ export const commentApi = {
     postUlid: string,
     path: string
   ): Promise<ApiResponse<void>> {
-    return apiClient<void>(
+    return clientApiInstance<void>(
       `/api/v1/members/${memberId}/like/communication/post/${postUlid}/path/${path}`,
       {
         method: "DELETE",
+        skipAuth: false,
+      }
+    );
+  },
+
+  /**
+   * 내 댓글 목록 조회
+   * @param params 페이지네이션 파라미터
+   * @returns 내 댓글 목록
+   */
+  async getMyComments(
+    params: GetMyCommentsRequest
+  ): Promise<ApiResponse<GetMyCommentsResponseData>> {
+    const { page, size = 8, uuid } = params;
+    return clientApiInstance<GetMyCommentsResponseData>(
+      `/api/v1/communication/comments/member/auth/${uuid}?page=${page}&size=${size}`,
+      {
+        method: "GET",
         skipAuth: false,
       }
     );
