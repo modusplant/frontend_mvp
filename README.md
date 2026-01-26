@@ -452,41 +452,10 @@ const {
 - API 응답 타입과 UI 타입 분리
 - 재사용 가능한 타입 `lib/types/common.ts`에 정의
 
----
-
-## 🐛 문제 해결
-
-### 개발 서버가 실행되지 않는 경우
-
-```bash
-# 캐시 제거 후 재설치
-rm -rf node_modules pnpm-lock.yaml
-pnpm install
-pnpm dev
-```
-
-### TypeScript 에러
-
-```bash
-# TypeScript 재컴파일
-pnpm exec tsc --noEmit
-```
-
-### 포트 3000 충돌
-
-```bash
-# 다른 포트로 실행
-pnpm dev -- -p 3001
-```
-
----
-
 ## 📝 라이선스
 
 이 프로젝트는 개인 포트폴리오 프로젝트입니다.
 
----
-
 ## 👨‍💼 개발자
 
-@deokjin25
+[![GitHub](https://img.shields.io/badge/GitHub-deokjin25-181717?style=flat-square&logo=github)](https://github.com/deokjin25)
