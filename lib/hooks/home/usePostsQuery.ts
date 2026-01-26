@@ -1,12 +1,13 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { postApi } from "@/lib/api/client/post";
-import { GetPostsRequest } from "@/lib/types/post";
+import { GetPostsRequest, GetPostsResponseData } from "@/lib/types/post";
 
 interface UsePostsQueryParams {
   size?: number;
   primaryCategoryId?: string;
   secondaryCategoryId?: string;
   enabled?: boolean;
+  initialData?: GetPostsResponseData;
 }
 
 /**
@@ -18,6 +19,7 @@ export function usePostsQuery({
   primaryCategoryId,
   secondaryCategoryId,
   enabled = true,
+  initialData,
 }: UsePostsQueryParams = {}) {
   return useInfiniteQuery({
     queryKey: ["posts", { primaryCategoryId, secondaryCategoryId }],
@@ -41,6 +43,13 @@ export function usePostsQuery({
     getNextPageParam: (lastPage) => {
       return lastPage?.hasNext ? lastPage.nextPostId : undefined;
     },
+    // 서버에서 가져온 초기 데이터 설정
+    initialData: initialData
+      ? {
+          pages: [initialData],
+          pageParams: [undefined],
+        }
+      : undefined,
     enabled,
   });
 }

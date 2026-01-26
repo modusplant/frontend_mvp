@@ -11,8 +11,13 @@ import { usePostsQuery } from "@/lib/hooks/home/usePostsQuery";
 import LoadingState from "./loadingState";
 import ErrorState from "./errorState";
 import HomeEmptyState from "./homeEmptyState";
+import { GetPostsResponseData } from "@/lib/types/post";
 
-export default function PostList() {
+interface PostListProps {
+  initialData?: GetPostsResponseData;
+}
+
+export default function PostList({ initialData }: PostListProps) {
   const { isAuthenticated } = useAuthStore();
   const {
     primaryCategory,
@@ -44,6 +49,7 @@ export default function PostList() {
       selectedSecondaryCategoryIds.length === 0
         ? undefined
         : selectedSecondaryCategoryIds.join(","),
+    initialData,
   });
 
   // 모든 페이지의 게시글을 하나의 배열로 평탄화

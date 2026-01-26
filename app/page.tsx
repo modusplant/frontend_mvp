@@ -1,8 +1,12 @@
 import PostList from "@/components/home/postList";
 import HeroBanner from "@/components/home/heroBanner";
 import ScrollToTop from "@/components/home/scrollToTop";
+import { serverPostApi } from "@/lib/api/server/post";
 
-export default function Home() {
+export default async function Home() {
+  // 서버에서 초기 게시글 데이터 fetch
+  const initialData = await serverPostApi.getPosts({ size: 12 });
+
   return (
     <div className="-mt-16">
       {/* Hero Banner (히어로 이미지) */}
@@ -20,7 +24,7 @@ export default function Home() {
               우리들의 식물 이야기
             </span>
           </div>
-          <PostList />
+          <PostList initialData={initialData.data} />
         </div>
       </section>
       <ScrollToTop />
