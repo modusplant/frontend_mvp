@@ -37,8 +37,14 @@ export async function getInitialAuthState(): Promise<any | null> {
         introduction: profileResponse?.introduction || "",
       };
     } catch (profileError) {
-      console.error("프로필 조회 실패:", profileError);
       // 프로필 조회 실패해도 토큰에서 추출한 정보는 반환
+      // 빌드 타임에는 로그를 출력하지 않음
+      if (
+        process.env.NODE_ENV !== "production" ||
+        typeof window !== "undefined"
+      ) {
+        console.error("프로필 조회 실패:", profileError);
+      }
       return {
         id: decoded.sub,
         email: decoded.email,
@@ -49,7 +55,22 @@ export async function getInitialAuthState(): Promise<any | null> {
       };
     }
   } catch (error) {
-    console.error("인증 상태 조회 실패:", error);
+    // Dynamic server error는 빌드 시 정상적인 동작이므로 로그 출력 제한
+    // DYNAMIC_SERVER_USAGE 에러는 빌드 타임에 예상되는 에러
+    if (
+      error instanceof Error &&
+      error.message.includes("DYNAMIC_SERVER_USAGE")
+    ) {
+      // 빌드 타임 에러는 무시 (정적 생성 시도 중 발생하는 정상 동작)
+      return null;
+    }
+    // 실제 런타임 에러만 로그 출력
+    if (
+      process.env.NODE_ENV !== "production" ||
+      typeof window !== "undefined"
+    ) {
+      console.error("인증 상태 조회 실패:", error);
+    }
     return null;
   }
 }
