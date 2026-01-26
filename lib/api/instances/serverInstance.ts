@@ -1,8 +1,7 @@
 import { ApiResponse, ApiError } from "../../types/common";
 import { getCookie, deleteCookie } from "../../utils/cookies/server";
 import { ACCESS_TOKEN_COOKIE_NAME } from "../../constants/auth";
-
-const BASE_URL = process.env.BASE_URL || "";
+import { BASE_URL } from "../../constants/apiInstance";
 
 /**
  * 서버 전용 API 클라이언트

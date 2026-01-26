@@ -5,6 +5,7 @@ import {
   ACCESS_TOKEN_MAX_AGE,
   REFRESH_TOKEN_MAX_AGE,
 } from "@/lib/constants/auth";
+import { BASE_URL } from "@/lib/constants/apiInstance";
 
 /**
  * Middleware: 모든 요청 전에 토큰 자동 갱신
@@ -19,16 +20,13 @@ export async function proxy(request: NextRequest) {
       const cookieHeader = request.headers.get("cookie") || "";
 
       // 백엔드에 RefreshToken으로 새 AccessToken 요청
-      const response = await fetch(
-        `${process.env.BASE_URL}/api/auth/token/refresh`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Cookie: cookieHeader,
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/auth/token/refresh`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieHeader,
+        },
+      });
 
       if (response.ok) {
         const data = await response.json();
