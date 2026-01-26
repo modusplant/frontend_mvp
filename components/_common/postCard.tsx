@@ -35,12 +35,12 @@ export default function PostCard({ post, className }: PostCardProps) {
       className={cn("group block overflow-hidden", className)}
     >
       {/* 썸네일 이미지 */}
-      <div className="relative aspect-4/3 w-full overflow-hidden">
+      <div className="relative aspect-4/3 w-full overflow-hidden rounded-lg">
         <Image
           src={thumbnail}
           alt={post.title}
           fill
-          className="rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
+          className="object-cover transition-transform duration-300 group-hover:scale-110"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
