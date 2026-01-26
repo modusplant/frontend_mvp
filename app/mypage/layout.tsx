@@ -1,5 +1,9 @@
+import type { Metadata } from "next";
 import { ReactNode } from "react";
 import Sidebar from "@/components/mypage/sidebar";
+import { mypageMetadata } from "@/lib/metadata/mypage";
+
+export { mypageMetadata as metadata };
 
 interface MypageLayoutProps {
   children: ReactNode;
