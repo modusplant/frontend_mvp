@@ -18,8 +18,7 @@ export function useProfileForm() {
     shouldDeleteImage: false,
   });
 
-  // 사용자 정보가 변경될 때 폼 데이터 초기화(새로고침 대응)
-  // TODO: user 정보가 확실히 로드된 후에만 실행되도록 개선 필요(깜박임 문제 있음)
+  // 사용자 정보가 변경될 때 폼 데이터 초기화
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,

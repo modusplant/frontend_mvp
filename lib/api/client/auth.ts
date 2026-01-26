@@ -38,8 +38,6 @@ export const authApi = {
     await deleteCookie("accessToken", {
       path: "/",
     });
-    // TODO: 필요시 서버에 로그아웃 요청 추가
-    // await clientApiInstance('/api/auth/logout', { method: 'POST' });
   },
 
   /**
