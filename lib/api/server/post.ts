@@ -5,6 +5,7 @@ import {
   GetPostsResponseData,
   PostDetail,
 } from "@/lib/types/post";
+import { POST_ENDPOINTS, buildQueryString } from "@/lib/constants/endpoints";
 
 /**
  * 서버 전용 게시글 API
@@ -18,25 +19,14 @@ export const serverPostApi = {
   async getPosts(
     params: GetPostsRequest
   ): Promise<ApiResponse<GetPostsResponseData>> {
-    const queryParams = new URLSearchParams();
+    const queryString = buildQueryString({
+      size: params.size,
+      lastPostId: params.lastPostId,
+      primaryCategoryId: params.primaryCategoryId,
+      secondaryCategoryId: params.secondaryCategoryId,
+    });
 
-    // size는 필수
-    queryParams.append("size", params.size.toString());
-
-    // 선택적 파라미터 추가
-    if (params.lastPostId) {
-      queryParams.append("lastPostId", params.lastPostId);
-    }
-
-    if (params.primaryCategoryId) {
-      queryParams.append("primaryCategoryId", params.primaryCategoryId);
-    }
-
-    if (params.secondaryCategoryId) {
-      queryParams.append("secondaryCategoryId", params.secondaryCategoryId);
-    }
-
-    const endpoint = `/api/v1/communication/posts?${queryParams.toString()}`;
+    const endpoint = `${POST_ENDPOINTS.POSTS}${queryString}`;
 
     return serverApiInstance<GetPostsResponseData>(endpoint, {
       method: "GET",
@@ -50,12 +40,9 @@ export const serverPostApi = {
    * @returns 게시글 상세 정보
    */
   async getPostDetail(postId: string): Promise<ApiResponse<PostDetail>> {
-    return serverApiInstance<PostDetail>(
-      `/api/v1/communication/posts/${postId}`,
-      {
-        method: "GET",
-        skipAuth: false,
-      }
-    );
+    return serverApiInstance<PostDetail>(POST_ENDPOINTS.POST_DETAIL(postId), {
+      method: "GET",
+      skipAuth: false,
+    });
   },
 };

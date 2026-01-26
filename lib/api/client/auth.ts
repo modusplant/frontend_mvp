@@ -9,6 +9,7 @@ import {
   NicknameCheckResponseData,
 } from "@/lib/types/auth";
 import { clientApiInstance } from "../instances/clientInstance";
+import { AUTH_ENDPOINTS } from "@/lib/constants/endpoints";
 
 /**
  * 인증 API
@@ -21,7 +22,7 @@ export const authApi = {
     data: LoginRequest
   ): Promise<ApiResponse<LoginResponseData> & { user?: User }> {
     const response = await clientApiInstance<LoginResponseData>(
-      "/api/auth/login",
+      AUTH_ENDPOINTS.LOGIN,
       {
         method: "POST",
         body: JSON.stringify(data),
@@ -44,7 +45,7 @@ export const authApi = {
    * 회원가입
    */
   async signup(data: SignupRequest): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>("/api/members/register", {
+    return clientApiInstance<void>(AUTH_ENDPOINTS.SIGNUP, {
       method: "POST",
       body: JSON.stringify(data),
       skipAuth: true,
@@ -59,7 +60,7 @@ export const authApi = {
   ): Promise<{ success: boolean; message: string }> {
     try {
       const response = await clientApiInstance<void>(
-        "/api/members/verify-email/send",
+        AUTH_ENDPOINTS.VERIFY_EMAIL_CODE_SEND,
         {
           method: "POST",
           body: JSON.stringify({ email }),
@@ -91,7 +92,7 @@ export const authApi = {
   ): Promise<{ success: boolean; message: string }> {
     try {
       const response = await clientApiInstance<EmailVerificationResponseData>(
-        "/api/members/verify-email",
+        AUTH_ENDPOINTS.VERIFY_EMAIL_CODE,
         {
           method: "POST",
           body: JSON.stringify({
@@ -125,7 +126,7 @@ export const authApi = {
   ): Promise<{ success: boolean; available: boolean; message: string }> {
     try {
       const response = await clientApiInstance<NicknameCheckResponseData>(
-        `/api/v1/members/check/nickname/${encodeURIComponent(nickname)}`,
+        AUTH_ENDPOINTS.CHECK_NICKNAME(nickname),
         {
           method: "GET",
           skipAuth: true,
@@ -153,7 +154,7 @@ export const authApi = {
    * 비밀번호 재설정 이메일 요청
    */
   async requestPasswordResetEmail(email: string): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>("/api/auth/reset-password-request/send", {
+    return clientApiInstance<void>(AUTH_ENDPOINTS.RESET_PASSWORD_CODE_SEND, {
       method: "POST",
       body: JSON.stringify({ email }),
       skipAuth: true,
@@ -165,7 +166,7 @@ export const authApi = {
    */
   async verifyPasswordResetEmail(uuid: string): Promise<ApiResponse<void>> {
     return clientApiInstance<void>(
-      `/api/auth/reset-password-request/verify/email?uuid=${uuid}`,
+      AUTH_ENDPOINTS.RESET_PASSWORD_VERIFY_CODE(uuid),
       {
         method: "POST",
         skipAuth: true,
@@ -178,7 +179,7 @@ export const authApi = {
    */
   async resetPassword(password: string): Promise<ApiResponse<void>> {
     return clientApiInstance<void>(
-      "/api/auth/reset-password-request/verify/input",
+      AUTH_ENDPOINTS.RESET_PASSWORD,
       {
         method: "POST",
         body: JSON.stringify({ password }),
@@ -186,4 +187,21 @@ export const authApi = {
       }
     );
   },
+
+    /**
+     * 이메일 변경
+     */
+    async changeEmail(
+      userId: string,
+      currentEmail: string,
+      newEmail: string
+    ): Promise<ApiResponse<void>> {
+      return clientApiInstance<void>(AUTH_ENDPOINTS.CHANGE_EMAIL(userId), {
+        method: "POST",
+        body: JSON.stringify({
+          currentEmail,
+          newEmail,
+        }),
+      });
+    },
 };

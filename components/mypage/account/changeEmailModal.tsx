@@ -10,7 +10,7 @@ import { useEmailVerification } from "@/lib/hooks/auth/useEmailVerification";
 import { cn } from "@/lib/utils/tailwindHelper";
 import { emailSchema, verificationCodeSchema } from "@/lib/constants/schema";
 import { showModal } from "@/lib/store/modalStore";
-import { memberApi } from "@/lib/api/client/member";
+import { authApi } from "@/lib/api/client/auth";
 import { useAuthStore } from "@/lib/store/authStore";
 import { useRouter } from "next/navigation";
 
@@ -94,7 +94,7 @@ export default function ChangeEmailModal({
 
     if (isVerified) {
       // 이메일 변경 처리
-      await memberApi.changeEmail(userId!, email, watchedNewEmail);
+      await authApi.changeEmail(userId!, email, watchedNewEmail);
 
       // 회원 인증 정보 refetch
       queryClient.invalidateQueries({

@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { postApi } from "@/lib/api/client/post";
+import { memberApi } from "@/lib/api/client/member";
 import { GetMyPostsResponseData } from "@/lib/types/post";
 
 /**
@@ -20,7 +20,7 @@ export function useBookmarkedPostsQuery(page: number = 1, size: number = 9) {
   return useQuery<GetMyPostsResponseData | undefined>({
     queryKey: ["bookmarkedPosts", page, size],
     queryFn: async () => {
-      const response = await postApi.getBookmarkedPosts({ page, size });
+      const response = await memberApi.getBookmarkedPosts({ page, size });
 
       if (response.status !== 200) {
         throw new Error(
