@@ -42,9 +42,7 @@ export const postApi = {
 
     const endpoint = `${POST_ENDPOINTS.POSTS}${queryString}`;
 
-    return clientApiInstance<GetPostsResponseData>(endpoint, {
-      method: "GET",
-    });
+    return clientApiInstance.get<GetPostsResponseData>(endpoint);
   },
 
   /**
@@ -53,9 +51,9 @@ export const postApi = {
    * @returns 게시글 상세 정보
    */
   async getPostDetail(postId: string): Promise<ApiResponse<PostDetail>> {
-    return clientApiInstance<PostDetail>(POST_ENDPOINTS.POST_DETAIL(postId), {
-      method: "GET",
-    });
+    return clientApiInstance.get<PostDetail>(
+      POST_ENDPOINTS.POST_DETAIL(postId)
+    );
   },
 
   /**
@@ -64,11 +62,8 @@ export const postApi = {
    * @returns 게시글 상세 정보
    */
   async getEditPostDetail(postId: string): Promise<ApiResponse<PostEditData>> {
-    return clientApiInstance<PostEditData>(
-      POST_ENDPOINTS.POST_DETAIL_EDIT(postId),
-      {
-        method: "GET",
-      }
+    return clientApiInstance.get<PostEditData>(
+      POST_ENDPOINTS.POST_DETAIL_EDIT(postId)
     );
   },
 
@@ -77,9 +72,7 @@ export const postApi = {
    * @param postId 게시글 ID (ULID)
    */
   async deletePost(postId: string): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(POST_ENDPOINTS.POST_DETAIL(postId), {
-      method: "DELETE",
-    });
+    return clientApiInstance.delete<void>(POST_ENDPOINTS.POST_DETAIL(postId));
   },
 
   /**
@@ -91,11 +84,8 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      POST_ENDPOINTS.LIKE_POST(memberId, postUlid),
-      {
-        method: "PUT",
-      }
+    return clientApiInstance.put<void>(
+      POST_ENDPOINTS.LIKE_POST(memberId, postUlid)
     );
   },
 
@@ -108,11 +98,8 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      POST_ENDPOINTS.LIKE_POST(memberId, postUlid),
-      {
-        method: "DELETE",
-      }
+    return clientApiInstance.delete<void>(
+      POST_ENDPOINTS.LIKE_POST(memberId, postUlid)
     );
   },
 
@@ -125,11 +112,8 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      POST_ENDPOINTS.BOOKMARK_POST(memberId, postUlid),
-      {
-        method: "PUT",
-      }
+    return clientApiInstance.put<void>(
+      POST_ENDPOINTS.BOOKMARK_POST(memberId, postUlid)
     );
   },
 
@@ -142,11 +126,8 @@ export const postApi = {
     memberId: string,
     postUlid: string
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      POST_ENDPOINTS.BOOKMARK_POST(memberId, postUlid),
-      {
-        method: "DELETE",
-      }
+    return clientApiInstance.delete<void>(
+      POST_ENDPOINTS.BOOKMARK_POST(memberId, postUlid)
     );
   },
 
@@ -158,10 +139,10 @@ export const postApi = {
     const formData = buildPostFormData(payload);
     const queryParams = buildPostQueryParams(payload);
 
-    return clientApiInstance<void>(`${POST_ENDPOINTS.POSTS}?${queryParams}`, {
-      method: "POST",
-      body: formData,
-    });
+    return clientApiInstance.post<void>(
+      `${POST_ENDPOINTS.POSTS}?${queryParams}`,
+      formData
+    );
   },
 
   /**
@@ -176,13 +157,9 @@ export const postApi = {
     const formData = buildPostFormData(payload);
     const queryParams = buildPostQueryParams(payload);
 
-    return clientApiInstance<void>(
+    return clientApiInstance.put<void>(
       `${POST_ENDPOINTS.POST_DETAIL(postId)}?${queryParams}`,
-      {
-        method: "PUT",
-        body: formData,
-        skipAuth: false,
-      }
+      formData
     );
   },
 };

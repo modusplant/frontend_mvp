@@ -17,9 +17,7 @@ export const memberApi = {
    * 프로필 조회
    */
   async getProfile(userId: string): Promise<ApiResponse<ProfileData>> {
-    return clientApiInstance<ProfileData>(MEMBER_ENDPOINTS.PROFILE(userId), {
-      method: "GET",
-    });
+    return clientApiInstance.get<ProfileData>(MEMBER_ENDPOINTS.PROFILE(userId));
   },
 
   /**
@@ -30,23 +28,17 @@ export const memberApi = {
     userId: string,
     formData: FormData
   ): Promise<ApiResponse<ProfileData>> {
-    return clientApiInstance<ProfileData>(MEMBER_ENDPOINTS.PROFILE(userId), {
-      method: "PUT",
-      body: formData,
-      // FormData는 자동으로 Content-Type 설정됨
-      headers: {
-        // Content-Type을 명시하지 않으면 브라우저가 자동으로 multipart/form-data로 설정
-      },
-    });
+    return clientApiInstance.put<ProfileData>(
+      MEMBER_ENDPOINTS.PROFILE(userId),
+      formData
+    );
   },
 
   /**
    * 회원 인증 정보 조회
    */
   async getAuthInfo(userId: string): Promise<ApiResponse<AuthInfo>> {
-    return clientApiInstance<AuthInfo>(MEMBER_ENDPOINTS.AUTH_INFO(userId), {
-      method: "GET",
-    });
+    return clientApiInstance.get<AuthInfo>(MEMBER_ENDPOINTS.AUTH_INFO(userId));
   },
 
   /**
@@ -64,9 +56,7 @@ export const memberApi = {
 
     const endpoint = `${MEMBER_ENDPOINTS.MY_RECENT_POSTS}${queryString}`;
 
-    return clientApiInstance<GetRecentPostsResponseData>(endpoint, {
-      method: "GET",
-    });
+    return clientApiInstance.get<GetRecentPostsResponseData>(endpoint);
   },
 
   /**
@@ -84,9 +74,7 @@ export const memberApi = {
 
     const endpoint = `${MEMBER_ENDPOINTS.MY_POSTS}${queryString}`;
 
-    return clientApiInstance<GetMyPostsResponseData>(endpoint, {
-      method: "GET",
-    });
+    return clientApiInstance.get<GetMyPostsResponseData>(endpoint);
   },
 
   /**
@@ -104,9 +92,7 @@ export const memberApi = {
 
     const endpoint = `${MEMBER_ENDPOINTS.MY_LIKED_POSTS}${queryString}`;
 
-    return clientApiInstance<GetMyPostsResponseData>(endpoint, {
-      method: "GET",
-    });
+    return clientApiInstance.get<GetMyPostsResponseData>(endpoint);
   },
 
   /**
@@ -124,8 +110,6 @@ export const memberApi = {
 
     const endpoint = `${MEMBER_ENDPOINTS.MY_BOOKMARKED_POSTS}${queryString}`;
 
-    return clientApiInstance<GetMyPostsResponseData>(endpoint, {
-      method: "GET",
-    });
+    return clientApiInstance.get<GetMyPostsResponseData>(endpoint);
   },
 };

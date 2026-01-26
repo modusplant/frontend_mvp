@@ -1,6 +1,6 @@
 import { serverApiInstance } from "@/lib/api/instances/serverInstance";
 import { ApiResponse } from "@/lib/types/common";
-import { ProfileData, AuthInfo } from "@/lib/types/member";
+import { ProfileData } from "@/lib/types/member";
 import { MEMBER_ENDPOINTS } from "@/lib/constants/endpoints";
 
 /**
@@ -12,8 +12,6 @@ export const memberApi = {
    * GET /api/v1/members/{id}/profile
    */
   async getProfile(userId: string): Promise<ApiResponse<ProfileData>> {
-    return serverApiInstance<ProfileData>(MEMBER_ENDPOINTS.PROFILE(userId), {
-      method: "GET",
-    });
+    return serverApiInstance.get<ProfileData>(MEMBER_ENDPOINTS.PROFILE(userId));
   },
 };

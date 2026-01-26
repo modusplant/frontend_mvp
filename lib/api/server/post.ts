@@ -28,10 +28,7 @@ export const serverPostApi = {
 
     const endpoint = `${POST_ENDPOINTS.POSTS}${queryString}`;
 
-    return serverApiInstance<GetPostsResponseData>(endpoint, {
-      method: "GET",
-      skipAuth: false, // 인증 필요 (북마크 상태 등)
-    });
+    return serverApiInstance.get<GetPostsResponseData>(endpoint);
   },
 
   /**
@@ -40,9 +37,8 @@ export const serverPostApi = {
    * @returns 게시글 상세 정보
    */
   async getPostDetail(postId: string): Promise<ApiResponse<PostDetail>> {
-    return serverApiInstance<PostDetail>(POST_ENDPOINTS.POST_DETAIL(postId), {
-      method: "GET",
-      skipAuth: false,
-    });
+    return serverApiInstance.get<PostDetail>(
+      POST_ENDPOINTS.POST_DETAIL(postId)
+    );
   },
 };

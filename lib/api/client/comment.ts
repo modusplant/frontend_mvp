@@ -18,12 +18,8 @@ export const commentApi = {
    * @returns 댓글 목록 (플랫 배열)
    */
   async getComments(postId: string): Promise<ApiResponse<Comment[]>> {
-    return clientApiInstance<Comment[]>(
-      COMMENT_ENDPOINTS.POST_COMMENTS(postId),
-      {
-        method: "GET",
-        skipAuth: false,
-      }
+    return clientApiInstance.get<Comment[]>(
+      COMMENT_ENDPOINTS.POST_COMMENTS(postId)
     );
   },
 
@@ -35,14 +31,7 @@ export const commentApi = {
   async createComment(
     payload: CommentCreatePayload
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(COMMENT_ENDPOINTS.COMMENTS, {
-      method: "POST",
-      skipAuth: false,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    return clientApiInstance.post<void>(COMMENT_ENDPOINTS.COMMENTS, payload);
   },
 
   /**
@@ -55,12 +44,8 @@ export const commentApi = {
     postUlid: string,
     path: string
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      COMMENT_ENDPOINTS.DELETE_COMMENT(postUlid, path),
-      {
-        method: "DELETE",
-        skipAuth: false,
-      }
+    return clientApiInstance.delete<void>(
+      COMMENT_ENDPOINTS.DELETE_COMMENT(postUlid, path)
     );
   },
 
@@ -76,12 +61,8 @@ export const commentApi = {
     postUlid: string,
     path: string
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      COMMENT_ENDPOINTS.LIKE_COMMENT(memberId, postUlid, path),
-      {
-        method: "PUT",
-        skipAuth: false,
-      }
+    return clientApiInstance.put<void>(
+      COMMENT_ENDPOINTS.LIKE_COMMENT(memberId, postUlid, path)
     );
   },
 
@@ -97,12 +78,8 @@ export const commentApi = {
     postUlid: string,
     path: string
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      COMMENT_ENDPOINTS.LIKE_COMMENT(memberId, postUlid, path),
-      {
-        method: "DELETE",
-        skipAuth: false,
-      }
+    return clientApiInstance.delete<void>(
+      COMMENT_ENDPOINTS.LIKE_COMMENT(memberId, postUlid, path)
     );
   },
 
@@ -122,12 +99,8 @@ export const commentApi = {
 
     const queryString = buildQueryString({ page, size });
 
-    return clientApiInstance<GetMyCommentsResponseData>(
-      `${COMMENT_ENDPOINTS.MY_COMMENTS(uuid)}${queryString}`,
-      {
-        method: "GET",
-        skipAuth: false,
-      }
+    return clientApiInstance.get<GetMyCommentsResponseData>(
+      `${COMMENT_ENDPOINTS.MY_COMMENTS(uuid)}${queryString}`
     );
   },
 };

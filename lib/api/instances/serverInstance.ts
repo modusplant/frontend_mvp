@@ -11,7 +11,10 @@ interface RequestConfig extends RequestInit {
   enableCache?: boolean;
 }
 
-export async function serverApiInstance<T = any>(
+/**
+ * 기본 요청 함수 (내부용)
+ */
+async function request<T = any>(
   endpoint: string,
   config: RequestConfig = {}
 ): Promise<ApiResponse<T>> {
@@ -71,3 +74,71 @@ export async function serverApiInstance<T = any>(
     throw new ApiError(500, "network_error", "네트워크 오류가 발생했습니다");
   }
 }
+
+/**
+ * HTTP Method별 옵션 타입
+ */
+interface ApiRequestOptions {
+  skipAuth?: boolean;
+  enableCache?: boolean;
+  headers?: Record<string, string>;
+}
+
+/**
+ * axios 스타일의 서버 API 인스턴스
+ */
+export const serverApiInstance = {
+  /**
+   * GET 요청
+   */
+  get: <T = any>(endpoint: string, options: ApiRequestOptions = {}) =>
+    request<T>(endpoint, { ...options, method: "GET" }),
+
+  /**
+   * POST 요청
+   */
+  post: <T = any>(
+    endpoint: string,
+    body?: any,
+    options: ApiRequestOptions = {}
+  ) =>
+    request<T>(endpoint, {
+      ...options,
+      method: "POST",
+      body: body instanceof FormData ? body : JSON.stringify(body),
+    }),
+
+  /**
+   * PUT 요청
+   */
+  put: <T = any>(
+    endpoint: string,
+    body?: any,
+    options: ApiRequestOptions = {}
+  ) =>
+    request<T>(endpoint, {
+      ...options,
+      method: "PUT",
+      body: body instanceof FormData ? body : JSON.stringify(body),
+    }),
+
+  /**
+   * PATCH 요청
+   */
+  patch: <T = any>(
+    endpoint: string,
+    body?: any,
+    options: ApiRequestOptions = {}
+  ) =>
+    request<T>(endpoint, {
+      ...options,
+      method: "PATCH",
+      body: body instanceof FormData ? body : JSON.stringify(body),
+    }),
+
+  /**
+   * DELETE 요청
+   */
+  delete: <T = any>(endpoint: string, options: ApiRequestOptions = {}) =>
+    request<T>(endpoint, { ...options, method: "DELETE" }),
+};
