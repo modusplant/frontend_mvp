@@ -1,16 +1,15 @@
-import { ApiResponse, ApiError } from "../../types/common";
-import { getCookie, setCookie, deleteCookie } from "../../utils/cookies/client";
+import { ApiResponse, ApiError } from "@/lib/types/common";
+import { getCookie, setCookie, deleteCookie } from "@/lib/utils/cookies/client";
 import {
   ACCESS_TOKEN_COOKIE_NAME,
   ACCESS_TOKEN_MAX_AGE,
-} from "../../constants/auth";
-
+} from "@/lib/constants/auth";
 const BASE_URL = ""; // 클라이언트는 상대 경로 사용 (rewrites 적용)
 
 /**
  * 클라이언트 전용: 리프레시 토큰으로 새 액세스 토큰 발급
  */
-export async function refreshAccessToken(): Promise<string> {
+async function refreshAccessToken(): Promise<string> {
   try {
     const response = await fetch(`${BASE_URL}/api/auth/token/refresh`, {
       method: "POST",
@@ -65,88 +64,19 @@ export async function refreshAccessToken(): Promise<string> {
   }
 }
 
-/**
- * 클라이언트 전용 API 클라이언트
- */
-interface RequestConfig extends RequestInit {
-  skipAuth?: boolean;
-  isRetry?: boolean;
-  enableCache?: boolean;
-}
+import { createApi } from "./core";
 
-export async function clientApiInstance<T = any>(
-  endpoint: string,
-  config: RequestConfig = {}
-): Promise<ApiResponse<T>> {
-  const {
-    skipAuth = false,
-    isRetry = false,
-    enableCache = false,
-    ...fetchConfig
-  } = config;
-
-  const url = `${BASE_URL}${endpoint}`;
-
-  const isFormData = fetchConfig.body instanceof FormData;
-  const headers: Record<string, string> = {
-    ...(!isFormData && { "Content-Type": "application/json" }),
-    ...(!enableCache && {
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      Pragma: "no-cache",
-      Expires: "0",
-    }),
-    ...(fetchConfig.headers as Record<string, string>),
-  };
-
-  // 인증이 필요한 경우 액세스 토큰 추가
-  if (!skipAuth) {
-    const accessToken = getCookie(ACCESS_TOKEN_COOKIE_NAME);
-    if (accessToken) {
-      headers["Authorization"] = `Bearer ${accessToken}`;
+export const clientApiInstance = createApi({
+  baseUrl: BASE_URL,
+  includeCredentials: true,
+  getAccessToken: () => getCookie(ACCESS_TOKEN_COOKIE_NAME),
+  onUnauthorized: async () => {
+    try {
+      await refreshAccessToken();
+      return "retry" as const;
+    } catch (e) {
+      deleteCookie(ACCESS_TOKEN_COOKIE_NAME, { path: "/" });
+      return "fail" as const;
     }
-  }
-
-  try {
-    const response = await fetch(url, {
-      ...fetchConfig,
-      headers,
-      credentials: "include", // 쿠키 자동 전송 (refreshToken)
-    });
-
-    const data: ApiResponse<T> = await response.json();
-
-    // 401 에러이고 재시도가 아닌 경우 토큰 갱신 후 재시도
-    if (data.status === 401 && !isRetry && !skipAuth) {
-      try {
-        await refreshAccessToken();
-        return clientApiInstance<T>(endpoint, { ...config, isRetry: true });
-      } catch (refreshError) {
-        deleteCookie(ACCESS_TOKEN_COOKIE_NAME, {
-          path: "/",
-        });
-        throw new ApiError(
-          401,
-          "authentication_required",
-          "다시 로그인해주세요"
-        );
-      }
-    }
-
-    // 에러 응답 처리
-    if (data.status >= 400) {
-      throw new ApiError(
-        data.status,
-        data.code,
-        data.message || "요청에 실패했습니다"
-      );
-    }
-
-    return data;
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-
-    throw new ApiError(500, "network_error", "네트워크 오류가 발생했습니다");
-  }
-}
+  },
+});

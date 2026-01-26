@@ -6,6 +6,7 @@ import {
   GetMyCommentsRequest,
   GetMyCommentsResponseData,
 } from "@/lib/types/comment";
+import { COMMENT_ENDPOINTS, buildQueryString } from "@/lib/constants/endpoints";
 
 /**
  * 댓글 관련 API
@@ -17,12 +18,8 @@ export const commentApi = {
    * @returns 댓글 목록 (플랫 배열)
    */
   async getComments(postId: string): Promise<ApiResponse<Comment[]>> {
-    return clientApiInstance<Comment[]>(
-      `/api/v1/communication/comments/post/${postId}`,
-      {
-        method: "GET",
-        skipAuth: false,
-      }
+    return clientApiInstance.get<Comment[]>(
+      COMMENT_ENDPOINTS.POST_COMMENTS(postId)
     );
   },
 
@@ -34,14 +31,7 @@ export const commentApi = {
   async createComment(
     payload: CommentCreatePayload
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>("/api/v1/communication/comments", {
-      method: "POST",
-      skipAuth: false,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    return clientApiInstance.post<void>(COMMENT_ENDPOINTS.COMMENTS, payload);
   },
 
   /**
@@ -54,12 +44,8 @@ export const commentApi = {
     postUlid: string,
     path: string
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      `/api/v1/communication/comments/post/${postUlid}/path/${path}`,
-      {
-        method: "DELETE",
-        skipAuth: false,
-      }
+    return clientApiInstance.delete<void>(
+      COMMENT_ENDPOINTS.DELETE_COMMENT(postUlid, path)
     );
   },
 
@@ -75,12 +61,8 @@ export const commentApi = {
     postUlid: string,
     path: string
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      `/api/v1/members/${memberId}/like/communication/post/${postUlid}/path/${path}`,
-      {
-        method: "PUT",
-        skipAuth: false,
-      }
+    return clientApiInstance.put<void>(
+      COMMENT_ENDPOINTS.LIKE_COMMENT(memberId, postUlid, path)
     );
   },
 
@@ -96,12 +78,8 @@ export const commentApi = {
     postUlid: string,
     path: string
   ): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      `/api/v1/members/${memberId}/like/communication/post/${postUlid}/path/${path}`,
-      {
-        method: "DELETE",
-        skipAuth: false,
-      }
+    return clientApiInstance.delete<void>(
+      COMMENT_ENDPOINTS.LIKE_COMMENT(memberId, postUlid, path)
     );
   },
 
@@ -114,12 +92,15 @@ export const commentApi = {
     params: GetMyCommentsRequest
   ): Promise<ApiResponse<GetMyCommentsResponseData>> {
     const { page, size = 8, uuid } = params;
-    return clientApiInstance<GetMyCommentsResponseData>(
-      `/api/v1/communication/comments/member/auth/${uuid}?page=${page}&size=${size}`,
-      {
-        method: "GET",
-        skipAuth: false,
-      }
+
+    if (!uuid) {
+      throw new Error("uuid is required for getMyComments");
+    }
+
+    const queryString = buildQueryString({ page, size });
+
+    return clientApiInstance.get<GetMyCommentsResponseData>(
+      `${COMMENT_ENDPOINTS.MY_COMMENTS(uuid)}${queryString}`
     );
   },
 };

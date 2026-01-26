@@ -9,6 +9,7 @@ import {
   NicknameCheckResponseData,
 } from "@/lib/types/auth";
 import { clientApiInstance } from "../instances/clientInstance";
+import { AUTH_ENDPOINTS } from "@/lib/constants/endpoints";
 
 /**
  * 인증 API
@@ -20,13 +21,10 @@ export const authApi = {
   async login(
     data: LoginRequest
   ): Promise<ApiResponse<LoginResponseData> & { user?: User }> {
-    const response = await clientApiInstance<LoginResponseData>(
-      "/api/auth/login",
-      {
-        method: "POST",
-        body: JSON.stringify(data),
-        skipAuth: true, // 로그인은 인증 불필요
-      }
+    const response = await clientApiInstance.post<LoginResponseData>(
+      AUTH_ENDPOINTS.LOGIN,
+      data,
+      { skipAuth: true }
     );
     return response;
   },
@@ -38,17 +36,13 @@ export const authApi = {
     await deleteCookie("accessToken", {
       path: "/",
     });
-    // TODO: 필요시 서버에 로그아웃 요청 추가
-    // await clientApiInstance('/api/auth/logout', { method: 'POST' });
   },
 
   /**
    * 회원가입
    */
   async signup(data: SignupRequest): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>("/api/members/register", {
-      method: "POST",
-      body: JSON.stringify(data),
+    return clientApiInstance.post<void>(AUTH_ENDPOINTS.SIGNUP, data, {
       skipAuth: true,
     });
   },
@@ -60,13 +54,10 @@ export const authApi = {
     email: string
   ): Promise<{ success: boolean; message: string }> {
     try {
-      const response = await clientApiInstance<void>(
-        "/api/members/verify-email/send",
-        {
-          method: "POST",
-          body: JSON.stringify({ email }),
-          skipAuth: true,
-        }
+      const response = await clientApiInstance.post<void>(
+        AUTH_ENDPOINTS.VERIFY_EMAIL_CODE_SEND,
+        { email },
+        { skipAuth: true }
       );
 
       return {
@@ -92,17 +83,12 @@ export const authApi = {
     code: string
   ): Promise<{ success: boolean; message: string }> {
     try {
-      const response = await clientApiInstance<EmailVerificationResponseData>(
-        "/api/members/verify-email",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email,
-            verifyCode: code,
-          }),
-          skipAuth: true,
-        }
-      );
+      const response =
+        await clientApiInstance.post<EmailVerificationResponseData>(
+          AUTH_ENDPOINTS.VERIFY_EMAIL_CODE,
+          { email, verifyCode: code },
+          { skipAuth: true }
+        );
 
       const isVerified = response.data?.hasEmailAuth === true;
       return {
@@ -126,12 +112,9 @@ export const authApi = {
     nickname: string
   ): Promise<{ success: boolean; available: boolean; message: string }> {
     try {
-      const response = await clientApiInstance<NicknameCheckResponseData>(
-        `/api/v1/members/check/nickname/${encodeURIComponent(nickname)}`,
-        {
-          method: "GET",
-          skipAuth: true,
-        }
+      const response = await clientApiInstance.get<NicknameCheckResponseData>(
+        AUTH_ENDPOINTS.CHECK_NICKNAME(nickname),
+        { skipAuth: true }
       );
 
       const isExisted = response.data?.isNicknameExisted === true;
@@ -155,23 +138,21 @@ export const authApi = {
    * 비밀번호 재설정 이메일 요청
    */
   async requestPasswordResetEmail(email: string): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>("/api/auth/reset-password-request/send", {
-      method: "POST",
-      body: JSON.stringify({ email }),
-      skipAuth: true,
-    });
+    return clientApiInstance.post<void>(
+      AUTH_ENDPOINTS.RESET_PASSWORD_CODE_SEND,
+      { email },
+      { skipAuth: true }
+    );
   },
 
   /**
    * 비밀번호 재설정 이메일 검증
    */
   async verifyPasswordResetEmail(uuid: string): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      `/api/auth/reset-password-request/verify/email?uuid=${uuid}`,
-      {
-        method: "POST",
-        skipAuth: true,
-      }
+    return clientApiInstance.post<void>(
+      AUTH_ENDPOINTS.RESET_PASSWORD_VERIFY_CODE(uuid),
+      undefined,
+      { skipAuth: true }
     );
   },
 
@@ -179,13 +160,24 @@ export const authApi = {
    * 비밀번호 재설정
    */
   async resetPassword(password: string): Promise<ApiResponse<void>> {
-    return clientApiInstance<void>(
-      "/api/auth/reset-password-request/verify/input",
-      {
-        method: "POST",
-        body: JSON.stringify({ password }),
-        skipAuth: true,
-      }
+    return clientApiInstance.post<void>(
+      AUTH_ENDPOINTS.RESET_PASSWORD,
+      { password },
+      { skipAuth: true }
     );
+  },
+
+  /**
+   * 이메일 변경
+   */
+  async changeEmail(
+    userId: string,
+    currentEmail: string,
+    newEmail: string
+  ): Promise<ApiResponse<void>> {
+    return clientApiInstance.post<void>(AUTH_ENDPOINTS.CHANGE_EMAIL(userId), {
+      currentEmail,
+      newEmail,
+    });
   },
 };

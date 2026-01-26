@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { postApi } from "@/lib/api/client/post";
+import { memberApi } from "@/lib/api/client/member";
 import { GetMyPostsResponseData } from "@/lib/types/post";
 
 /**
@@ -20,7 +20,7 @@ export function useMyPostsQuery(page: number = 1, size: number = 8) {
   return useQuery<GetMyPostsResponseData | undefined>({
     queryKey: ["myPosts", page, size],
     queryFn: async () => {
-      const response = await postApi.getMyPosts({ page, size });
+      const response = await memberApi.getMyPosts({ page, size });
 
       if (response.status !== 200) {
         throw new Error(response.message || "게시글 목록 조회에 실패했습니다.");

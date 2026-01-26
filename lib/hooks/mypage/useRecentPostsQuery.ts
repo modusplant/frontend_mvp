@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { postApi } from "@/lib/api/client/post";
+import { memberApi } from "@/lib/api/client/member";
 import { GetRecentPostsResponseData } from "@/lib/types/post";
 
 /**
@@ -13,7 +13,7 @@ export function useRecentPostsQuery(page: number, size: number = 8) {
   return useQuery<GetRecentPostsResponseData>({
     queryKey: ["recentPosts", page, size],
     queryFn: async () => {
-      const response = await postApi.getRecentPosts({ page, size });
+      const response = await memberApi.getRecentPosts({ page, size });
       if (response.status !== 200 || !response.data) {
         throw new Error(
           response.message || "최근에 본 게시글을 불러오는데 실패했습니다."

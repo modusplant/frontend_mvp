@@ -6,7 +6,7 @@ import { Metadata } from "next";
 export const SITE_CONFIG = {
   name: "모두의식물",
   domain: "https://modusplant.kr",
-  defaultImage: "/logo_favicon/Logo_v2_white.svg",
+  defaultImage: "/logo_favicon/Logo_v2_black.svg",
   description: "식물에 관심 있는 사용자들을 위한 정보 제공 플랫폼",
 } as const;
 
