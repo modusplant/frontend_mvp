@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useQueryClient } from "@tanstack/react-query";
 import Button from "@/components/_common/button";
 import { Input } from "@/components/_common/input";
 import { useEmailVerification } from "@/lib/hooks/auth/useEmailVerification";
@@ -43,6 +44,7 @@ export default function ChangeEmailModal({
   });
   const router = useRouter();
   const { logout } = useAuthStore();
+  const queryClient = useQueryClient();
   const watchedNewEmail = watch("newEmail");
 
   const {
@@ -93,6 +95,12 @@ export default function ChangeEmailModal({
     if (isVerified) {
       // 이메일 변경 처리
       await memberApi.changeEmail(userId!, email, watchedNewEmail);
+
+      // 회원 인증 정보 refetch
+      queryClient.invalidateQueries({
+        queryKey: ["member", "authInfo", userId],
+      });
+
       close?.();
       showModal({
         type: "one-button",
