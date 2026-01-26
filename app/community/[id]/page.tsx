@@ -1,4 +1,3 @@
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PostDetail from "@/components/community/detail/postDetail";
 import { serverPostApi } from "@/lib/api/server/post";
@@ -9,17 +8,15 @@ import {
 } from "@/lib/metadata/community";
 
 interface PostPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 /**
  * 게시글 상세 페이지 메타데이터 생성
  */
-export async function generateMetadata({
-  params,
-}: PostPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PostPageProps) {
   const { id } = await params;
   try {
     const response = await serverPostApi.getPostDetail(id);
@@ -38,8 +35,16 @@ export async function generateMetadata({
  */
 export default async function PostPage({ params }: PostPageProps) {
   const { id } = await params;
+
   try {
-    return <PostDetail postId={id} />;
+    // 서버에서 초기 게시글 데이터 fetch
+    const response = await serverPostApi.getPostDetail(id);
+
+    if (!response.data || response.status !== 200) {
+      notFound();
+    }
+
+    return <PostDetail postId={id} initialData={response.data} />;
   } catch (error) {
     notFound();
   }
