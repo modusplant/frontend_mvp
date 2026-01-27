@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils/tailwindHelper";
 import { Input } from "@/components/_common/input";
 import { PasswordSectionProps } from "@/lib/types/auth";
-import { validatePassword } from "@/lib/utils/auth/validatePassword";
 
 export default function PasswordSection({
   register,
@@ -17,21 +16,6 @@ export default function PasswordSection({
 
   const password = watch?.("password") || "";
   const passwordConfirm = watch?.("passwordConfirm") || "";
-
-  // 비밀번호 실시간 검증
-  useEffect(() => {
-    if (!password) {
-      setPasswordError("");
-      return;
-    }
-
-    const validation = validatePassword(password);
-    if (!validation.isValid) {
-      setPasswordError("올바르지 않은 비밀번호 입니다.");
-    } else {
-      setPasswordError("");
-    }
-  }, [password]);
 
   // 비밀번호 확인 실시간 검증
   useEffect(() => {

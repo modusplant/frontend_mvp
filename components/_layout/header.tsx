@@ -1,13 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/_common/button";
 import { cn } from "@/lib/utils/tailwindHelper";
 import { useAuthStore } from "@/lib/store/authStore";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Profile from "@/components/_common/profileImage";
+import Dropdown from "@/components/_common/dropdown";
 import { User } from "@/lib/types/auth";
+import { LogOut } from "lucide-react";
 
 export interface HeaderProps {
   className?: string;
@@ -15,12 +18,20 @@ export interface HeaderProps {
 }
 
 export default function Header({ className, initialUser }: HeaderProps) {
-  const { isAuthenticated, user: storeUser } = useAuthStore();
+  const { isAuthenticated, user: storeUser, logout } = useAuthStore();
   const pathname = usePathname();
+  const router = useRouter();
   const isRootPath = pathname.endsWith("/");
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
   // Use store user if authenticated, otherwise use initialUser
   const user = isAuthenticated ? storeUser : initialUser;
+
+  const handleLogout = () => {
+    logout();
+    setIsProfileDropdownOpen(false);
+    router.push("/");
+  };
 
   const logo = isRootPath
     ? "/logo_favicon/Logo_v2_white.svg"
@@ -45,12 +56,38 @@ export default function Header({ className, initialUser }: HeaderProps) {
         <div className="flex items-center gap-2 text-[13px] font-medium">
           {user ? (
             <>
-              {/* 프로필 아이콘 (추후 드롭다운 추가) */}
-              <Link href="/mypage">
-                <div className="relative h-9 w-9">
-                  <Profile imageSrc={user?.image} />
-                </div>
-              </Link>
+              {/* 프로필 드롭다운 */}
+              <Dropdown
+                isOpen={isProfileDropdownOpen}
+                onClose={() => setIsProfileDropdownOpen(false)}
+                trigger={
+                  <button
+                    onClick={() =>
+                      setIsProfileDropdownOpen(!isProfileDropdownOpen)
+                    }
+                    className="relative h-9 w-9 cursor-pointer rounded-full transition-opacity hover:opacity-80"
+                    aria-label="프로필 메뉴"
+                  >
+                    <Profile imageSrc={user?.image} />
+                  </button>
+                }
+                items={[
+                  {
+                    label: "마이페이지",
+                    onClick: () => router.push("/mypage"),
+                  },
+                  {
+                    label: "내 활동",
+                    onClick: () => router.push("/mypage/recent"),
+                  },
+                  {
+                    label: "로그아웃",
+                    onClick: handleLogout,
+                  },
+                ]}
+                position="center"
+                width="w-32"
+              />
               {/* 글쓰기 버튼 */}
               <Link href="/community/write">
                 <Button variant="point" size="sm" className="h-9 rounded-full">
