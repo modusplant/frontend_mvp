@@ -68,7 +68,7 @@ export default function TermsSection({
             <button
               type="button"
               onClick={() => toggleContent("showTermsContent")}
-              className="text-neutral-60 cursor-pointer text-sm underline"
+              className="text-neutral-60 ml-2 w-fit cursor-pointer text-sm whitespace-nowrap underline"
             >
               {contentState.showTermsContent ? "접기" : "보기"}
             </button>
@@ -101,7 +101,7 @@ export default function TermsSection({
             <button
               type="button"
               onClick={() => toggleContent("showPrivacyContent")}
-              className="text-neutral-60 cursor-pointer text-sm underline"
+              className="text-neutral-60 ml-2 cursor-pointer text-sm whitespace-nowrap underline"
             >
               {contentState.showPrivacyContent ? "접기" : "보기"}
             </button>
@@ -134,7 +134,7 @@ export default function TermsSection({
             <button
               type="button"
               onClick={() => toggleContent("showCommunityContent")}
-              className="text-neutral-60 cursor-pointer text-sm underline"
+              className="text-neutral-60 ml-2 cursor-pointer text-sm whitespace-nowrap underline"
             >
               {contentState.showCommunityContent ? "접기" : "보기"}
             </button>
