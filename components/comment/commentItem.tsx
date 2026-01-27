@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Comment } from "@/lib/types/comment";
 import { useAuthStore } from "@/lib/store/authStore";
 import { formatRelativeTime } from "@/lib/utils/formatTime";
@@ -9,6 +9,7 @@ import { useCommentLike } from "@/lib/hooks/comment/useCommentLike";
 import { useCommentMutations } from "@/lib/hooks/comment/useCommentMutations";
 import CommentInput from "./commentInput";
 import ProfileImage from "@/components/_common/profileImage";
+import Dropdown from "@/components/_common/dropdown";
 
 interface CommentItemProps {
   comment: Comment;
@@ -24,7 +25,6 @@ export default function CommentItem({
   const { user, isAuthenticated } = useAuthStore();
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const isMyComment = isAuthenticated && user?.nickname === comment.nickname;
 
@@ -45,28 +45,7 @@ export default function CommentItem({
     onSuccess: onUpdate,
   });
 
-  // 드롭다운 외부 클릭 시 닫기
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    if (isDropdownOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isDropdownOpen]);
-
   const handleDelete = () => {
-    setIsDropdownOpen(false);
     deleteComment({ commentPath: comment.path });
   };
 
@@ -88,28 +67,28 @@ export default function CommentItem({
               </span>
 
               {isMyComment && (
-                <div className="relative" ref={dropdownRef}>
-                  <button
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full"
-                    aria-label="댓글 옵션"
-                  >
-                    <EllipsisVertical className="text-neutral-60 h-4 w-4" />
-                  </button>
-
-                  {/* 드롭다운 메뉴 */}
-                  {isDropdownOpen && (
-                    <div className="border-surface-99 absolute top-8 right-2 z-50 w-24 rounded-lg border bg-neutral-100 text-sm font-medium shadow-sm">
-                      <button
-                        onClick={handleDelete}
-                        disabled={isDeleting}
-                        className="text-neutral-20 hover:bg-surface-98 w-full cursor-pointer rounded-lg px-4 py-2.5"
-                      >
-                        삭제
-                      </button>
-                    </div>
-                  )}
-                </div>
+                <Dropdown
+                  isOpen={isDropdownOpen}
+                  onClose={() => setIsDropdownOpen(false)}
+                  trigger={
+                    <button
+                      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full"
+                      aria-label="댓글 옵션"
+                    >
+                      <EllipsisVertical className="text-neutral-60 h-4 w-4" />
+                    </button>
+                  }
+                  items={[
+                    {
+                      label: "삭제",
+                      onClick: handleDelete,
+                      disabled: isDeleting,
+                    },
+                  ]}
+                  position="right"
+                  width="w-24"
+                />
               )}
             </div>
 

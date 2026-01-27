@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Heart, Bookmark, EllipsisVertical } from "lucide-react";
 import { postApi } from "@/lib/api/client/post";
 import { useAuthStore } from "@/lib/store/authStore";
 import { showModal } from "@/lib/store/modalStore";
 import { usePostInteraction } from "@/lib/hooks/community/usePostInteraction";
+import Dropdown from "@/components/_common/dropdown";
 
 interface PostActionsProps {
   postId: string;
@@ -27,7 +28,6 @@ export default function PostActions({
   const { user } = useAuthStore();
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const {
     likeCount,
@@ -47,33 +47,11 @@ export default function PostActions({
   // 본인 게시글 여부 확인
   const isAuthor = user?.id === authorId;
 
-  // 드롭다운 외부 클릭 시 닫기
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    if (isDropdownOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isDropdownOpen]);
-
   const handleEdit = () => {
-    setIsDropdownOpen(false);
     router.push(`/community/write/edit/${postId}`);
   };
 
   const handleDelete = async () => {
-    setIsDropdownOpen(false);
     showModal({
       title: "게시글을 삭제하시겠습니까?",
       description: "삭제된 게시글은 복구할 수 없습니다.",
@@ -91,7 +69,7 @@ export default function PostActions({
         description: "게시글이 성공적으로 삭제되었습니다.",
         type: "snackbar",
       });
-      router.back(); // 이전 페이지로 이동
+      router.back();
     } catch (error) {
       showModal({
         title: "게시글 삭제 실패",
@@ -141,34 +119,32 @@ export default function PostActions({
 
       {/* 수정/삭제 버튼 (작성자만) */}
       {isAuthor && (
-        <div className="relative" ref={dropdownRef}>
-          <button
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full"
-            aria-label="게시글 옵션"
-          >
-            <EllipsisVertical className="text-neutral-60 h-5 w-5" />
-          </button>
-
-          {/* 드롭다운 메뉴 */}
-          {isDropdownOpen && (
-            <div className="border-surface-99 absolute top-12 right-0 z-50 w-24 rounded-lg border bg-neutral-100 text-sm font-medium shadow-sm">
-              <button
-                onClick={handleEdit}
-                className="text-neutral-20 hover:bg-surface-98 w-full cursor-pointer px-4 py-3 first:rounded-t-lg"
-              >
-                수정
-              </button>
-              <button
-                onClick={handleDelete}
-                disabled={isDeleting}
-                className="text-neutral-20 hover:bg-surface-98 w-full cursor-pointer px-4 py-3 last:rounded-b-lg"
-              >
-                삭제
-              </button>
-            </div>
-          )}
-        </div>
+        <Dropdown
+          isOpen={isDropdownOpen}
+          onClose={() => setIsDropdownOpen(false)}
+          trigger={
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full"
+              aria-label="게시글 옵션"
+            >
+              <EllipsisVertical className="text-neutral-60 h-5 w-5" />
+            </button>
+          }
+          items={[
+            {
+              label: "수정",
+              onClick: handleEdit,
+            },
+            {
+              label: "삭제",
+              onClick: handleDelete,
+              disabled: isDeleting,
+            },
+          ]}
+          position="right"
+          width="w-24"
+        />
       )}
     </div>
   );
