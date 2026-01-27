@@ -124,7 +124,9 @@ export default function SecondaryCategoryFilter({
     close();
   };
 
-  const isDisabled = isSelector && !primaryCategoryId;
+  const isDisabled =
+    (isSelector && !primaryCategoryId) ||
+    (!isSelector && primaryCategoryId === "all");
 
   return (
     <div
@@ -141,7 +143,7 @@ export default function SecondaryCategoryFilter({
           "hover:border-primary-50 focus:border-primary-50 focus:ring-primary-10 focus:ring-2 focus:outline-none",
           "cursor-pointer",
           isOpen && "border-primary-50 ring-primary-10 ring-2",
-          isDisabled && "cursor-not-allowed opacity-50",
+          isDisabled && "cursor-default opacity-50",
           {
             // filter 스타일
             "text-neutral-0 w-40 rounded-full px-4 py-3 text-sm font-medium":
