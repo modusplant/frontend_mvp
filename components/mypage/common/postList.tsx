@@ -4,7 +4,6 @@ import { useState, ReactNode } from "react";
 import PostListItem from "./postListItem";
 import Pagination from "./pagination";
 import { PostData } from "@/lib/types/post";
-import { dummyPosts } from "@/lib/data/posts";
 
 interface PostListProps<T> {
   /**
@@ -68,12 +67,6 @@ export default function PostList<
   if (!data || data.posts.length === 0) {
     return <>{emptyComponent}</>;
   }
-
-  // 더미 데이터(개발용)
-  // const data = {
-  //   posts: dummyPosts,
-  //   totalPages: 10,
-  // };
 
   return (
     <div className="flex flex-col gap-[30px]">
