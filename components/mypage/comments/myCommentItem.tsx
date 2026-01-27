@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MyComment } from "@/lib/types/comment";
-import { formatDate } from "@/lib/utils/formatTime";
+import { formatRelativeTime } from "@/lib/utils/formatTime";
 
 interface MyCommentItemProps {
   comment: MyComment;
@@ -16,7 +16,7 @@ export default function MyCommentItem({ comment }: MyCommentItemProps) {
         {/* 댓글 내용 */}
         <p className="text-neutral-20 line-clamp-2 font-medium">{content}</p>
 
-        <span className="text-neutral-60">{formatDate(createdAt)}</span>
+        <span className="text-neutral-60">{formatRelativeTime(createdAt)}</span>
 
         {/* 게시글 제목 */}
         <div className="flex items-center gap-2">

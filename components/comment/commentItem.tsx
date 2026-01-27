@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Comment } from "@/lib/types/comment";
 import { useAuthStore } from "@/lib/store/authStore";
-import { formatPostDate } from "@/lib/utils/post";
+import { formatRelativeTime } from "@/lib/utils/formatTime";
 import { Heart, MessageSquare, EllipsisVertical } from "lucide-react";
 import { useCommentLike } from "@/lib/hooks/comment/useCommentLike";
 import { useCommentMutations } from "@/lib/hooks/comment/useCommentMutations";
@@ -120,7 +120,7 @@ export default function CommentItem({
 
             {/* 액션 버튼 */}
             <div className="text-neutral-60 flex items-center gap-4 text-sm">
-              <span>{formatPostDate(comment.createdAt)}</span>
+              <span>{formatRelativeTime(comment.createdAt)}</span>
               <button
                 onClick={handleLike}
                 disabled={isLiking}
