@@ -3,9 +3,11 @@
  * 작성과 수정에서 공통으로 사용하는 FormData 생성 로직
  */
 
+import { getProxiedImageUrl } from "./image";
+
 export interface PostFormDataPayload {
   textContent: string;
-  images: File[];
+  images: (File | string)[]; // File 또는 기존 이미지 URL
   primaryCategoryId: string;
   secondaryCategoryId: string;
   title: string;
@@ -16,7 +18,9 @@ export interface PostFormDataPayload {
  * @param payload 게시글 데이터
  * @returns 서버에 전송할 FormData
  */
-export function buildPostFormData(payload: PostFormDataPayload): FormData {
+export async function buildPostFormData(
+  payload: PostFormDataPayload
+): Promise<FormData> {
   const formData = new FormData();
 
   // 1. 텍스트 콘텐츠를 파일로 변환하여 추가
@@ -28,10 +32,36 @@ export function buildPostFormData(payload: PostFormDataPayload): FormData {
     formData.append("content", textFile);
   }
 
-  // 2. 이미지 파일들 추가
-  payload.images.forEach((image) => {
-    formData.append("content", image);
-  });
+  // 2. 이미지 처리 (File 객체와 URL 모두 동일하게 처리)
+  const imageFiles: File[] = [];
+
+  for (const image of payload.images) {
+    if (image instanceof File) {
+      imageFiles.push(image);
+      formData.append("content", image);
+    } else if (typeof image === "string") {
+      // URL을 Blob으로 변환하여 File 객체로 생성
+      try {
+        // 프록시 경로로 변환 (CORS 회피)
+        const proxiedUrl = getProxiedImageUrl(image) || image;
+        const response = await fetch(proxiedUrl);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const blob = await response.blob();
+
+        const filename = image.split("/").pop() || "image";
+        const file = new File([blob], filename, { type: blob.type });
+
+        imageFiles.push(file);
+        formData.append("content", file);
+      } catch (error) {
+        console.error("FormData 변환 중 이미지 로드 실패");
+      }
+    }
+  }
 
   // 3. orderInfo 생성 (텍스트 + 이미지 순서)
   const orderInfo: { filename: string; order: number }[] = [];
@@ -41,7 +71,7 @@ export function buildPostFormData(payload: PostFormDataPayload): FormData {
     orderInfo.push({ filename: "text_0.txt", order: currentOrder++ });
   }
 
-  payload.images.forEach((image) => {
+  imageFiles.forEach((image) => {
     orderInfo.push({ filename: image.name, order: currentOrder++ });
   });
 
