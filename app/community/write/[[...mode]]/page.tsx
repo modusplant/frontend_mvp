@@ -11,7 +11,6 @@ import PostWriteActions from "@/components/community/write/postWriteActions";
 import usePostWrite from "@/lib/hooks/community/usePostWrite";
 import { usePostWriteForm } from "@/lib/hooks/community/usePostWriteForm";
 import { postApi } from "@/lib/api/client/post";
-import { getFullImageUrl } from "@/lib/utils/image";
 import { getTextContent, getImageContent } from "@/lib/utils/post";
 
 export default function PostWritePage() {
