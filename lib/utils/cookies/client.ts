@@ -124,3 +124,14 @@ export function getAllCookies(): CookieEntry[] {
     return acc;
   }, []);
 }
+
+/**
+ * 클라이언트에서 모든 쿠키 삭제
+ */
+export function deleteAllCookies(): void {
+  if (typeof document === "undefined") return;
+  const cookies = getAllCookies();
+  cookies.forEach((cookie) => {
+    deleteCookie(cookie.name);
+  });
+}

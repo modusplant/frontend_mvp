@@ -27,10 +27,10 @@ export default function Header({ className, initialUser }: HeaderProps) {
   // Use store user if authenticated, otherwise use initialUser
   const user = isAuthenticated ? storeUser : initialUser;
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
     setIsProfileDropdownOpen(false);
-    router.push("/");
+    logout();
+    router.refresh();
   };
 
   const logo = isRootPath
