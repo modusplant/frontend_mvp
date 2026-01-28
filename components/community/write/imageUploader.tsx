@@ -1,9 +1,9 @@
 "use client";
 
-import { Image as ImageIcon } from "lucide-react";
 import useImageUpload from "@/lib/hooks/community/useImageUpload";
 import ImagePreviewItem from "./imagePreviewItem";
 import ImageDropZone from "./imageDropZone";
+import ImageUploadButton from "./imageUploadButton";
 
 interface ImageUploaderProps {
   images: (File | string)[];
@@ -31,25 +31,12 @@ export default function ImageUploader({
   return (
     <div className="w-full">
       {/* 이미지 업로드 버튼 */}
-      <div className="flex items-center gap-1 rounded-[40px] px-3 py-2.25">
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/jpg"
-          multiple
-          onChange={handleFileSelect}
-          className="hidden"
-        />
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          className="text-neutral-20 flex items-center gap-1 text-[15px] leading-normal font-medium tracking-[-0.01em]"
-        >
-          <ImageIcon className="h-4.5 w-4.5" />
-          사진
-        </button>
-      </div>
+      <ImageUploadButton
+        fileInputRef={fileInputRef}
+        onFileSelect={handleFileSelect}
+      />
 
-      {/* 이미지 미리보기 스크롤 */}
+      {/* 이미지 미리보기 + 스크롤 */}
       {images.length > 0 && (
         <div
           className={`mt-4 overflow-x-auto rounded-lg pb-2 ${
