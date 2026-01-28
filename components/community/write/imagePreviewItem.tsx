@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface ImagePreviewItemProps {
   file: File | string;
@@ -15,6 +16,16 @@ export default function ImagePreviewItem({
   // 이미지 미리보기 URL 생성
   const previewUrl =
     typeof file === "string" ? file : URL.createObjectURL(file);
+
+  useEffect(() => {
+    // 컴포넌트 언마운트 시 URL 해제
+    return () => {
+      if (typeof file !== "string") {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [file, previewUrl]);
+
   return (
     <div className="group relative h-[120px] w-[120px] shrink-0">
       <Image

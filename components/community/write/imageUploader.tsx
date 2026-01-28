@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import useImageUpload from "@/lib/hooks/community/useImageUpload";
 import ImagePreviewItem from "./imagePreviewItem";
 import ImageDropZone from "./imageDropZone";
@@ -12,7 +13,7 @@ interface ImageUploaderProps {
   maxSizeInMB?: number;
 }
 
-export default function ImageUploader({
+function ImageUploader({
   images,
   onImagesChange,
   maxImages = 10,
@@ -73,3 +74,6 @@ export default function ImageUploader({
     </div>
   );
 }
+
+// React.memo로 불필요한 리렌더링 방지
+export default memo(ImageUploader);
