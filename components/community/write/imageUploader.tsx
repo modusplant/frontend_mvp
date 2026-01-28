@@ -1,18 +1,19 @@
 "use client";
 
-import { Image as ImageIcon } from "lucide-react";
+import { memo } from "react";
 import useImageUpload from "@/lib/hooks/community/useImageUpload";
 import ImagePreviewItem from "./imagePreviewItem";
 import ImageDropZone from "./imageDropZone";
+import ImageUploadButton from "./imageUploadButton";
 
 interface ImageUploaderProps {
-  images: File[];
-  onImagesChange: (images: File[]) => void;
+  images: (File | string)[];
+  onImagesChange: (images: (File | string)[]) => void;
   maxImages?: number;
   maxSizeInMB?: number;
 }
 
-export default function ImageUploader({
+function ImageUploader({
   images,
   onImagesChange,
   maxImages = 10,
@@ -31,25 +32,12 @@ export default function ImageUploader({
   return (
     <div className="w-full">
       {/* 이미지 업로드 버튼 */}
-      <div className="flex items-center gap-1 rounded-[40px] px-3 py-2.25">
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/jpg"
-          multiple
-          onChange={handleFileSelect}
-          className="hidden"
-        />
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          className="text-neutral-20 flex items-center gap-1 text-[15px] leading-normal font-medium tracking-[-0.01em]"
-        >
-          <ImageIcon className="h-4.5 w-4.5" />
-          사진
-        </button>
-      </div>
+      <ImageUploadButton
+        fileInputRef={fileInputRef}
+        onFileSelect={handleFileSelect}
+      />
 
-      {/* 이미지 미리보기 스크롤 */}
+      {/* 이미지 미리보기 + 스크롤 */}
       {images.length > 0 && (
         <div
           className={`mt-4 overflow-x-auto rounded-lg pb-2 ${
@@ -64,10 +52,10 @@ export default function ImageUploader({
           <div className="flex min-w-min gap-3 px-2 py-2">
             {images.map((image, index) => (
               <ImagePreviewItem
-                key={index}
+                key={`image-${index}`}
                 file={image}
                 index={index}
-                onRemove={handleRemoveImage}
+                onRemove={(idx) => handleRemoveImage(idx)}
               />
             ))}
           </div>
@@ -86,3 +74,6 @@ export default function ImageUploader({
     </div>
   );
 }
+
+// React.memo로 불필요한 리렌더링 방지
+export default memo(ImageUploader);

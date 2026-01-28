@@ -1,4 +1,3 @@
-import { deleteCookie } from "@/lib/utils/cookies";
 import { ApiResponse } from "@/lib/types/common";
 import {
   LoginRequest,
@@ -32,11 +31,7 @@ export const authApi = {
   /**
    * 로그아웃
    */
-  async logout(): Promise<void> {
-    await deleteCookie("accessToken", {
-      path: "/",
-    });
-  },
+  async logout(): Promise<void> {},
 
   /**
    * 회원가입

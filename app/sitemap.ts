@@ -1,16 +1,20 @@
 import { MetadataRoute } from "next";
-import { serverPostApi } from "@/lib/api/server/post";
+import { BASE_URL } from "@/lib/constants/apiInstance";
+import { PostData } from "@/lib/types/post";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://modusplant.kr";
 
   try {
-    // 최근 게시글 가져오기 (최대 100개)
-    const postsResponse = await serverPostApi.getPosts({ size: 50 });
-    const posts = postsResponse.data?.posts || [];
+    // 최근 게시글 가져오기 (인증 없이 공개 API 직접 호출)
+    const response = await fetch(`${BASE_URL}/posts?size=50`, {
+      next: { revalidate: 3600 }, // 1시간마다 재생성
+    });
+    const result = await response.json();
+    const posts = result.data?.posts || [];
 
     // 게시글 URL 생성
-    const postUrls: MetadataRoute.Sitemap = posts.map((post) => ({
+    const postUrls: MetadataRoute.Sitemap = posts.map((post: PostData) => ({
       url: `${baseUrl}/community/${post.postId}`,
       lastModified: new Date(post.publishedAt),
       changeFrequency: "weekly",

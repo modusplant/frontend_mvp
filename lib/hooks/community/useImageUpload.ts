@@ -4,8 +4,8 @@ import { useRef, useState } from "react";
 interface UseImageUploadProps {
   maxImages?: number;
   maxSizeInMB?: number;
-  onImagesChange: (images: File[]) => void;
-  images: File[];
+  onImagesChange: (images: (File | string)[]) => void;
+  images: (File | string)[];
 }
 
 export default function useImageUpload({

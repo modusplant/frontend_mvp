@@ -57,7 +57,7 @@ export default function CommentItem({
       ) : (
         <div className="mt-6 flex gap-4">
           <div className="relative h-7.5 w-7.5">
-            <ProfileImage imageSrc={comment.image} />
+            <ProfileImage imageSrc={comment.profileImagePath} />
           </div>
 
           <div className="w-full">

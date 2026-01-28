@@ -11,6 +11,7 @@ export function usePostWriteForm(initialData?: {
   secondaryCategoryId?: string;
   title?: string;
   textContent?: string;
+  imageUrls?: string[];
 }) {
   // 카테고리 상태
   const [primaryCategoryId, setPrimaryCategoryId] = useState(
@@ -26,8 +27,8 @@ export function usePostWriteForm(initialData?: {
     initialData?.textContent || ""
   );
 
-  // 이미지 상태
-  const [images, setImages] = useState<File[]>([]);
+  // 이미지 상태 (File | string 통합 관리)
+  const [images, setImages] = useState<(File | string)[]>([]);
 
   // 기존 데이터로 폼 초기화 (수정 모드)
   useEffect(() => {
@@ -53,6 +54,12 @@ export function usePostWriteForm(initialData?: {
       setTextContent(initialData.textContent);
     }
   }, [initialData?.textContent]);
+
+  useEffect(() => {
+    if (initialData?.imageUrls && initialData.imageUrls.length > 0) {
+      setImages(initialData.imageUrls);
+    }
+  }, [initialData?.imageUrls]);
 
   // 폼 유효성 검증
   const isFormValid = useMemo(

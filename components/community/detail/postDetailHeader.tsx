@@ -4,10 +4,12 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Badge from "@/components/_common/badge";
 import { formatRelativeTime } from "@/lib/utils/formatTime";
+import ProfileImage from "@/components/_common/profileImage";
 
 interface PostDetailHeaderProps {
   secondaryCategory: string;
   title: string;
+  authorImageUrl: string | null;
   nickname: string;
   publishedAt: string;
   viewCount: number;
@@ -17,6 +19,7 @@ interface PostDetailHeaderProps {
 export default function PostDetailHeader({
   secondaryCategory,
   title,
+  authorImageUrl,
   nickname,
   publishedAt,
   viewCount,
@@ -50,6 +53,9 @@ export default function PostDetailHeader({
       {/* 작성자 정보 */}
       <div className="text-neutral-70 mb-8 flex items-center gap-2 text-[13px]">
         {/* 작성자 */}
+        <div className="relative h-6 w-6 overflow-hidden rounded-full">
+          <ProfileImage imageSrc={authorImageUrl} />
+        </div>
         <span className="text-neutral-20 text-[15px] font-semibold">
           {nickname}
         </span>

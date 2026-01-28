@@ -5,7 +5,7 @@ import Link from "next/link";
 import { PostData } from "@/lib/types/post";
 import Badge from "@/components/_common/badge";
 import { secondaryCategoryLabels } from "@/lib/constants/categories";
-import { getThumbnail, getExcerpt } from "@/lib/utils/post";
+import { getThumbnail, getTextContent } from "@/lib/utils/post";
 import { formatRelativeTime } from "@/lib/utils/formatTime";
 import { cn } from "@/lib/utils/tailwindHelper";
 import { Bookmark, Heart, MessageSquare } from "lucide-react";
@@ -25,7 +25,7 @@ export default function PostCard({ post, className }: PostCardProps) {
   const thumbnail = getThumbnail(post);
 
   // 본문 요약 (content에서 추출)
-  const excerpt = getExcerpt(post);
+  const excerpt = getTextContent(post.content);
 
   // 날짜 포맷팅
   const formattedDate = formatRelativeTime(post.publishedAt);

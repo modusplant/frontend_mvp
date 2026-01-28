@@ -34,8 +34,6 @@ export function useLogin() {
 
         // 로그인 성공 - 사용자 정보 저장
         login(user);
-
-        console.log("로그인 성공");
         router.push("/");
       }
     } catch (error: any) {

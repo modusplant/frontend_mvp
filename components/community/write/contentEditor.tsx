@@ -1,15 +1,16 @@
 "use client";
 
+import { memo } from "react";
 import ImageUploader from "./imageUploader";
 
 interface ContentEditorProps {
   textContent: string;
-  images: File[];
+  images: (File | string)[];
   onTextChange: (text: string) => void;
-  onImagesChange: (images: File[]) => void;
+  onImagesChange: (images: (File | string)[]) => void;
 }
 
-export default function ContentEditor({
+function ContentEditor({
   textContent,
   images,
   onTextChange,
@@ -33,3 +34,6 @@ export default function ContentEditor({
     </div>
   );
 }
+
+// React.memo로 불필요한 리렌더링 방지
+export default memo(ContentEditor);

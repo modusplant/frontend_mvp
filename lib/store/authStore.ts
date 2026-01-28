@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { User } from "@/lib/types/auth";
-import { authApi } from "@/lib/api/client/auth";
-import { deleteCookie } from "@/lib/utils/cookies/client";
+import { deleteAllCookies } from "@/lib/utils/cookies/client";
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
@@ -36,13 +35,8 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   },
 
   logout: () => {
-    // 서버에 로그아웃 요청 (비동기, 에러 무시)
-    authApi.logout().catch(console.error);
-
-    // RememberMe 쿠키 삭제
-    deleteCookie("rememberMe", {
-      path: "/",
-    });
+    // 모든 쿠키 삭제
+    deleteAllCookies();
 
     set({
       user: null,

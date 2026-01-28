@@ -11,6 +11,7 @@ import PostWriteActions from "@/components/community/write/postWriteActions";
 import usePostWrite from "@/lib/hooks/community/usePostWrite";
 import { usePostWriteForm } from "@/lib/hooks/community/usePostWriteForm";
 import { postApi } from "@/lib/api/client/post";
+import { getTextContent, getImageContent } from "@/lib/utils/post";
 
 export default function PostWritePage() {
   const params = useParams();
@@ -33,16 +34,19 @@ export default function PostWritePage() {
 
     const post = existingPost.data;
     // 텍스트 콘텐츠 추출
-    const textParts = post.content
-      .filter((c) => c.type === "text")
-      .map((c) => c.data)
-      .join("\n\n");
+    const textParts = getTextContent(post.content);
+
+    // 이미지 데이터 추출 (src URL)
+    const imageUrls = getImageContent(post.content)
+      .map((img) => img.src)
+      .filter(Boolean) as string[];
 
     return {
       primaryCategoryId: post.primaryCategoryId,
       secondaryCategoryId: post.secondaryCategoryId,
       title: post.title,
       textContent: textParts,
+      imageUrls,
     };
   }, [existingPost]);
 

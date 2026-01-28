@@ -1,4 +1,5 @@
-import { PostData } from "@/lib/types/post";
+import { PostData, ContentPart } from "@/lib/types/post";
+import { getFullImageUrl } from "@/lib/utils/image";
 
 /**
  * 썸네일 추출 헬퍼 함수
@@ -21,12 +22,22 @@ export function getThumbnail(post: PostData): string {
 }
 
 /**
- * 본문 첫 텍스트 추출 헬퍼 함수
- * - content 배열에서 첫 번째 텍스트를 찾아 반환
+ * 텍스트 콘텐츠만 필터링
+ * - content 배열에서 type이 "text"인 항목들만 반환
  */
-export function getExcerpt(post: PostData): string | undefined {
-  const textContent = post.content.find((c) => c.type === "text");
-  if (!textContent) return undefined;
+export function getTextContent(content: ContentPart[]): string {
+  return content.find((item) => item.type === "text")?.data || "";
+}
 
-  return textContent.data;
+/**
+ * 이미지 콘텐츠만 필터링
+ * - content 배열에서 type이 "image"인 항목들만 반환
+ */
+export function getImageContent(content: ContentPart[]): ContentPart[] {
+  return content
+    .filter((item) => item.type === "image")
+    .map((item) => ({
+      ...item,
+      src: getFullImageUrl(item.src),
+    }));
 }
