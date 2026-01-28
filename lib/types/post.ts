@@ -51,6 +51,7 @@ export interface PostData {
  */
 export interface PostDetail extends PostData {
   authorId: string;
+  authorImageUrl: string | null;
   viewCount: number;
   isPublished: boolean;
   publishedAt: string;

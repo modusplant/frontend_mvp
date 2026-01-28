@@ -16,6 +16,7 @@ export default function PostDetail({ postId, initialData }: PostDetailProps) {
       <PostDetailHeader
         secondaryCategory={initialData.secondaryCategory}
         title={initialData.title}
+        authorImageUrl={initialData.authorImageUrl}
         nickname={initialData.nickname}
         publishedAt={initialData.publishedAt}
         viewCount={initialData.viewCount}
