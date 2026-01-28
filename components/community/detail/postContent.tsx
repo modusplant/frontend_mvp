@@ -46,43 +46,24 @@ export default function PostContent({ content }: PostContentProps) {
   const textContent = content.filter((item) => item.type === "text");
   const imageContent = content.filter((item) => item.type === "image");
 
-  const postContent = [...textContent, ...imageContent];
-
   return (
     <>
       <div className="prose prose-lg max-w-none">
-        {postContent.map((item, index) => {
-          if (item.type === "text") {
-            return (
-              <p
-                key={`text-${index}`}
-                className="text-neutral-20 mb-4 text-[16px] leading-relaxed break-words whitespace-pre-wrap"
-              >
-                {parseTextWithLinks(item.data || "")}
-              </p>
-            );
-          }
-
-          if (item.type === "image") {
-            return (
-              <div
-                key={`image-${index}`}
-                className="my-6 cursor-pointer"
-                onClick={() => setSelectedImage(item.src || null)}
-              >
-                <Image
-                  src={item.src || ""}
-                  alt={item.filename || `이미지 ${index + 1}`}
-                  width={800}
-                  height={600}
-                  className="rounded-lg"
-                  priority={index === 0}
-                />
-              </div>
-            );
-          }
-
-          return null;
+        <p className="text-neutral-20 mb-4 text-[16px] leading-relaxed break-words whitespace-pre-wrap">
+          {parseTextWithLinks(textContent[0]?.data || "")}
+        </p>
+        {imageContent.map((item, index) => {
+          return (
+            <Image
+              src={item.src || ""}
+              alt={item.filename || `이미지 ${index + 1}`}
+              width={800}
+              height={600}
+              className="my-6 cursor-pointer rounded-lg"
+              priority={index === 0}
+              onClick={() => setSelectedImage(item.src || null)}
+            />
+          );
         })}
       </div>
 
