@@ -3,7 +3,7 @@
 import { PostData } from "@/lib/types/post";
 import Badge from "@/components/_common/badge";
 import { secondaryCategoryLabels } from "@/lib/constants/categories";
-import { getExcerpt } from "@/lib/utils/post";
+import { getTextContent } from "@/lib/utils/post";
 
 export interface PostListItemContentProps {
   post: PostData;
@@ -18,7 +18,7 @@ export interface PostListItemContentProps {
 export default function PostListItemContent({
   post,
 }: PostListItemContentProps) {
-  const excerpt = getExcerpt(post);
+  const excerpt = getTextContent(post.content);
 
   return (
     <div className="flex flex-col gap-2">

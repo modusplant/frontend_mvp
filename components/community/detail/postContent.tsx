@@ -3,54 +3,31 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ContentPart } from "@/lib/types/post";
+import { getTextContent, getImageContent } from "@/lib/utils/post";
+import { parseTextWithLinks } from "@/lib/utils/textParser";
 import ImageModal from "./imageModal";
 
 interface PostContentProps {
   content: ContentPart[];
 }
 
-// URL을 감지하고 링크로 변환하는 함수
-function parseTextWithLinks(text: string) {
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
-  const parts = text.split(urlRegex);
-
-  return parts.map((part, index) => {
-    if (part.match(urlRegex)) {
-      try {
-        const url = new URL(part);
-        const displayText = url.hostname.replace(/^www\./, "");
-
-        return (
-          <a
-            key={index}
-            href={part}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary-50 hover:text-primary-40 break-all underline decoration-1 underline-offset-2 transition-colors"
-          >
-            {displayText}
-          </a>
-        );
-      } catch {
-        return part;
-      }
-    }
-    return part;
-  });
-}
-
+/**
+ * 게시글 상세 콘텐츠 컴포넌트
+ * - 텍스트와 이미지 콘텐츠 렌더링(텍스트 First)
+ * - 텍스트 내 URL을 감지하여 링크로 변환
+ * - 이미지 클릭 시 풀스크린 모달로 확대
+ */
 export default function PostContent({ content }: PostContentProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  // 텍스트와 이미지를 분리하여 순서대로 렌더링
-  const textContent = content.filter((item) => item.type === "text");
-  const imageContent = content.filter((item) => item.type === "image");
+  const textContent = getTextContent(content);
+  const imageContent = getImageContent(content);
 
   return (
     <>
       <div className="prose prose-lg max-w-none">
         <p className="text-neutral-20 mb-4 text-[16px] leading-relaxed break-words whitespace-pre-wrap">
-          {parseTextWithLinks(textContent[0]?.data || "")}
+          {parseTextWithLinks(textContent)}
         </p>
         {imageContent.map((item, index) => {
           return (

@@ -12,6 +12,7 @@ import usePostWrite from "@/lib/hooks/community/usePostWrite";
 import { usePostWriteForm } from "@/lib/hooks/community/usePostWriteForm";
 import { postApi } from "@/lib/api/client/post";
 import { getFullImageUrl } from "@/lib/utils/image";
+import { getTextContent, getImageContent } from "@/lib/utils/post";
 
 export default function PostWritePage() {
   const params = useParams();
@@ -34,15 +35,11 @@ export default function PostWritePage() {
 
     const post = existingPost.data;
     // 텍스트 콘텐츠 추출
-    const textParts = post.content
-      .filter((c) => c.type === "text")
-      .map((c) => c.data)
-      .join("\n\n");
+    const textParts = getTextContent(post.content);
 
     // 이미지 데이터 추출 (src URL)
-    const imageUrls = post.content
-      .filter((c) => c.type === "image")
-      .map((c) => getFullImageUrl(c.src))
+    const imageUrls = getImageContent(post.content)
+      .map((img) => img.src)
       .filter(Boolean) as string[];
 
     return {
