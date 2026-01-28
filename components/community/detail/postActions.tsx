@@ -69,7 +69,7 @@ export default function PostActions({
         description: "게시글이 성공적으로 삭제되었습니다.",
         type: "snackbar",
       });
-      router.back();
+      router.replace("/");
     } catch (error) {
       showModal({
         title: "게시글 삭제 실패",
