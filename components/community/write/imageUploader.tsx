@@ -6,8 +6,8 @@ import ImagePreviewItem from "./imagePreviewItem";
 import ImageDropZone from "./imageDropZone";
 
 interface ImageUploaderProps {
-  images: File[];
-  onImagesChange: (images: File[]) => void;
+  images: (File | string)[];
+  onImagesChange: (images: (File | string)[]) => void;
   maxImages?: number;
   maxSizeInMB?: number;
 }
@@ -64,10 +64,10 @@ export default function ImageUploader({
           <div className="flex min-w-min gap-3 px-2 py-2">
             {images.map((image, index) => (
               <ImagePreviewItem
-                key={index}
+                key={`image-${index}`}
                 file={image}
                 index={index}
-                onRemove={handleRemoveImage}
+                onRemove={(idx) => handleRemoveImage(idx)}
               />
             ))}
           </div>

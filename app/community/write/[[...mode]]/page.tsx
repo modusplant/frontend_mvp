@@ -11,6 +11,7 @@ import PostWriteActions from "@/components/community/write/postWriteActions";
 import usePostWrite from "@/lib/hooks/community/usePostWrite";
 import { usePostWriteForm } from "@/lib/hooks/community/usePostWriteForm";
 import { postApi } from "@/lib/api/client/post";
+import { getFullImageUrl } from "@/lib/utils/image";
 
 export default function PostWritePage() {
   const params = useParams();
@@ -38,11 +39,18 @@ export default function PostWritePage() {
       .map((c) => c.data)
       .join("\n\n");
 
+    // 이미지 데이터 추출 (src URL)
+    const imageUrls = post.content
+      .filter((c) => c.type === "image")
+      .map((c) => getFullImageUrl(c.src))
+      .filter(Boolean) as string[];
+
     return {
       primaryCategoryId: post.primaryCategoryId,
       secondaryCategoryId: post.secondaryCategoryId,
       title: post.title,
       textContent: textParts,
+      imageUrls,
     };
   }, [existingPost]);
 

@@ -4,9 +4,9 @@ import ImageUploader from "./imageUploader";
 
 interface ContentEditorProps {
   textContent: string;
-  images: File[];
+  images: (File | string)[];
   onTextChange: (text: string) => void;
-  onImagesChange: (images: File[]) => void;
+  onImagesChange: (images: (File | string)[]) => void;
 }
 
 export default function ContentEditor({

@@ -80,7 +80,7 @@ export interface PostWritePayload {
   secondaryCategoryId: string; // UUID
   title: string; // 최대 60자
   textContent: string; // 본문 텍스트
-  images: File[]; // 이미지 파일들 (최대 10개, 각 10MB)
+  images: (File | string)[]; // 이미지 파일들 또는 URL (최대 10개, 각 10MB)
 }
 
 /**
