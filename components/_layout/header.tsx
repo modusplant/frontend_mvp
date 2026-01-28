@@ -10,7 +10,6 @@ import { usePathname, useRouter } from "next/navigation";
 import Profile from "@/components/_common/profileImage";
 import Dropdown from "@/components/_common/dropdown";
 import { User } from "@/lib/types/auth";
-import { LogOut } from "lucide-react";
 
 export interface HeaderProps {
   className?: string;
