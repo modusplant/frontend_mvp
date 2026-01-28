@@ -52,7 +52,7 @@ export async function buildPostFormData(
 
         const blob = await response.blob();
 
-        const filename = image.split("/").pop() || "image";
+        const filename = image.split("/").pop()?.split("?")[0] || "image";
         const file = new File([blob], filename, { type: blob.type });
 
         imageFiles.push(file);

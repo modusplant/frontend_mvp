@@ -32,24 +32,16 @@ export function getProxiedImageUrl(
 ): string | undefined {
   if (!src) return undefined;
 
-  // URL이 이미 full URL인지 확인
-  if (src.startsWith("http://") || src.startsWith("https://")) {
-    // 외부 이미지 호스트의 이미지인 경우에만 프록시 사용
-    const hostname = process.env.NEXT_PUBLIC_IMAGE_HOSTNAME;
-    const path = process.env.NEXT_PUBLIC_IMAGE_PATH || "";
-
-    if (hostname && src.includes(hostname)) {
-      // https://hostname/path/image.jpg -> /image-proxy/image.jpg
-      const urlPath = src.split(`${hostname}${path}`)[1];
-      if (urlPath) {
-        return `/image-proxy/${urlPath}`;
-      }
-    }
-
-    // 다른 호스트의 이미지는 그대로 반환
+  // 이미 프록시 URL인 경우 그대로 반환
+  if (src.startsWith("/api/image-proxy")) {
     return src;
   }
 
-  // 상대 경로인 경우 프록시 경로로 변환
-  return `/image-proxy/${src}`;
+  // full URL을 먼저 가져옴
+  const fullUrl = getFullImageUrl(src);
+  if (!fullUrl) return undefined;
+
+  // API Route를 통한 프록시 경로로 변환
+  // URL 전체를 쿼리 파라미터로 전달 (presigned URL의 쿼리 파라미터 보존)
+  return `/api/image-proxy?url=${encodeURIComponent(fullUrl)}`;
 }

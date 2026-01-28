@@ -16,10 +16,6 @@ const nextConfig: NextConfig = {
         source: "/api/:path*",
         destination: `${process.env.BASE_URL}/api/:path*`,
       },
-      {
-        source: "/image-proxy/:path*",
-        destination: `https://${process.env.NEXT_PUBLIC_IMAGE_HOSTNAME}${process.env.NEXT_PUBLIC_IMAGE_PATH}/:path*`,
-      },
     ];
   },
 };
