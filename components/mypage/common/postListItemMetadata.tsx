@@ -48,7 +48,7 @@ export default function PostListItemMetadata({
         <Bookmark
           fill={post.isBookmarked ? "currentColor" : "none"}
           className={cn(
-            "h-[15px] w-[15px] md:h-[17px] md:w-[17px]",
+            "h-3.75 w-3.75 md:h-4.25 md:w-4.25",
             post.isBookmarked ? "text-primary-50" : "text-neutral-60"
           )}
         />
