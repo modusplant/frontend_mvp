@@ -3,12 +3,17 @@ import Image from "next/image";
 
 interface HeaderLogoProps {
   isRootPath: boolean;
+  scrolled?: boolean;
 }
 
-export default function HeaderLogo({ isRootPath }: HeaderLogoProps) {
-  const logo = isRootPath
-    ? "/logo_favicon/Logo_v2_white.svg"
-    : "/logo_favicon/Logo_v2_black.svg";
+export default function HeaderLogo({
+  isRootPath,
+  scrolled = false,
+}: HeaderLogoProps) {
+  const logo =
+    isRootPath && !scrolled
+      ? "/logo_favicon/Logo_v2_white.svg"
+      : "/logo_favicon/Logo_v2_black.svg";
 
   return (
     <Link href="/" className="transition-opacity hover:opacity-80">
