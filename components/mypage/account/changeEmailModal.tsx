@@ -124,7 +124,7 @@ export default function ChangeEmailModal({
     >
       {/* 모달 영역 */}
       <div
-        className="min-h-[375px] w-[480px] rounded-[28px] bg-neutral-100 px-10 pb-5 shadow-lg"
+        className="min-h-93.75 w-120 rounded-[28px] bg-neutral-100 px-10 pb-5 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="mt-8 text-center text-xl font-bold">이메일 변경</h2>

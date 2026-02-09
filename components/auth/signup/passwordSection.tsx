@@ -83,7 +83,7 @@ export default function PasswordSection({
           )}
         </div>
 
-        <p className="text-neutral-60 mt-1 text-sm">
+        <p className="text-neutral-60 mt-1 text-[13px]">
           영문 대소문자, 숫자, 특수문자를 포함한 8자 이상의 비밀번호로
           입력해주세요.
         </p>

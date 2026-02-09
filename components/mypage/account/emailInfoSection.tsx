@@ -21,24 +21,32 @@ export default function EmailInfoSection({
   onChangeEmail,
 }: EmailInfoSectionProps) {
   return (
-    <div className="border-surface-98 flex flex-col gap-[30px] rounded-xl border bg-white p-10">
-      <h2 className="text-neutral-5 text-[17px] leading-[1.2] font-semibold tracking-[-0.01em]">
+    <div className="border-surface-98 flex flex-col gap-5 rounded-xl border bg-white p-10">
+      <h2 className="text-neutral-5 text-[18px] leading-[1.2] font-semibold tracking-[-0.01em]">
         이메일 정보
       </h2>
 
       <div className="flex flex-col gap-3">
-        <label className="text-neutral-0 text-base leading-normal font-medium tracking-[-0.02em]">
-          이메일
+        <label className="text-neutral-0 text-[14px] leading-normal font-medium tracking-[-0.02em]">
+          현재 이메일
+          <span className="text-primary-40 text-sm font-medium"> *</span>
         </label>
         <Input type="email" value={email} disabled className="flex-1" />
-        <p className="text-neutral-60 text-sm leading-normal">
-          가입일: {createdAt ? formatDate(createdAt) : "-"}
-        </p>
-        <hr className="border-surface-stroke-2" />
-        <div>
-          <Button variant="point2" size="md" onClick={onChangeEmail}>
-            이메일 변경하기
-          </Button>
+        <div className="flex flex-col gap-6">
+          <p className="text-neutral-60 text-sm leading-normal">
+            가입일: {createdAt ? formatDate(createdAt) : "-"}
+          </p>
+          <hr className="border-surface-stroke-2" />
+          <div>
+            <Button
+              variant="point2"
+              size="md"
+              onClick={onChangeEmail}
+              className="h-10.5 text-[15px] font-medium"
+            >
+              이메일 변경하기
+            </Button>
+          </div>
         </div>
       </div>
     </div>

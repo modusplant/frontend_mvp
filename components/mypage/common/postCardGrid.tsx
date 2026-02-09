@@ -68,16 +68,10 @@ export default function PostCardGrid<
     return <>{emptyComponent}</>;
   }
 
-  // 더미데이터(개발용)
-  // const data = {
-  //   posts: dummyPosts,
-  //   totalPages: 10,
-  // };
-
   return (
-    <div className="flex flex-col gap-[60px]">
+    <div className="flex flex-col gap-15">
       {/* 카드 그리드 (3열) */}
-      <div className="grid grid-cols-1 gap-x-5 gap-y-[60px] md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-x-5 gap-y-15 md:grid-cols-2 lg:grid-cols-3">
         {data.posts.map((post) => (
           <PostCard key={post.postId} post={post} />
         ))}

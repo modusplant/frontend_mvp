@@ -33,7 +33,7 @@ export default function ProfileImageUploader({
     <div className="flex items-center gap-6">
       {/* 프로필 이미지 미리보기 */}
       <div className="flex flex-col items-center gap-3">
-        <div className="relative h-[100px] w-[100px]">
+        <div className="relative h-25 w-25">
           {/* 배경 원 */}
           <div className="bg-neutral-90 absolute inset-0 rounded-full" />
 
@@ -57,7 +57,7 @@ export default function ProfileImageUploader({
       {/* 업로드 버튼 */}
       <button
         onClick={handleUploadClick}
-        className="border-primary-40 hover:bg-primary-10 flex items-center gap-1.5 rounded-[40px] border px-[18px] py-3 transition-colors"
+        className="border-primary-40 hover:bg-primary-10 flex items-center gap-1.5 rounded-[40px] border px-4.5 py-3 transition-colors"
       >
         <Upload className="text-primary-50 h-4 w-4" />
         <span className="text-primary-50 text-sm leading-[1.2] font-medium tracking-[-0.02em]">

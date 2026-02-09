@@ -133,7 +133,7 @@ export default function PostList({ initialData }: PostListProps) {
       {/* 게시물 목록 */}
       {!isLoading && !isError && (
         <>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-x-8 md:gap-y-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-10">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-x-8 md:gap-y-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-16">
             {visiblePosts.map((post) => (
               <PostCard key={post.postId} post={post} />
             ))}
@@ -155,7 +155,7 @@ export default function PostList({ initialData }: PostListProps) {
           )}
 
           {/* 무한 스크롤 트리거 (로그인 상태일 때만) */}
-          {!isGuest && <div ref={observerTarget} className="h-10" />}
+          {!isGuest && <div ref={observerTarget} className="" />}
 
           {/* 다음 페이지 로딩 중 */}
           {isFetchingNextPage && <LoadingState />}

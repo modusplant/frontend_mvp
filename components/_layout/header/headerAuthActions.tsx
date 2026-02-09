@@ -34,7 +34,7 @@ export default function HeaderAuthActions({
         trigger={
           <button
             onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-            className="relative h-9 w-9 cursor-pointer rounded-full transition-opacity hover:opacity-80"
+            className="relative flex h-9 w-9 cursor-pointer items-center rounded-full transition-opacity hover:opacity-80"
             aria-label="프로필 메뉴"
           >
             <Profile imageSrc={user?.image} />
@@ -44,14 +44,17 @@ export default function HeaderAuthActions({
           {
             label: "마이페이지",
             onClick: () => router.push("/mypage"),
+            textAlign: "left",
           },
           {
             label: "내 활동",
             onClick: () => router.push("/mypage/recent"),
+            textAlign: "left",
           },
           {
             label: "로그아웃",
             onClick: handleLogout,
+            textAlign: "left",
           },
         ]}
         position="center"

@@ -30,7 +30,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               "text-neutral-0 placeholder:text-neutral-70 w-full bg-transparent text-base",
               "rounded-lg border px-4 py-3 outline-none",
               isError ? "border-system-alert" : "border-surface-stroke-2",
-              "focus:ring-primary-50 focus:border-primary-50 focus:ring-1",
+              "focus:border-primary-50",
               "disabled:cursor-not-allowed disabled:opacity-50",
               "transition-colors",
               className
@@ -62,7 +62,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           "text-neutral-0 placeholder:text-neutral-70 w-full bg-transparent text-base",
           "rounded-lg border px-4 py-3 outline-none",
           isError ? "border-system-alert" : "border-surface-stroke-2",
-          "focus:ring-primary-50 focus:border-primary-50 focus:ring-1",
+          "focus:border-primary-50",
           "disabled:cursor-not-allowed disabled:opacity-50",
           "transition-colors",
           className

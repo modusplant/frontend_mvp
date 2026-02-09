@@ -69,7 +69,7 @@ export default function PostList<
   }
 
   return (
-    <div className="flex flex-col gap-[30px]">
+    <div className="flex flex-col gap-7.5">
       {/* 게시글 리스트 */}
       <div className="flex flex-col gap-6">
         {data.posts.map((post, index) => (

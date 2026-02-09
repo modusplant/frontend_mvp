@@ -9,7 +9,7 @@ export default function HeaderGuestActions() {
         <Button
           variant="default"
           size="sm"
-          className="h-9 cursor-pointer rounded-full border-none"
+          className="border-surface-stroke h-9 cursor-pointer rounded-full"
         >
           로그인
         </Button>

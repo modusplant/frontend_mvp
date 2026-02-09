@@ -9,6 +9,7 @@ interface DropdownItem {
   disabled?: boolean;
   className?: string;
   variant?: "default" | "danger";
+  textAlign?: "left" | "center" | "right";
 }
 
 interface DropdownProps {
@@ -65,7 +66,10 @@ export default function Dropdown({
       {isOpen && (
         <div
           className={cn(
-            "border-surface-99 absolute top-12 z-50 rounded-lg border bg-neutral-100 text-sm font-medium shadow-sm",
+            "absolute top-12 z-50",
+            "border-surface-99 rounded-[10px] border bg-neutral-100 shadow-sm",
+            "p-1.5",
+            "text-sm font-medium",
             positionClass,
             width,
             className
@@ -80,21 +84,24 @@ export default function Dropdown({
               }}
               disabled={item.disabled}
               className={cn(
-                "w-full cursor-pointer px-1 py-1 transition-colors",
+                "h-10 w-full cursor-pointer transition-colors",
 
                 {
-                  "first:rounded-t-lg": true,
-                  "last:rounded-b-lg": true,
+                  "first:rounded-t-[10px]": true,
+                  "last:rounded-b-[10px]": true,
                 },
                 item.className
               )}
             >
               <div
                 className={cn(
-                  "w-full rounded-lg py-1.5",
+                  "w-full rounded-[10px] px-5 py-2.5",
                   item.variant === "danger"
                     ? "hover:bg-surface-98 text-red-500"
-                    : "text-neutral-20 hover:bg-surface-98"
+                    : "text-neutral-20 hover:bg-surface-98",
+                  item.textAlign === "left" && "text-left",
+                  item.textAlign === "center" && "text-center",
+                  item.textAlign === "right" && "text-right"
                 )}
               >
                 {item.label}

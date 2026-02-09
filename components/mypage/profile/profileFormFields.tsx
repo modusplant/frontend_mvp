@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { authApi } from "@/lib/api/client/auth";
 import { Input } from "@/components/_common/input";
 import Button from "@/components/_common/button";
+import { cn } from "@/lib/utils/tailwindHelper";
 
 interface ProfileFormFieldsProps {
   nickname: string;
@@ -40,16 +41,14 @@ export default function ProfileFormFields({
   };
 
   return (
-    <div className="flex flex-col gap-11">
+    <div className="flex flex-col gap-10">
       {/* 닉네임 필드 */}
       <div className="flex flex-col gap-2">
         <div className="flex gap-0.5">
           <label className="text-neutral-20 text-sm leading-[1.2] font-medium tracking-[-0.01em]">
             닉네임
           </label>
-          <span className="text-primary-40 text-sm leading-[1.2] font-medium tracking-[-0.01em]">
-            *
-          </span>
+          <span className="text-primary-40 text-sm font-medium">*</span>
         </div>
 
         <div className="flex gap-2">
@@ -64,7 +63,7 @@ export default function ProfileFormFields({
             onClick={handleNicknameCheck}
             variant="point"
             size="md"
-            className="shrink-0 rounded-lg px-4 text-[15px] font-medium whitespace-nowrap"
+            className="min-w-23 shrink-0 rounded-lg px-4 text-[15px] font-medium whitespace-nowrap"
             disabled={!nickname.trim() || nickname === initialNickname}
           >
             중복 확인
@@ -90,7 +89,12 @@ export default function ProfileFormFields({
           onChange={(e) => onIntroductionChange(e.target.value)}
           placeholder="한 줄 소개를 입력해주세요."
           rows={1}
-          className="border-surface-stroke-2 text-neutral-20 placeholder:text-neutral-40 focus:border-primary-50 min-h-[120px] w-full resize-none rounded-lg border px-4 py-4 text-sm leading-[1.2] tracking-[-0.01em] transition-colors focus:outline-none"
+          className={cn(
+            "border-surface-stroke-2 min-h-30 w-full resize-none rounded-lg border",
+            "min-h-30 px-4 py-4",
+            "focus:border-primary-50 transition-colors focus:outline-none",
+            "text-neutral-20 placeholder:text-neutral-40 text-[16px] leading-[1.2] tracking-[-0.01em]"
+          )}
         />
       </div>
     </div>

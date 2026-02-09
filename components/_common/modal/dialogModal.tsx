@@ -19,24 +19,26 @@ export default function DialogModal({
 }: DialogModalProps) {
   return (
     <div
-      className="bg-opacity-50 fixed inset-0 z-99 flex items-center justify-center"
+      className="fixed inset-0 z-99 flex items-center justify-center bg-black/20"
       onClick={hideModal}
     >
       <div
-        className="w-96 rounded-2xl bg-neutral-100 py-5 shadow-lg"
+        className="w-85 rounded-2xl bg-neutral-100 py-4 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex flex-col items-center gap-1 py-9">
-          <h2 className="text-xl font-semibold">{title}</h2>
-          <p className="">{description}</p>
+        <div className="flex flex-col items-center gap-1 py-10">
+          <h2 className="text-neutral-10 text-xl text-[17px] font-semibold">
+            {title}
+          </h2>
+          <p className="text-neutral-30 text-[16px]">{description}</p>
         </div>
-        <div className="flex justify-center">
+        <div className="flex h-10 justify-center gap-2.5 font-medium">
           {type === "two-button" && (
             <Button
               variant="default"
               size="lg"
               onClick={hideModal}
-              className="text-neutral-10 mr-4 min-w-24 rounded-md px-5 py-3"
+              className="text-neutral-10 min-w-20 rounded-[7px] px-5 py-3 text-[15px]"
             >
               취소
             </Button>
@@ -48,7 +50,7 @@ export default function DialogModal({
               onConfirm?.();
               hideModal();
             }}
-            className="min-w-24 rounded-md px-5 py-3 text-neutral-100"
+            className="min-w-20 rounded-[7px] px-5 py-3 text-[15px] text-neutral-100"
           >
             {buttonText || "OK"}
           </Button>

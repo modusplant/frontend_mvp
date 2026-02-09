@@ -95,7 +95,7 @@ export default function PostCard({ post, className }: PostCardProps) {
             <Bookmark
               fill={post.isBookmarked ? "currentColor" : "none"}
               className={cn(
-                "md:h-5 md:w-5",
+                "md:h-4 md:w-4",
                 post.isBookmarked ? "text-primary-50" : "text-neutral-60"
               )}
             />

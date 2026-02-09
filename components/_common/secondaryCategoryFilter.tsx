@@ -6,7 +6,7 @@ import {
   type Category,
 } from "@/lib/constants/categories";
 import { cn } from "@/lib/utils/tailwindHelper";
-import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 import { useDropdownState } from "@/lib/hooks/category/useDropdownState";
 import { getCategoryNameById } from "@/lib/utils/category";
 
@@ -139,17 +139,18 @@ export default function SecondaryCategoryFilter({
         onClick={() => !isDisabled && toggle()}
         disabled={isDisabled}
         className={cn(
-          "border-surface-stroke flex items-center justify-between border bg-neutral-100",
+          "border-surface-stroke flex items-center justify-between border",
           "hover:border-primary-50 focus:border-primary-50 focus:ring-primary-10 focus:ring-2 focus:outline-none",
           "cursor-pointer",
           isOpen && "border-primary-50 ring-primary-10 ring-2",
-          isDisabled && "cursor-default opacity-50",
+          isDisabled && "cursor-default",
           {
             // filter 스타일
-            "text-neutral-0 w-40 rounded-full px-4 py-3 text-sm font-medium":
+            "text-neutral-20 h-10 w-40 rounded-full px-4 py-3 text-sm font-medium":
               !isSelector,
             // selector 스타일
-            "h-11 w-full rounded-lg px-3 py-2.5 md:w-60 md:px-4.5": isSelector,
+            "text-neutral-20 h-11 w-full rounded-lg px-3 py-2.5 text-[15px] leading-normal font-medium tracking-[-0.01em] md:w-60 md:px-4.5":
+              isSelector,
           }
         )}
         aria-haspopup="listbox"
@@ -157,19 +158,18 @@ export default function SecondaryCategoryFilter({
       >
         <span
           className={cn({
-            "text-[15px] leading-normal font-medium tracking-[-0.01em]":
-              isSelector,
-            "text-neutral-20": isSelector && selectedCategoryIds.length > 0,
+            "text-neutral-70": isDisabled,
             "text-neutral-60": isSelector && selectedCategoryIds.length === 0,
           })}
         >
           {getSelectedLabel()}
         </span>
-        <ChevronDown
-          className={cn("transition-transform", isOpen && "rotate-180", {
-            "text-neutral-60 ml-2 h-4 w-4 md:h-5 md:w-5": !isSelector,
-            "text-neutral-70 h-3.5 w-3.5": isSelector,
-          })}
+        <Image
+          src="/icon/arrow-down.svg"
+          alt="arrow"
+          width={12}
+          height={12}
+          className={cn(isOpen && "rotate-180")}
         />
       </button>
 

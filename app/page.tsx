@@ -16,8 +16,8 @@ export default async function Home() {
       <HeroBanner />
 
       {/* Post List Section - main 태그로 메인 콘텐츠 명시 */}
-      <main className="relative w-full py-8 md:py-12 lg:py-16">
-        <div className="mx-auto flex w-full max-w-[1320px] flex-col px-4 md:px-6 lg:px-8">
+      <main className="relative mb-4 w-full py-8 md:py-12 lg:mb-9 lg:py-16">
+        <div className="mx-auto flex w-full max-w-330 flex-col px-4 md:px-6 lg:px-8">
           {/* 섹션 타이틀 - header와 h1 태그 사용 */}
           <header className="flex flex-col gap-2.5">
             <p className="font-emphasis text-primary-50 text-xl font-bold">

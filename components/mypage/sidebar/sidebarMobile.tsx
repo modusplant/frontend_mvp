@@ -45,27 +45,18 @@ export default function SidebarMobile({ onLogout }: SidebarMobileProps) {
               <div className="flex flex-col">
                 {section.items.map((item) => {
                   const isActive = pathname === item.href;
-                  const isDisabled = item.disabled;
 
                   return (
                     <Link
                       key={item.href}
-                      href={isDisabled ? "#" : item.href}
+                      href={item.href}
                       className={cn(
-                        "flex rounded-[10px] px-0 py-[13px]",
+                        "flex rounded-[10px] px-0 py-3.25",
                         "text-[15px] leading-[1.19] font-medium tracking-[-0.02em]",
                         "transition-colors",
                         isActive && "text-neutral-5 font-semibold",
-                        !isActive && !isDisabled && "text-neutral-30",
-                        isDisabled && "text-neutral-60 cursor-not-allowed"
+                        !isActive && "text-neutral-30 font-medium"
                       )}
-                      onClick={(e) => {
-                        if (isDisabled) {
-                          e.preventDefault();
-                        } else {
-                          setIsOpen(false);
-                        }
-                      }}
                     >
                       {item.label}
                     </Link>
@@ -86,7 +77,7 @@ export default function SidebarMobile({ onLogout }: SidebarMobileProps) {
             <button
               onClick={onLogout}
               className={cn(
-                "mt-2.5 flex rounded-[10px] px-0 py-[13px]",
+                "mt-2.5 flex rounded-[10px] px-0 py-3.25",
                 "text-[15px] leading-[1.19] font-medium tracking-[-0.02em]",
                 "text-neutral-30"
               )}

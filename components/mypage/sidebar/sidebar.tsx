@@ -11,7 +11,7 @@ export default function Sidebar() {
   const handleLogout = () => {
     showModal({
       type: "two-button",
-      title: "로그아웃 하시겠습니까?",
+      title: "로그아웃 하시겠어요?",
       description: "메인페이지로 이동합니다.",
       buttonText: "로그아웃",
       onConfirm: () => {
