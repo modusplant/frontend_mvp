@@ -7,6 +7,7 @@ import ProfileImageUploader from "./profileImageUploader";
 import ProfileFormFields from "./profileFormFields";
 import Button from "@/components/_common/button";
 import { showModal } from "@/lib/store/modalStore";
+import Image from "next/image";
 
 export default function ProfileSection() {
   const { user } = useAuthStore();
@@ -52,14 +53,14 @@ export default function ProfileSection() {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       {/* 프로필 정보 카드 */}
-      <div className="border-surface-98 flex flex-col gap-[30px] rounded-xl border bg-white p-10">
+      <div className="border-surface-98 flex flex-col gap-7.5 rounded-xl border bg-white p-10">
         <h2 className="text-neutral-5 text-[18px] leading-[1.2] font-semibold tracking-[-0.01em]">
           프로필 정보
         </h2>
 
-        <div className="flex flex-col gap-11">
+        <div className="flex flex-col gap-10">
           {/* 프로필 이미지 업로더 */}
           <ProfileImageUploader
             imagePreview={formData.imagePreview}
@@ -67,7 +68,7 @@ export default function ProfileSection() {
             onImageDelete={handleImageDelete}
           />
 
-          {/* 닉네임 입력 필드 */}
+          {/* 닉네임 및 소개글 입력 필드 */}
           <ProfileFormFields
             nickname={formData.nickname}
             introduction={formData.introduction}
@@ -78,15 +79,24 @@ export default function ProfileSection() {
       </div>
 
       {/* 저장 버튼 */}
-      <div className="border-surface-98 flex justify-end border-t pt-3">
+      <div className="border-surface-98 flex justify-end border-t">
         <Button
           variant={hasChanges && !isPending ? "point" : "deactivate"}
           size="md"
           onClick={handleSave}
           disabled={!hasChanges || isPending}
-          className="h-[50px] rounded-full px-5 text-[15px] font-medium"
+          className="h-12.5 rounded-full px-5 text-[15px] font-medium"
         >
-          {isPending ? "저장 중..." : "변경사항 저장"}
+          {isPending ? (
+            <Image
+              src={"/icon/loading.gif"}
+              alt="Loading"
+              width={20}
+              height={20}
+            />
+          ) : (
+            "변경사항 저장"
+          )}
         </Button>
       </div>
     </div>

@@ -54,7 +54,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               variant === "point",
 
             // point2: primary green 테투리
-            "border-primary-50 text-primary-50 hover:bg-primary-10 border":
+            "border-primary-40 text-primary-50 hover:bg-primary-10 border":
               variant === "point2",
 
             // secondary: 회색 배경, 활성화 상태
