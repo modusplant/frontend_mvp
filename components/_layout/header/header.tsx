@@ -66,15 +66,16 @@ export default function Header({ className, initialUser }: HeaderProps) {
 
         {/* 로그인 상태에 따른 버튼 */}
         <div className="flex items-center gap-2 text-[13px] font-medium">
-          {user ? (
-            <HeaderAuthActions
-              user={user}
-              onLogout={handleLogout}
-              showWriteButton={showWriteButton}
-            />
-          ) : (
-            <HeaderGuestActions />
-          )}
+          {pathname !== "/signup" &&
+            (user ? (
+              <HeaderAuthActions
+                user={user}
+                onLogout={handleLogout}
+                showWriteButton={showWriteButton}
+              />
+            ) : (
+              <HeaderGuestActions />
+            ))}
         </div>
       </div>
     </header>
