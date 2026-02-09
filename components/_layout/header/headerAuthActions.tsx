@@ -44,14 +44,17 @@ export default function HeaderAuthActions({
           {
             label: "마이페이지",
             onClick: () => router.push("/mypage"),
+            textAlign: "left",
           },
           {
             label: "내 활동",
             onClick: () => router.push("/mypage/recent"),
+            textAlign: "left",
           },
           {
             label: "로그아웃",
             onClick: handleLogout,
+            textAlign: "left",
           },
         ]}
         position="center"
