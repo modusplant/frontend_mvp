@@ -57,7 +57,7 @@ export default function EmailSection({
               : handleRequestVerification(watchedEmail)
           }
           disabled={emailDisabled}
-          className="w-full min-w-23 cursor-pointer rounded-lg px-5 py-3 text-sm sm:w-auto"
+          className="w-full min-w-23 cursor-pointer rounded-lg px-5 py-3 text-sm font-medium sm:w-auto"
           variant={!emailDisabled ? "point" : "secondary"}
         >
           {canResend ? "재요청" : "인증요청"}
@@ -66,7 +66,9 @@ export default function EmailSection({
 
       {/* 이메일 에러 메시지 */}
       {errors.email && (
-        <p className="text-system-alert text-sm">{errors.email.message}</p>
+        <p className="text-system-alert text-sm font-medium">
+          {errors.email.message}
+        </p>
       )}
 
       {/* 인증코드 입력 */}
@@ -78,14 +80,14 @@ export default function EmailSection({
                 {...register("verificationCode")}
                 type="text"
                 placeholder="인증코드를 입력해주세요"
-                className="w-full"
+                className="w-full font-medium"
               />
             </div>
             <Button
               type="button"
               onClick={() => handleVerifyCode(watchedEmail)}
               disabled={!watch("verificationCode")}
-              className="w-full min-w-23 rounded-lg px-5 py-3 text-sm sm:w-auto"
+              className="w-full min-w-23 rounded-lg px-5 py-3 text-sm font-medium sm:w-auto"
               variant={watch("verificationCode") ? "point" : "secondary"}
             >
               확인
@@ -94,12 +96,14 @@ export default function EmailSection({
 
           {/* 카운트다운 */}
           {timeRemaining > 0 && (
-            <p className="text-neutral-60 text-sm">요청 시간 {formattedTime}</p>
+            <p className="text-neutral-60 text-sm font-medium">
+              요청 시간 {formattedTime}
+            </p>
           )}
 
           {/* 인증코드 에러 메시지 */}
           {errors.verificationCode && (
-            <p className="text-system-alert text-sm">
+            <p className="text-system-alert text-sm font-medium">
               {errors.verificationCode.message}
             </p>
           )}

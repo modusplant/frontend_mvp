@@ -10,6 +10,7 @@ import { useAuthStore } from "@/lib/store/authStore";
 import { TERMS_VERSIONS } from "@/lib/constants/terms";
 import { Button } from "@/components/_common/button";
 import { processSuccessfulAuth } from "@/lib/utils/auth/processSuccessfulAuth";
+import Image from "next/image";
 
 // Sub-components
 import EmailSection from "./emailSection";
@@ -100,25 +101,27 @@ export default function SignupForm() {
     !Object.keys(errors).length;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 md:space-y-8">
-      {/* 이메일 섹션 */}
-      <EmailSection
-        register={register}
-        errors={errors}
-        watch={watch}
-        trigger={trigger}
-      />
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 md:space-y-10">
+      <div className="flex flex-col gap-7.5">
+        {/* 이메일 섹션 */}
+        <EmailSection
+          register={register}
+          errors={errors}
+          watch={watch}
+          trigger={trigger}
+        />
 
-      {/* 비밀번호 섹션 */}
-      <PasswordSection register={register} errors={errors} watch={watch} />
+        {/* 비밀번호 섹션 */}
+        <PasswordSection register={register} errors={errors} watch={watch} />
 
-      {/* 닉네임 섹션 */}
-      <NicknameSection
-        register={register}
-        errors={errors}
-        watch={watch}
-        trigger={trigger}
-      />
+        {/* 닉네임 섹션 */}
+        <NicknameSection
+          register={register}
+          errors={errors}
+          watch={watch}
+          trigger={trigger}
+        />
+      </div>
 
       {/* 약관 동의 섹션 */}
       <TermsSection
@@ -132,10 +135,19 @@ export default function SignupForm() {
       <Button
         type="submit"
         disabled={!isFormValid || isSubmitting}
-        className="w-full rounded-lg py-3 md:py-4"
+        className="w-full rounded-lg py-3 text-[16px] font-semibold md:py-4"
         variant={isFormValid || !isSubmitting ? "point" : "secondary"}
       >
-        {isSubmitting ? "처리 중..." : "회원가입"}
+        {isSubmitting ? (
+          <Image
+            src={"/icon/loading.gif"}
+            alt="Loading"
+            width={20}
+            height={20}
+          />
+        ) : (
+          "회원가입"
+        )}
       </Button>
     </form>
   );

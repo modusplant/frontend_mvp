@@ -4,6 +4,7 @@ import { useTermsAgreement } from "@/lib/hooks/auth/useTermsAgreement";
 import { Checkbox } from "@/components/_common/checkbox";
 import { TERMS_MAP, TERMS_LABELS } from "@/lib/constants/terms";
 import { TermsSectionProps } from "@/lib/types/auth";
+import TermsItem from "./termsItem";
 
 export default function TermsSection({
   register,
@@ -42,9 +43,12 @@ export default function TermsSection({
           onChange={handleAllAgreementChange}
           id="agreeToAll"
         />
-        <span className="text-neutral-20 text-sm font-semibold">
+        <label
+          htmlFor="agreeToAll"
+          className="text-neutral-20 cursor-pointer text-sm font-semibold"
+        >
           {TERMS_LABELS.all}
-        </span>
+        </label>
       </div>
 
       {/* 구분선 */}
@@ -53,103 +57,37 @@ export default function TermsSection({
       {/* 개별 약관들 */}
       <div className="space-y-3">
         {/* 이용약관 */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Checkbox
-                {...register("agreeToTerms")}
-                id="agreeToTerms"
-                checked={agreementValues.agreeToTerms || false}
-              />
-              <span className="text-neutral-60 text-sm">
-                {TERMS_LABELS.terms}
-              </span>
-            </div>
-            <button
-              type="button"
-              onClick={() => toggleContent("showTermsContent")}
-              className="text-neutral-60 ml-2 w-fit cursor-pointer text-sm whitespace-nowrap underline"
-            >
-              {contentState.showTermsContent ? "접기" : "보기"}
-            </button>
-          </div>
-          {contentState.showTermsContent && (
-            <div className="bg-neutral-98 text-neutral-60 ml-6 rounded-md p-3 text-sm leading-relaxed">
-              <p className="mb-2 font-medium">{TERMS_MAP.terms.title}</p>
-              <ul className="space-y-1 text-xs md:text-sm">
-                {TERMS_MAP.terms.items.map((item, index) => (
-                  <li key={index}>• {item}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+        <TermsItem
+          id="agreeToTerms"
+          label={TERMS_LABELS.terms}
+          checked={agreementValues.agreeToTerms || false}
+          register={register("agreeToTerms")}
+          isExpanded={contentState.showTermsContent}
+          onToggle={() => toggleContent("showTermsContent")}
+          content={TERMS_MAP.terms}
+        />
 
         {/* 개인정보 처리방침 */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Checkbox
-                {...register("agreeToPrivacy")}
-                id="agreeToPrivacy"
-                checked={agreementValues.agreeToPrivacy || false}
-              />
-              <span className="text-neutral-60 text-sm">
-                {TERMS_LABELS.privacy}
-              </span>
-            </div>
-            <button
-              type="button"
-              onClick={() => toggleContent("showPrivacyContent")}
-              className="text-neutral-60 ml-2 cursor-pointer text-sm whitespace-nowrap underline"
-            >
-              {contentState.showPrivacyContent ? "접기" : "보기"}
-            </button>
-          </div>
-          {contentState.showPrivacyContent && (
-            <div className="bg-neutral-98 text-neutral-60 ml-6 rounded-md p-3 text-sm leading-relaxed">
-              <p className="mb-2 font-medium">{TERMS_MAP.privacy.title}</p>
-              <ul className="space-y-1 text-xs md:text-sm">
-                {TERMS_MAP.privacy.items.map((item, index) => (
-                  <li key={index}>• {item}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+        <TermsItem
+          id="agreeToPrivacy"
+          label={TERMS_LABELS.privacy}
+          checked={agreementValues.agreeToPrivacy || false}
+          register={register("agreeToPrivacy")}
+          isExpanded={contentState.showPrivacyContent}
+          onToggle={() => toggleContent("showPrivacyContent")}
+          content={TERMS_MAP.privacy}
+        />
 
         {/* 커뮤니티 운영정책 */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Checkbox
-                {...register("agreeToCommunity")}
-                id="agreeToCommunity"
-                checked={agreementValues.agreeToCommunity || false}
-              />
-              <span className="text-neutral-60 text-sm">
-                {TERMS_LABELS.community}
-              </span>
-            </div>
-            <button
-              type="button"
-              onClick={() => toggleContent("showCommunityContent")}
-              className="text-neutral-60 ml-2 cursor-pointer text-sm whitespace-nowrap underline"
-            >
-              {contentState.showCommunityContent ? "접기" : "보기"}
-            </button>
-          </div>
-          {contentState.showCommunityContent && (
-            <div className="bg-neutral-98 text-neutral-60 ml-6 rounded-md p-3 text-sm leading-relaxed">
-              <p className="mb-2 font-medium">{TERMS_MAP.community.title}</p>
-              <ul className="space-y-1 text-xs md:text-sm">
-                {TERMS_MAP.community.items.map((item, index) => (
-                  <li key={index}>• {item}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+        <TermsItem
+          id="agreeToCommunity"
+          label={TERMS_LABELS.community}
+          checked={agreementValues.agreeToCommunity || false}
+          register={register("agreeToCommunity")}
+          isExpanded={contentState.showCommunityContent}
+          onToggle={() => toggleContent("showCommunityContent")}
+          content={TERMS_MAP.community}
+        />
       </div>
 
       {/* 에러 메시지 */}
