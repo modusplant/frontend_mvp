@@ -22,7 +22,7 @@ export default function AccountSection() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-[400px] items-center justify-center">
+      <div className="flex min-h-100 items-center justify-center">
         <p className="text-neutral-60">로딩 중...</p>
       </div>
     );
@@ -30,7 +30,7 @@ export default function AccountSection() {
 
   if (error || !authInfo) {
     return (
-      <div className="flex min-h-[400px] items-center justify-center">
+      <div className="flex min-h-100 items-center justify-center">
         <p className="text-system-alert">계정 정보를 불러올 수 없습니다.</p>
       </div>
     );

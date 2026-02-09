@@ -57,7 +57,7 @@ export default function EmailSection({
               : handleRequestVerification(watchedEmail)
           }
           disabled={emailDisabled}
-          className="w-full min-w-[92px] cursor-pointer rounded-lg px-5 py-3 text-sm sm:w-auto"
+          className="w-full min-w-23 cursor-pointer rounded-lg px-5 py-3 text-sm sm:w-auto"
           variant={!emailDisabled ? "point" : "secondary"}
         >
           {canResend ? "재요청" : "인증요청"}
@@ -85,7 +85,7 @@ export default function EmailSection({
               type="button"
               onClick={() => handleVerifyCode(watchedEmail)}
               disabled={!watch("verificationCode")}
-              className="w-full min-w-[92px] rounded-lg px-5 py-3 text-sm sm:w-auto"
+              className="w-full min-w-23 rounded-lg px-5 py-3 text-sm sm:w-auto"
               variant={watch("verificationCode") ? "point" : "secondary"}
             >
               확인

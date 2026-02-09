@@ -5,6 +5,7 @@ import { useNicknameVerification } from "@/lib/hooks/auth/useNicknameVerificatio
 import { Input } from "@/components/_common/input";
 import Button from "@/components/_common/button";
 import { NicknameSectionProps } from "@/lib/types/auth";
+import Image from "next/image";
 
 export default function NicknameSection({
   register,
@@ -31,7 +32,7 @@ export default function NicknameSection({
     const nicknameValid = await trigger("nickname");
     if (!nicknameValid) return;
 
-    const result = await checkNickname(watchedNickname);
+    await checkNickname(watchedNickname);
   };
 
   // 닉네임 변경 핸들러
@@ -65,10 +66,19 @@ export default function NicknameSection({
           type="button"
           onClick={handleCheckNickname}
           disabled={nicknameDisabled}
-          className="w-full min-w-[92px] cursor-pointer rounded-lg px-5 py-3 text-sm sm:w-auto"
-          variant={nicknameDisabled ? "secondary" : "point"}
+          className="min-w-23 cursor-pointer rounded-lg px-5 py-3 text-sm sm:w-auto"
+          variant={nicknameDisabled && !isLoading ? "secondary" : "point"}
         >
-          {isLoading ? "확인중..." : "중복확인"}
+          {isLoading ? (
+            <Image
+              src={"/icon/loading.gif"}
+              alt="Loading"
+              width={20}
+              height={20}
+            />
+          ) : (
+            "중복확인"
+          )}
         </Button>
       </div>
 

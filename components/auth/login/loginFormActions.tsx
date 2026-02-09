@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/_common/button";
 
 interface LoginFormActionsProps {
@@ -24,7 +25,16 @@ export default function LoginFormActions({ isLoading }: LoginFormActionsProps) {
         disabled={isLoading}
         className="py-5 md:py-6"
       >
-        {isLoading ? "로그인 중..." : "로그인"}
+        {isLoading ? (
+          <Image
+            src={"/icon/loading.gif"}
+            alt="Loading"
+            width={20}
+            height={20}
+          />
+        ) : (
+          "로그인"
+        )}
       </Button>
 
       {/* 하단 링크 */}
