@@ -93,7 +93,7 @@ export default function PostActions({
           className="group flex cursor-pointer gap-1.5"
         >
           <Heart
-            className={`h-6 w-6 transition-all ${
+            className={`h-5 w-5 transition-all ${
               isLiked ? "" : "group-hover:fill-neutral-90"
             }`}
             color={isLiked ? "red" : "#919191"}
@@ -108,7 +108,7 @@ export default function PostActions({
           className="group flex cursor-pointer gap-1.5"
         >
           <Bookmark
-            className={`h-6 w-6 transition-all ${
+            className={`h-5 w-5 transition-all ${
               isBookmarked ? "" : "group-hover:fill-neutral-90"
             }`}
             fill={isBookmarked ? "#3a972e" : "none"}

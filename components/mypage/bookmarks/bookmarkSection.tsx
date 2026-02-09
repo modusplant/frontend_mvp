@@ -6,7 +6,7 @@ import { useBookmarkedPostsQuery } from "@/lib/hooks/mypage/useBookmarkedPostsQu
 
 export default function BookmarkSection() {
   return (
-    <div className="border-surface-98 flex flex-col gap-[30px] rounded-xl border bg-white p-10">
+    <div className="border-surface-98 flex flex-col gap-7.5 rounded-xl border bg-white p-10">
       {/* 페이지 제목 */}
       <h1 className="text-neutral-5 text-xl leading-[1.2] font-bold tracking-[-0.01em]">
         북마크
