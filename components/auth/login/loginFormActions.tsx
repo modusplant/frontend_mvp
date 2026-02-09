@@ -23,7 +23,7 @@ export default function LoginFormActions({ isLoading }: LoginFormActionsProps) {
         size="md"
         fullWidth
         disabled={isLoading}
-        className="py-5 md:py-6"
+        className="h-13 rounded-[7px] py-5 text-[16px] font-semibold md:py-6"
       >
         {isLoading ? (
           <Image
