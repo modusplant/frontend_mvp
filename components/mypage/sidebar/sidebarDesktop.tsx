@@ -13,12 +13,12 @@ export default function SidebarDesktop({ onLogout }: SidebarDesktopProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="border-surface-98 hidden h-fit w-[248px] shrink-0 flex-col gap-5 rounded-xl border bg-white p-8 lg:flex">
+    <aside className="border-surface-98 hidden h-fit w-62 shrink-0 flex-col gap-5 rounded-xl border bg-white p-8 lg:flex">
       {MYPAGE_MENU_SECTIONS.map((section, sectionIndex) => (
         <div key={section.title} className="flex flex-col gap-2.5">
           {/* 섹션 제목 */}
           <div className="px-0 py-1">
-            <span className="text-sm leading-[1.2] font-medium tracking-[-0.02em] text-neutral-50">
+            <span className="text-[14px] leading-[1.2] font-medium tracking-[-0.02em] text-neutral-50">
               {section.title}
             </span>
           </div>
@@ -27,25 +27,18 @@ export default function SidebarDesktop({ onLogout }: SidebarDesktopProps) {
           <div className="flex flex-col">
             {section.items.map((item) => {
               const isActive = pathname === item.href;
-              const isDisabled = item.disabled;
 
               return (
                 <Link
                   key={item.href}
-                  href={isDisabled ? "#" : item.href}
+                  href={item.href}
                   className={cn(
-                    "flex rounded-[10px] px-0 py-[13px]",
-                    "text-[15px] leading-[1.19] font-medium tracking-[-0.02em]",
+                    "flex rounded-[10px] px-0 py-3.25",
+                    "text-[16px] leading-[1.19] tracking-[-0.02em]",
                     "transition-colors",
                     isActive && "text-neutral-5 font-semibold",
-                    !isActive && !isDisabled && "text-neutral-30",
-                    isDisabled && "text-neutral-60 cursor-not-allowed"
+                    !isActive && "text-neutral-30 font-medium"
                   )}
-                  onClick={(e) => {
-                    if (isDisabled) {
-                      e.preventDefault();
-                    }
-                  }}
                 >
                   {item.label}
                 </Link>
@@ -66,9 +59,9 @@ export default function SidebarDesktop({ onLogout }: SidebarDesktopProps) {
         <button
           onClick={onLogout}
           className={cn(
-            "mt-2.5 flex rounded-[10px] px-0 py-[13px]",
-            "text-[15px] leading-[1.19] font-medium tracking-[-0.02em]",
-            "text-neutral-30"
+            "mt-2.5 flex rounded-[10px] px-0 py-3.25",
+            "text-[16px] leading-[1.19] tracking-[-0.02em]",
+            "text-neutral-30 font-medium"
           )}
         >
           로그아웃
