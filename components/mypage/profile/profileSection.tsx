@@ -93,6 +93,7 @@ export default function ProfileSection() {
               alt="Loading"
               width={20}
               height={20}
+              unoptimized
             />
           ) : (
             "변경사항 저장"

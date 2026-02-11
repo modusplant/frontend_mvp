@@ -170,6 +170,7 @@ export default function SecondaryCategoryFilter({
           width={12}
           height={12}
           className={cn(isOpen && "rotate-180")}
+          loading="lazy"
         />
       </button>
 

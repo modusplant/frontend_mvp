@@ -144,6 +144,7 @@ export default function SignupForm() {
             alt="Loading"
             width={20}
             height={20}
+            unoptimized
           />
         ) : (
           "회원가입"

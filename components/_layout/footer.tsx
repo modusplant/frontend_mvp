@@ -18,6 +18,7 @@ export default function Footer({ className }: FooterProps) {
             alt="모두의식물 로고"
             width={120}
             height={32}
+            loading="lazy"
           />
 
           <span className="text-surface-stroke-2 hidden lg:inline">|</span>

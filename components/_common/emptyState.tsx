@@ -48,10 +48,16 @@ export default function EmptyState({
   buttonHref,
 }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center gap-5 py-[60px]">
+    <div className="flex flex-col items-center justify-center gap-5 py-15">
       {/* 캐릭터 이미지 */}
-      <div className="relative h-[100px] w-[100px]">
-        <Image src={imageSrc} alt={title} fill className="object-contain" />
+      <div className="relative h-25 w-25">
+        <Image
+          src={imageSrc}
+          alt={title}
+          fill
+          className="object-contain"
+          loading="lazy"
+        />
       </div>
 
       {/* 안내 문구 */}

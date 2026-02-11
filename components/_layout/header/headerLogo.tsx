@@ -17,7 +17,13 @@ export default function HeaderLogo({
 
   return (
     <Link href="/" className="transition-opacity hover:opacity-80">
-      <Image src={logo} alt="모두의식물 로고" width={117} height={26} />
+      <Image
+        src={logo}
+        alt="모두의식물 로고"
+        width={117}
+        height={26}
+        priority
+      />
     </Link>
   );
 }
