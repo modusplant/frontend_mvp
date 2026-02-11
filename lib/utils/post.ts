@@ -1,5 +1,9 @@
 import { PostData, ContentPart } from "@/lib/types/post";
 import { getFullImageUrl } from "@/lib/utils/image";
+import Post1 from "@/public/post/image_01.png";
+import Post2 from "@/public/post/image_02.png";
+import Post3 from "@/public/post/image_03.png";
+import Post4 from "@/public/post/image_04.png";
 
 /**
  * 썸네일 추출 헬퍼 함수
@@ -18,7 +22,9 @@ export function getThumbnail(post: PostData): string {
   const charCode = lastChar.charCodeAt(0);
   const imageNumber = (charCode % 4) + 1;
 
-  return `/post/image_0${imageNumber}.png`;
+  const defaultImages = [Post1, Post2, Post3, Post4];
+
+  return defaultImages[imageNumber - 1].src;
 }
 
 /**

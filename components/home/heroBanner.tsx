@@ -5,9 +5,12 @@ import { cn } from "@/lib/utils/tailwindHelper";
 import { useCarousel } from "@/lib/hooks/home/useCarousel";
 import CarouselControls from "./carouselControls";
 import HeroBannerContent from "./heroBannerContent";
+import { StaticImageData } from "next/image";
+import Banner1 from "@/public/banner/ban_01.png";
+import Banner2 from "@/public/banner/ban_02.png";
 
 export interface HeroBannerProps {
-  images?: string[];
+  images?: StaticImageData[];
   autoPlayInterval?: number; // 밀리초 단위 (기본 5000ms = 5초)
   className?: string;
   title?: string;
@@ -22,7 +25,7 @@ export interface HeroBannerProps {
  * - 루프 슬라이더
  */
 export default function HeroBanner({
-  images = ["/banner/ban_01.png", "/banner/ban_02.png", "/banner/ban_01.png"],
+  images = [Banner1, Banner2, Banner1],
   autoPlayInterval = 5000,
   className,
   title,
