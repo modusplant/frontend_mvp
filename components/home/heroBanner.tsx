@@ -73,6 +73,7 @@ export default function HeroBanner({
                 fill
                 className="object-cover"
                 priority={index === 0}
+                placeholder="blur"
                 sizes="100vw"
               />
             </div>
