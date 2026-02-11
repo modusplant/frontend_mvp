@@ -18,7 +18,7 @@ export default function SocialLoginInfo({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="border-surface-98 flex flex-col gap-[30px] rounded-xl border bg-white p-10">
+      <div className="border-surface-98 flex flex-col gap-7.5 rounded-xl border bg-white p-10">
         <div className="border-surface-stroke bg-surface-99 rounded-lg border p-6">
           <p className="text-neutral-60 text-sm leading-normal">
             {providerName} 간편 로그인으로 가입하셨습니다.

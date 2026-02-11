@@ -78,7 +78,7 @@ export default function EmptyState({
       {/* CTA 버튼 */}
       <Link
         href={buttonHref}
-        className="border-surface-stroke text-neutral-20 flex h-12 items-center justify-center gap-[9px] rounded-[31px] border px-6 py-4 text-base leading-[1.2] font-medium tracking-[-0.03em]"
+        className="border-surface-stroke text-neutral-20 flex h-12 items-center justify-center gap-2.25 rounded-[31px] border px-6 py-4 text-base leading-[1.2] font-medium tracking-[-0.03em]"
       >
         {buttonText}
       </Link>

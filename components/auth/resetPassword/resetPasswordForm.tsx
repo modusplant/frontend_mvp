@@ -68,7 +68,7 @@ export default function ResetPasswordForm({ uuid }: ResetPasswordFormProps) {
 
   if (isValidUuid !== 200) {
     return (
-      <div className="mx-auto w-[480px] p-10 text-center">
+      <div className="mx-auto w-120 p-10 text-center">
         <h1 className="mb-6 text-2xl font-bold">비밀번호 재설정</h1>
         <p className="text-neutral-20">
           유효하지 않은 링크입니다. <br />

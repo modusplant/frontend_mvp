@@ -27,7 +27,7 @@ export default function ImagePreviewItem({
   }, [file, previewUrl]);
 
   return (
-    <div className="group relative h-[120px] w-[120px] shrink-0">
+    <div className="group relative h-30 w-30 shrink-0">
       <Image
         src={previewUrl}
         alt={`업로드 이미지 ${index + 1}`}

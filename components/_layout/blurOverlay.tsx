@@ -35,7 +35,7 @@ export default function BlurOverlay({
               : "flex h-full items-center justify-center"
           )}
         >
-          <div className="mx-auto flex max-w-[480px] flex-col items-center gap-5 text-center">
+          <div className="mx-auto flex max-w-120 flex-col items-center gap-5 text-center">
             <p className="text-neutral-20 text-[22px] leading-snug font-bold md:text-[22px]">
               {lines.map((line, idx) => (
                 <span key={idx}>
