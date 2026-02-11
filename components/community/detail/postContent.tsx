@@ -32,6 +32,7 @@ export default function PostContent({ content }: PostContentProps) {
         {imageContent.map((item, index) => {
           return (
             <Image
+              key={index}
               src={item.src || ""}
               alt={item.filename || `이미지 ${index + 1}`}
               width={800}

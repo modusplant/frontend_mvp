@@ -81,7 +81,7 @@ export default function ResetPasswordForm({ uuid }: ResetPasswordFormProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto w-[520px] space-y-10 p-10"
+      className="mx-auto w-130 space-y-10 p-10"
     >
       {/* 페이지 제목 */}
       <h1 className="text-center text-2xl font-bold">비밀번호 재설정</h1>
