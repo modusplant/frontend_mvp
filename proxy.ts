@@ -6,6 +6,20 @@ import {
   REFRESH_TOKEN_MAX_AGE,
 } from "@/lib/constants/auth";
 import { BASE_URL } from "@/lib/constants/apiInstance";
+import { decodeJWT } from "@/lib/utils/auth/decodeJWT";
+
+/**
+ * JWT 토큰이 만료되었는지 확인 (5분 여유 시간 포함)
+ */
+function isTokenExpired(token: string): boolean {
+  const payload = decodeJWT(token);
+  if (!payload?.exp) return true;
+
+  const now = Math.floor(Date.now() / 1000);
+  const bufferTime = 5 * 60; // 5분 여유 시간
+
+  return payload.exp - now < bufferTime;
+}
 
 /**
  * Middleware: 모든 요청 전에 토큰 자동 갱신
@@ -14,8 +28,11 @@ export async function proxy(request: NextRequest) {
   const rememberMe = request.cookies.get("rememberMe")?.value;
   const accessToken = request.cookies.get(ACCESS_TOKEN_COOKIE_NAME)?.value;
 
-  // rememberMe가 true이고 accessToken이 없으면 토큰 갱신 시도
-  if (rememberMe === "true" && !accessToken) {
+  // rememberMe가 true이고 (accessToken이 없거나 만료되었으면) 토큰 갱신 시도
+  const shouldRefreshToken =
+    rememberMe === "true" && (!accessToken || isTokenExpired(accessToken));
+
+  if (shouldRefreshToken) {
     try {
       const cookieHeader = request.headers.get("cookie") || "";
 
@@ -65,7 +82,10 @@ export async function proxy(request: NextRequest) {
             }
           }
 
-          console.info("[Middleware] 토큰 갱신 성공");
+          console.info(
+            "[Middleware] 토큰 갱신 성공:",
+            accessToken ? "만료된 토큰 갱신" : "토큰 없음으로 갱신"
+          );
           return nextResponse;
         }
       } else {
