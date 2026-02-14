@@ -90,7 +90,7 @@ export default function PostActions({
         <button
           onClick={handleLike}
           disabled={isLiking}
-          className="group flex cursor-pointer gap-1.5"
+          className="group flex cursor-pointer items-center gap-1.5"
         >
           <Heart
             className={`h-5 w-5 transition-all ${
@@ -105,7 +105,7 @@ export default function PostActions({
         <button
           onClick={handleBookmark}
           disabled={isBookmarking}
-          className="group flex cursor-pointer gap-1.5"
+          className="group flex cursor-pointer items-center gap-1.5"
         >
           <Bookmark
             className={`h-5 w-5 transition-all ${
