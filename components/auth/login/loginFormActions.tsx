@@ -31,6 +31,7 @@ export default function LoginFormActions({ isLoading }: LoginFormActionsProps) {
             alt="Loading"
             width={20}
             height={20}
+            unoptimized
           />
         ) : (
           "로그인"

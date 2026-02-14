@@ -79,6 +79,7 @@ export default function PrimaryCategoryFilter({
           width={12}
           height={12}
           className={cn(isOpen && "rotate-180")}
+          loading="lazy"
         />
       </button>
 

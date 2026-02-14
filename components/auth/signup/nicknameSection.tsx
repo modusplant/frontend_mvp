@@ -75,6 +75,7 @@ export default function NicknameSection({
               alt="Loading"
               width={20}
               height={20}
+              unoptimized
             />
           ) : (
             "중복확인"

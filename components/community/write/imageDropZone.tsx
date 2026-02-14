@@ -13,7 +13,7 @@ export default function ImageDropZone({
 }: ImageDropZoneProps) {
   return (
     <div
-      className={`mt-4 flex min-h-[120px] items-center justify-center rounded-lg border-2 border-dashed ${
+      className={`mt-4 flex min-h-30 items-center justify-center rounded-lg border-2 border-dashed ${
         isDragging ? "border-primary-50 bg-primary-10" : "border-surface-stroke"
       }`}
       onDragOver={onDragOver}

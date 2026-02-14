@@ -86,7 +86,7 @@ export default function PostWritePage() {
   };
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-full flex-col gap-5 bg-neutral-100 px-4 py-5 md:px-8 lg:w-[848px] lg:px-10">
+    <div className="mx-auto flex min-h-screen w-full max-w-full flex-col gap-5 bg-neutral-100 px-4 py-5 md:px-8 lg:w-212 lg:px-10">
       {/* 헤더 */}
       <PostWriteHeader isEditMode={hookIsEditMode} />
 

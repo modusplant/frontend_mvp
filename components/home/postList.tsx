@@ -141,7 +141,7 @@ export default function PostList({ initialData }: PostListProps) {
 
           {/* 비로그인 시 9개 이후 영역 블러 + CTA 오버레이 */}
           {isGuest && hiddenPosts.length > 0 && (
-            <div className="relative mt-12">
+            <div className="relative mt-10 md:mt-12 lg:mt-16">
               {/* 가려질 게시물 영역 (실제 배치 유지) */}
               <div className="pointer-events-none grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-x-8 md:gap-y-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-10">
                 {hiddenPosts.map((post) => (

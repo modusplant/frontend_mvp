@@ -48,10 +48,16 @@ export default function EmptyState({
   buttonHref,
 }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center gap-5 py-[60px]">
+    <div className="flex flex-col items-center justify-center gap-5 py-15">
       {/* 캐릭터 이미지 */}
-      <div className="relative h-[100px] w-[100px]">
-        <Image src={imageSrc} alt={title} fill className="object-contain" />
+      <div className="relative h-25 w-25">
+        <Image
+          src={imageSrc}
+          alt={title}
+          fill
+          className="object-contain"
+          loading="lazy"
+        />
       </div>
 
       {/* 안내 문구 */}
@@ -72,7 +78,7 @@ export default function EmptyState({
       {/* CTA 버튼 */}
       <Link
         href={buttonHref}
-        className="border-surface-stroke text-neutral-20 flex h-12 items-center justify-center gap-[9px] rounded-[31px] border px-6 py-4 text-base leading-[1.2] font-medium tracking-[-0.03em]"
+        className="border-surface-stroke text-neutral-20 flex h-12 items-center justify-center gap-2.25 rounded-[31px] border px-6 py-4 text-base leading-[1.2] font-medium tracking-[-0.03em]"
       >
         {buttonText}
       </Link>

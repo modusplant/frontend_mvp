@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { StaticImageData } from "next/image";
 
 export interface UseCarouselOptions {
   totalSlides: number;
@@ -10,7 +11,7 @@ export interface UseCarouselReturn {
   currentIndex: number;
   isPlaying: boolean;
   isTransitioning: boolean;
-  extendedImages: string[];
+  extendedImages: StaticImageData[];
   totalSlides: number;
   handleNext: () => void;
   handlePrev: () => void;
@@ -26,7 +27,7 @@ export interface UseCarouselReturn {
  * - transition 관리
  */
 export function useCarousel(
-  images: string[],
+  images: StaticImageData[],
   {
     autoPlayInterval = 3000,
     autoPlay = true,

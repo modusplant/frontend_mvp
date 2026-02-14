@@ -66,7 +66,7 @@ export default function RequestEmailForm() {
   };
 
   return (
-    <div className="mx-auto w-[480px] p-10">
+    <div className="mx-auto w-120 p-10">
       {/* 뒤로가기 버튼 */}
       <div>
         <button

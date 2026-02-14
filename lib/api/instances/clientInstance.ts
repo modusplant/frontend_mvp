@@ -4,6 +4,8 @@ import {
   ACCESS_TOKEN_COOKIE_NAME,
   ACCESS_TOKEN_MAX_AGE,
 } from "@/lib/constants/auth";
+import { AUTH_ENDPOINTS } from "@/lib/constants/endpoints";
+
 const BASE_URL = ""; // 클라이언트는 상대 경로 사용 (rewrites 적용)
 
 /**
@@ -11,7 +13,7 @@ const BASE_URL = ""; // 클라이언트는 상대 경로 사용 (rewrites 적용
  */
 async function refreshAccessToken(): Promise<string> {
   try {
-    const response = await fetch(`${BASE_URL}/api/auth/token/refresh`, {
+    const response = await fetch(`${BASE_URL}${AUTH_ENDPOINTS.TOKEN_REFRESH}`, {
       method: "POST",
       credentials: "include", // 쿠키 자동 전송
       headers: {
@@ -76,6 +78,7 @@ export const clientApiInstance = createApi({
       return "retry" as const;
     } catch (e) {
       deleteCookie(ACCESS_TOKEN_COOKIE_NAME, { path: "/" });
+      deleteCookie("rememberMe", { path: "/" });
       return "fail" as const;
     }
   },

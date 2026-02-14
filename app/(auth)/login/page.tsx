@@ -2,6 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import LoginForm from "@/components/auth/login/loginForm";
 import { cn } from "@/lib/utils/tailwindHelper";
+import { loginMetadata as metadata } from "@/lib/metadata/auth";
+
+export { metadata };
 
 export default function LoginPage() {
   return (

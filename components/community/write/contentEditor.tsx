@@ -24,7 +24,7 @@ function ContentEditor({
           value={textContent}
           onChange={(e) => onTextChange(e.target.value)}
           placeholder="내용을 입력해주세요."
-          className="text-neutral-20 placeholder:text-neutral-60 h-full min-h-[300px] resize-none text-base leading-[1.8] font-normal tracking-[-0.01em] focus:outline-none"
+          className="text-neutral-20 placeholder:text-neutral-60 h-full min-h-75 resize-none text-base leading-[1.8] font-normal tracking-[-0.01em] focus:outline-none"
         />
       </div>
       {/* 이미지 업로드 섹션 */}

@@ -32,7 +32,13 @@ export default function CarouselControls({
           className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 transition-colors hover:bg-black/80"
           aria-label="일시정지"
         >
-          <Image src="/icon/pause.png" alt="일시정지" width={10} height={12} />
+          <Image
+            src="/icon/pause.png"
+            alt="일시정지"
+            width={10}
+            height={12}
+            loading="lazy"
+          />
         </button>
         <button
           onClick={onPlay}

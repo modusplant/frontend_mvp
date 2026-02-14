@@ -13,6 +13,7 @@ export default function ProfileImage({ className, imageSrc }: ProfileProps) {
       alt="프로필 이미지"
       className={cn("rounded-full object-cover", className)}
       fill
+      loading="lazy"
     />
   ) : (
     <Image
@@ -20,6 +21,7 @@ export default function ProfileImage({ className, imageSrc }: ProfileProps) {
       alt="기본 프로필 이미지"
       className={cn("rounded-full object-cover", className)}
       fill
+      loading="lazy"
     />
   );
 }

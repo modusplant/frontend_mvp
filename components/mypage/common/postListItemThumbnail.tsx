@@ -23,7 +23,7 @@ export default function PostListItemThumbnail({
   }
 
   return (
-    <div className="relative h-[100px] w-[100px] shrink-0 overflow-hidden rounded-lg">
+    <div className="relative h-25 w-25 shrink-0 overflow-hidden rounded-lg">
       <Image
         src={thumbnail}
         alt={post.title}
